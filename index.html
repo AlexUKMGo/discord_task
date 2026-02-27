@@ -16,7 +16,7 @@
   </style>
 </head>
 
-<body class="min-h-screen bg-[#FAFAFA] text-slate-900 font-sans antialiased selection:bg-emerald-100 selection:text-emerald-900">
+<body class="min-h-screen bg-[#FAFAFA] text-slate-900 font-sans antialiased selection:bg-emerald-100 selection:text-emerald-900 flex flex-col">
   
   <div class="pointer-events-none fixed inset-0 overflow-hidden z-0">
     <div class="absolute -top-[20%] -right-[10%] w-[70vw] h-[70vw] rounded-full bg-gradient-to-b from-emerald-50 to-transparent blur-3xl opacity-60"></div>
@@ -39,15 +39,15 @@
     </div>
   </header>
 
-  <main class="relative z-10 mx-auto max-w-6xl px-5 pb-32 pt-8 md:pt-12">
+  <main class="relative z-10 mx-auto max-w-6xl px-5 pb-32 pt-8 md:pt-12 flex-1">
     
     <section class="max-w-3xl mb-10">
       <h1 class="text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight text-slate-900 leading-[1.15]" data-i18n-html="hero_hub_title">
-        Skip invalid interactions,<br class="hidden sm:block" />
-        Focus on <span class="text-transparent bg-clip-text bg-gradient-to-r from-emerald-600 to-teal-500">Definitive Yields.</span>
+        Skip the noise,<br class="hidden sm:block" />
+        Focus on <span class="text-transparent bg-clip-text bg-gradient-to-r from-emerald-600 to-teal-500">High-Conviction Yields.</span>
       </h1>
       <p class="mt-4 text-base text-slate-500 leading-relaxed font-medium" data-i18n="hero_hub_desc">
-        Ditch the complex whitepapers. We provide task checklists with clear ROI expectations and step-by-step guides. Filter, click, execute.
+        Ditch the complex whitepapers and low-ROI tasks. We provide curated checklists with clear expected returns and step-by-step guides. Filter, click, execute.
       </p>
     </section>
 
@@ -357,12 +357,36 @@
   </main>
 
   <script>
-    // ----------------------------------------------------
-    // 多语言与过滤逻辑
-    // ----------------------------------------------------
+    // 防御性内置英文数据
+    window.translations = window.translations || {};
+    window.translations.en = {
+      hub_title: "SHITHub — Airdrop & Yield Aggregator",
+      hero_hub_title: "Skip the noise,<br class=\"hidden sm:block\"/>Focus on <span class=\"text-transparent bg-clip-text bg-gradient-to-r from-emerald-600 to-teal-500\">High-Conviction Yields.</span>",
+      hero_hub_desc: "Ditch the complex whitepapers and low-ROI tasks. We provide curated checklists with clear expected returns and step-by-step guides. Filter, click, execute.",
+      f_all: "All Selected", f_live: "Live Rewards", f_tge: "Waiting for TGE", f_testnet: "Testnet", f_exchange: "Exchange Launch", f_social: "SocialFi", f_node: "Node / Idle",
+      lbl_time: "Est. Time", lbl_cost: "Est. Cost", lbl_req: "Requirement", lbl_method: "Method", lbl_cert: "Certainty", lbl_yield: "Expected Yield",
+      card_oshit_desc: "Community experiment with clear spot USDT rewards and quarterly token pool allocation. Extremely low entry barrier.",
+      card_oshit_time: "5 Mins", card_oshit_cost: "~0.01 SOL", card_oshit_yield: "10-50U + Airdrop",
+      card_hash_title: "Hashgame", card_hash_desc: "Top crypto gaming & prediction market. Participate in daily activities to accumulate points and lock in upcoming TGE airdrops.",
+      card_hash_time: "Daily 3 Mins", card_hash_cost: "On-demand", card_hash_yield: "TGE Airdrop",
+      card_satsume_title: "Satsume", card_satsume_desc: "Highly potential Web3 innovative ecosystem. Complete social binding and daily check-ins to get exclusive rewards.",
+      card_satsume_time: "2 Mins/Tx", card_satsume_cost: "Zero Cost", card_satsume_yield: "Spot / Points",
+      card_eigen_title: "EigenLayer Eco", card_eigen_desc: "Top restaking protocol. Deposit ETH or LST to accumulate dual points and secure genesis airdrop allocation.",
+      card_eigen_time: "One-time 10 Mins", card_eigen_req: "Deposit Assets", card_eigen_yield: "Points to Tokens",
+      card_bera_title: "Berachain V2", card_bera_desc: "Highly anticipated testnet. Claim daily faucets and complete contract interactions to build wallet weight.",
+      card_bera_time: "Daily 5 Mins", card_bera_cost: "Zero (0 Gas)", card_bera_yield: "Mainnet Airdrop",
+      card_bnb_title: "BNB Megadrop", card_bnb_desc: "Bind Web3 wallet for DApp interactions + lock BNB to get high multipliers for guaranteed new token launches.",
+      card_bnb_method: "Task + Lock", card_bnb_cert: "Very High", card_bnb_yield: "Direct Trading",
+      card_far_title: "Farcaster Echo", card_far_desc: "No asset purchase required. Accumulate points by posting, liking, and getting tipped on decentralized social platforms.",
+      card_far_time: "Fragmented Time", card_far_cost: "Zero Cost", card_far_yield: "Tips & Airdrops",
+      card_grass_title: "Grass Network", card_grass_desc: "Install browser extension to share idle bandwidth for automatic mining. Perfect for background running.",
+      card_grass_time: "1 Min Install", card_grass_method: "Auto Idle", card_grass_yield: "Accumulate Vouchers"
+    };
+
     let currentLang = localStorage.getItem('oshit_lang') || 'en';
 
     function applyTranslation() {
+      if(!window.translations) return;
       const data = window.translations[currentLang];
       if(!data) return;
 
@@ -389,14 +413,12 @@
       applyTranslation();
     }
 
-    // 筛选逻辑绑定
     function setupFilters() {
       const filterBtns = document.querySelectorAll('.filter-btn');
       const projectCards = document.querySelectorAll('.project-card');
 
       filterBtns.forEach(btn => {
         btn.addEventListener('click', function() {
-          // 更新按钮 UI 状态
           filterBtns.forEach(b => {
             b.classList.remove('bg-slate-900', 'text-white', 'shadow-md', 'border-transparent');
             b.classList.add('bg-white', 'text-slate-600', 'border-slate-200');
@@ -404,11 +426,10 @@
           this.classList.remove('bg-white', 'text-slate-600', 'border-slate-200');
           this.classList.add('bg-slate-900', 'text-white', 'shadow-md', 'border-transparent');
 
-          // 执行过滤
           const filterValue = this.getAttribute('data-filter');
           projectCards.forEach(card => {
             if (filterValue === 'all' || card.getAttribute('data-category') === filterValue) {
-              card.style.display = 'flex'; // 卡片是 flex 布局
+              card.style.display = 'flex'; 
             } else {
               card.style.display = 'none';
             }
@@ -418,11 +439,15 @@
     }
 
     window.addEventListener('DOMContentLoaded', () => {
-      const switcher = document.getElementById('langSwitcher');
-      if(switcher) switcher.addEventListener('click', toggleLang);
-      
-      applyTranslation();
-      setupFilters();
+      try {
+        const switcher = document.getElementById('langSwitcher');
+        if(switcher) switcher.addEventListener('click', toggleLang);
+        
+        applyTranslation();
+        setupFilters();
+      } catch(e) {
+        console.error("Hub init error:", e);
+      }
     });
   </script>
 </body>

@@ -3,8 +3,9 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>OSHIT — Onboarding</title>
+  <title>OSHIT — Interactive Task Board</title>
   <script src="https://cdn.tailwindcss.com"></script>
+  <script src="lang.js"></script>
   <style>
     body { -webkit-tap-highlight-color: transparent; }
     .safe-bottom { padding-bottom: env(safe-area-inset-bottom); }
@@ -13,6 +14,20 @@
     .custom-scroll::-webkit-scrollbar { width: 6px; }
     .custom-scroll::-webkit-scrollbar-track { background: transparent; }
     .custom-scroll::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
+    
+    .check-btn { transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
+    .check-btn.checked { background-color: #10b981; border-color: #10b981; color: white; }
+    .task-row.checked { opacity: 0.65; }
+    .task-row.checked .task-title { text-decoration: line-through; color: #64748b; }
+    
+    .periodic-task .check-btn.checked { background-color: #6366f1; border-color: #6366f1; }
+    
+    #discordToast, #systemToast { transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.3s; }
+    .toast-show { transform: translateY(0) scale(1) !important; opacity: 1 !important; }
+    .toast-hide { transform: translateY(120%) scale(0.95) !important; opacity: 0 !important; }
+
+    .bg-discord { background-color: #5865F2; }
+    .hover-bg-discord:hover { background-color: #4752C4; }
   </style>
 </head>
 
@@ -38,13 +53,29 @@
 
             <div class="flex items-center gap-2">
               <button id="btnScrollToGuide" type="button"
-                      class="hidden sm:inline-flex rounded-2xl border border-slate-200 bg-white px-4 py-2 text-xs font-semibold text-slate-700 shadow-sm hover:bg-slate-50 transition-colors" data-i18n="btn_guide">
+                      class="hidden sm:inline-flex rounded-2xl border border-slate-200 bg-white px-3 py-2 text-xs font-semibold text-slate-700 shadow-sm hover:bg-slate-50 transition-colors" data-i18n="btn_guide">
                 View Guide
               </button>
               <button id="btnOpenTokenTop" type="button"
-                      class="inline-flex rounded-2xl bg-emerald-500 px-5 py-2.5 text-xs font-bold text-white shadow-[0_4px_14px_-4px_rgba(16,185,129,0.4)] hover:bg-emerald-600 hover:-translate-y-px transition-all" data-i18n="btn_go_token">
-                Start Execution
+                      class="hidden sm:inline-flex rounded-2xl bg-emerald-500 px-4 py-2 text-xs font-bold text-white shadow-sm hover:bg-emerald-600 transition-colors" data-i18n="btn_go_token">
+                Go to /token
               </button>
+              
+              <div class="h-5 w-px bg-slate-200 mx-1 hidden sm:block"></div>
+              
+              <button id="btnDiscordLogin" type="button" class="inline-flex items-center gap-1.5 rounded-2xl bg-discord hover-bg-discord px-3 py-2 text-xs font-bold text-white shadow-sm transition-colors">
+                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M20.317 4.3698a19.7913 19.7913 0 00-4.8851-1.5152.0741.0741 0 00-.0785.0371c-.211.3753-.4447.8648-.6083 1.2495-1.8447-.2762-3.68-.2762-5.4868 0-.1636-.3933-.4058-.8742-.6177-1.2495a.077.077 0 00-.0785-.037 19.7363 19.7363 0 00-4.8852 1.515.0699.0699 0 00-.0321.0277C.5334 9.0458-.319 13.5799.0992 18.0578a.0824.0824 0 00.0312.0561c2.0528 1.5076 4.0413 2.4228 5.9929 3.0294a.0777.0777 0 00.0842-.0276c.4616-.6304.8731-1.2952 1.226-1.9942a.076.076 0 00-.0416-.1057c-.6528-.2476-1.2743-.5495-1.8722-.8923a.077.077 0 01-.0076-.1277c.1258-.0943.2517-.1923.3718-.2914a.0743.0743 0 01.0776-.0105c3.9278 1.7933 8.18 1.7933 12.0614 0a.0739.0739 0 01.0785.0095c.1202.099.246.1981.3728.2924a.077.077 0 01-.0066.1276 12.2986 12.2986 0 01-1.873.8914.0766.0766 0 00-.0407.1067c.3604.698.7719 1.3628 1.225 1.9932a.076.076 0 00.0842.0286c1.961-.6067 3.9495-1.5219 6.0023-3.0294a.077.077 0 00.0313-.0552c.5004-5.177-.8382-9.6739-3.5485-13.6604a.061.061 0 00-.0312-.0286zM8.02 15.3312c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9555-2.4189 2.157-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.9555 2.4189-2.1569 2.4189zm7.9748 0c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9554-2.4189 2.1569-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.946 2.4189-2.1568 2.4189Z"/></svg>
+                <span class="hidden sm:inline" data-i18n="btn_discord_login">Connect</span>
+              </button>
+              
+              <div id="discordUserArea" class="is-hidden flex items-center gap-2 rounded-2xl border border-slate-200 bg-white px-2 py-1.5 shadow-sm cursor-pointer hover:bg-slate-50 transition-colors" title="Click to logout">
+                <div class="w-5 h-5 rounded-full bg-slate-200 overflow-hidden shrink-0">
+                  <img id="discordAvatar" src="" class="w-full h-full object-cover hidden" />
+                  <svg id="discordAvatarFallback" class="w-full h-full text-slate-400" fill="currentColor" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+                </div>
+                <span class="text-[11px] font-bold text-slate-700 hidden sm:inline mr-1" id="discordUserName">User</span>
+              </div>
+
               <button id="langSwitcherMobile" class="sm:hidden inline-flex items-center justify-center rounded-lg border border-slate-200 bg-white px-2 py-2 text-[11px] font-bold text-slate-600 shadow-sm hover:bg-slate-50 transition-colors tracking-widest">
                 中文
               </button>
@@ -92,21 +123,21 @@
                     <svg class="w-4 h-4 text-emerald-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
                     <span data-i18n="check1_title">Real Rewards</span>
                   </div>
-                  <div class="mt-1 text-[11px] text-slate-600 leading-relaxed" data-i18n="check1_desc">USDT / Tokens (Directly distributed via events & leaderboards)</div>
+                  <div class="mt-1 text-[11px] text-slate-600 leading-relaxed" data-i18n="check1_desc">USDT / Tokens (Directly distributed)</div>
                 </div>
                 <div class="rounded-2xl border border-slate-200 bg-slate-50 p-4">
                   <div class="text-sm font-semibold flex items-center gap-1.5">
                     <svg class="w-4 h-4 text-sky-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" /></svg>
                     <span data-i18n="check2_title">Compound Growth</span>
                   </div>
-                  <div class="mt-1 text-[11px] text-slate-600 leading-relaxed" data-i18n="check2_desc">Accumulate XP to upgrade roles and unlock high-yield portals</div>
+                  <div class="mt-1 text-[11px] text-slate-600 leading-relaxed" data-i18n="check2_desc">Accumulate XP to upgrade roles</div>
                 </div>
                 <div class="rounded-2xl border border-slate-200 bg-slate-50 p-4">
                   <div class="text-sm font-semibold flex items-center gap-1.5">
                     <svg class="w-4 h-4 text-indigo-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M11 3.055A9.001 9.001 0 1020.945 13H11V3.055z" /><path stroke-linecap="round" stroke-linejoin="round" d="M20.488 9H15V3.512A9.025 9.025 0 0120.488 9z" /></svg>
                     <span data-i18n="check3_title">Points = Allocation</span>
                   </div>
-                  <div class="mt-1 text-[11px] text-slate-600 leading-relaxed" data-i18n="check3_desc">Scoreboard points determine your share of the quarterly pool</div>
+                  <div class="mt-1 text-[11px] text-slate-600 leading-relaxed" data-i18n="check3_desc">Points determine pool share</div>
                 </div>
               </div>
 
@@ -122,11 +153,156 @@
                   View Guide
                 </button>
               </div>
-
             </div>
           </div>
 
-          <div id="ts-guide-section" class="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
+          <div class="rounded-3xl border border-slate-200 bg-white p-6 sm:p-8 shadow-sm">
+            <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-6">
+              <div>
+                <div class="text-xl font-bold text-slate-900 flex items-center gap-2">
+                  <span data-i18n="board_daily_title">Daily Tasks</span>
+                </div>
+                <div class="mt-1.5 text-[12px] text-slate-500">
+                  <span data-i18n="board_desc">Track your yield. Daily tasks trigger reminders; periodic tasks are tracked separately.</span>
+                  <span class="font-semibold text-slate-600 inline-block ml-1" data-i18n="board_reset">(Resets daily at 00:00 UTC / 08:00 BJT)</span>
+                </div>
+              </div>
+              
+              <div class="w-full sm:w-48 bg-slate-50 p-3 rounded-xl border border-slate-100">
+                <div class="flex justify-between text-[11px] font-bold text-slate-700 mb-2">
+                  <span data-i18n="board_progress">Daily Progress</span>
+                  <span id="progressText" class="text-emerald-600">0%</span>
+                </div>
+                <div class="h-2 w-full bg-slate-200 rounded-full overflow-hidden">
+                  <div id="progressBar" class="h-full bg-emerald-500 transition-all duration-500 ease-out" style="width: 0%;"></div>
+                </div>
+              </div>
+            </div>
+            
+            <div class="space-y-3 mb-8" id="dailyTaskContainer">
+              <div class="task-row daily-task flex flex-col sm:flex-row sm:items-center justify-between p-4 rounded-2xl border border-slate-200 bg-slate-50 transition-all hover:border-slate-300 gap-4" data-task-id="task_ts">
+                <div class="flex items-start sm:items-center gap-4 flex-1 min-w-0">
+                  <button class="check-btn mt-0.5 sm:mt-0 shrink-0 w-6 h-6 rounded-full border-2 border-slate-300 flex items-center justify-center bg-white text-transparent focus:outline-none">
+                    <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg>
+                  </button>
+                  <div class="min-w-0">
+                    <div class="text-sm font-bold text-slate-900 truncate task-title" data-i18n="daily_task1_title">1. Main Quest: Complete TS (20x)</div>
+                    <div class="mt-1 text-[11px] text-slate-500 flex flex-wrap items-center gap-2">
+                      <span class="text-emerald-600 font-semibold" data-i18n="daily_task1_reward">Reward: Unlock Base</span>
+                      <span class="hidden sm:inline text-slate-300">|</span>
+                      <button class="text-slate-500 underline hover:text-slate-800" onclick="document.getElementById('ts-guide-section').scrollIntoView({behavior: 'smooth'})" data-i18n="btn_guide">View Guide</button>
+                    </div>
+                  </div>
+                </div>
+                <button class="shrink-0 w-full sm:w-auto rounded-xl bg-slate-900 px-5 py-2.5 text-[11px] font-bold text-white shadow-sm hover:bg-slate-800 transition-colors" onclick="openToken()" data-i18n="btn_go_token_short">Execute</button>
+              </div>
+
+              <div class="task-row daily-task flex flex-col sm:flex-row sm:items-center justify-between p-4 rounded-2xl border border-slate-200 bg-white transition-all hover:border-slate-300 gap-4" data-task-id="task_creator">
+                <div class="flex items-start sm:items-center gap-4 flex-1 min-w-0">
+                  <button class="check-btn mt-0.5 sm:mt-0 shrink-0 w-6 h-6 rounded-full border-2 border-slate-300 flex items-center justify-center bg-white text-transparent focus:outline-none">
+                    <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg>
+                  </button>
+                  <div class="min-w-0">
+                    <div class="text-sm font-bold text-slate-900 truncate task-title" data-i18n="daily_task2_title">2. Discord: Post via Creator Hub</div>
+                    <div class="mt-1 text-[11px] text-slate-500 flex flex-wrap items-center gap-2">
+                      <span class="text-emerald-600 font-semibold" data-i18n="daily_task2_reward">Reward: Daily 500-5000 Tokens</span>
+                      <span class="hidden sm:inline text-slate-300">|</span>
+                      <button class="text-slate-500 underline hover:text-slate-800 detail-btn" data-detail="creator" data-i18n="btn_guide">View Guide</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="task-row daily-task flex flex-col sm:flex-row sm:items-center justify-between p-4 rounded-2xl border border-slate-200 bg-white transition-all hover:border-slate-300 gap-4" data-task-id="task_engage">
+                <div class="flex items-start sm:items-center gap-4 flex-1 min-w-0">
+                  <button class="check-btn mt-0.5 sm:mt-0 shrink-0 w-6 h-6 rounded-full border-2 border-slate-300 flex items-center justify-center bg-white text-transparent focus:outline-none">
+                    <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg>
+                  </button>
+                  <div class="min-w-0">
+                    <div class="text-sm font-bold text-slate-900 truncate task-title" data-i18n="daily_task3_title">3. Discord: Engage Socials</div>
+                    <div class="mt-1 text-[11px] text-slate-500 flex flex-wrap items-center gap-2">
+                      <span class="text-emerald-600 font-semibold" data-i18n="daily_task3_reward">Reward: Engage Points</span>
+                      <span class="hidden sm:inline text-slate-300">|</span>
+                      <button class="text-slate-500 underline hover:text-slate-800 detail-btn" data-detail="engage" data-i18n="btn_guide">View Guide</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="p-5 bg-slate-800 rounded-2xl flex flex-col sm:flex-row sm:items-center justify-between gap-4 border border-slate-700">
+              <div class="flex items-start gap-3">
+                <div class="mt-0.5 w-8 h-8 rounded-full bg-slate-700 flex items-center justify-center shrink-0">
+                  <svg class="w-4 h-4 text-emerald-400" fill="currentColor" viewBox="0 0 24 24"><path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.89 2 2 2zm6-6v-5c0-3.07-1.64-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.63 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2z"/></svg>
+                </div>
+                <div>
+                  <div class="text-sm font-bold text-white" data-i18n="sub_title">Smart Daily Reminder</div>
+                  <div class="mt-1 text-[11px] text-slate-400 leading-relaxed max-w-lg" data-i18n-html="sub_desc">
+                    Connect Discord and subscribe to get a direct message from our Bot if you haven't completed your daily tasks by <span class="font-bold text-slate-300">20:00 (UTC+8)</span>.
+                  </div>
+                </div>
+              </div>
+              
+              <button id="btnSubRequireLogin" class="shrink-0 w-full sm:w-auto rounded-xl bg-discord px-5 py-3 text-xs font-bold text-white shadow-sm hover:bg-[#4752C4] transition-colors" data-i18n="sub_btn_connect">
+                Connect Discord First
+              </button>
+
+              <label id="toggleSubWrapper" class="is-hidden relative inline-flex items-center justify-center sm:justify-start w-full sm:w-auto cursor-pointer shrink-0">
+                <input type="checkbox" id="toggleReminder" class="sr-only peer">
+                <div class="w-11 h-6 bg-slate-600 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] sm:after:left-[2px] after:left-[calc(50%-18px)] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-emerald-500 shadow-inner"></div>
+                <span class="ml-3 text-xs font-bold text-slate-300" id="subStatusText" data-i18n="sub_status_off">Off</span>
+              </label>
+            </div>
+          </div>
+
+          <div class="rounded-3xl border border-indigo-100 bg-white p-6 sm:p-8 shadow-md relative overflow-hidden">
+            <div class="absolute right-0 top-0 w-32 h-32 bg-indigo-50/30 rounded-bl-full pointer-events-none"></div>
+            
+            <div class="mb-5 flex flex-col gap-1 relative z-10">
+              <div class="text-xl font-bold text-indigo-950 flex items-center gap-2">
+                <span data-i18n="board_periodic_title">Periodic High-Yield Events</span>
+              </div>
+              <div class="text-[12px] text-slate-500" data-i18n="board_periodic_desc">These are cycle-based events. Completion status is saved permanently until you untick them.</div>
+            </div>
+
+            <div class="space-y-3 relative z-10" id="periodicTaskContainer">
+              <div class="task-row periodic-task flex flex-col sm:flex-row sm:items-center justify-between p-4 rounded-2xl border border-indigo-100 bg-indigo-50/30 transition-all hover:border-indigo-200 gap-4" data-task-id="task_zealy">
+                <div class="flex items-start sm:items-center gap-4 flex-1 min-w-0 pr-4">
+                  <button class="check-btn mt-0.5 sm:mt-0 shrink-0 w-6 h-6 rounded-full border-2 border-slate-300 flex items-center justify-center bg-white text-transparent focus:outline-none">
+                    <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg>
+                  </button>
+                  <div class="min-w-0">
+                    <div class="text-sm font-bold text-slate-900 truncate task-title" data-i18n="periodic_task1_title">1. Rank up on Zealy</div>
+                    <div class="mt-1 text-[11px] text-slate-500 flex flex-wrap items-center gap-2">
+                      <span class="text-indigo-600 font-semibold" data-i18n="periodic_task1_reward">Reward: Spot USDT</span>
+                      <span class="hidden sm:inline text-slate-300">|</span>
+                      <button class="text-slate-500 underline hover:text-slate-800 detail-btn" data-detail="zealy" data-i18n="btn_guide">View Details</button>
+                    </div>
+                  </div>
+                </div>
+                <button class="shrink-0 w-full sm:w-auto rounded-xl bg-white border border-slate-200 px-5 py-2.5 text-[11px] font-bold text-slate-700 hover:bg-slate-50 transition-colors shadow-sm" onclick="window.open('https://zealy.io/cw/oshit/','_blank')" data-i18n="btn_go_link">Open Link</button>
+              </div>
+
+              <div class="task-row periodic-task flex flex-col sm:flex-row sm:items-center justify-between p-4 rounded-2xl border border-indigo-100 bg-indigo-50/30 transition-all hover:border-indigo-200 gap-4" data-task-id="task_check">
+                <div class="flex items-start sm:items-center gap-4 flex-1 min-w-0 pr-4">
+                  <button class="check-btn mt-0.5 sm:mt-0 shrink-0 w-6 h-6 rounded-full border-2 border-slate-300 flex items-center justify-center bg-white text-transparent focus:outline-none">
+                    <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg>
+                  </button>
+                  <div class="min-w-0">
+                    <div class="text-sm font-bold text-slate-900 truncate task-title" data-i18n="periodic_task2_title">2. Verify TS Check-in</div>
+                    <div class="mt-1 text-[11px] text-slate-500 flex flex-wrap items-center gap-2">
+                      <span class="text-indigo-600 font-semibold" data-i18n="periodic_task2_reward">Reward: Up to 25K Tokens</span>
+                      <span class="hidden sm:inline text-slate-300">|</span>
+                      <button class="text-slate-500 underline hover:text-slate-800 detail-btn" data-detail="tscheck" data-i18n="btn_guide">View Details</button>
+                    </div>
+                  </div>
+                </div>
+                <button class="shrink-0 w-full sm:w-auto rounded-xl bg-white border border-slate-200 px-5 py-2.5 text-[11px] font-bold text-slate-700 hover:bg-slate-50 transition-colors shadow-sm" onclick="window.open('https://oshit.io/check/','_blank')" data-i18n="btn_go_link">Open Link</button>
+              </div>
+            </div>
+          </div>
+
+          <div id="ts-guide-section" class="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm mt-8">
             <div class="flex flex-col sm:flex-row sm:items-start justify-between gap-4">
               <div>
                 <div class="text-sm font-semibold" data-i18n="ts_title">Main Quest: Take a SHIT (TS) Guide</div>
@@ -142,14 +318,11 @@
 
             <div id="carouselArea1" class="mt-4 overflow-hidden rounded-2xl border border-slate-200 bg-slate-50 relative">
               <div id="carouselTrack1" class="flex transition-transform duration-300 ease-out will-change-transform"></div>
-
               <button id="btnPrevSlide1" type="button" class="absolute left-3 top-1/2 -translate-y-1/2 rounded-2xl border border-slate-200 bg-white/90 px-3 py-2 text-xs font-bold text-slate-800 shadow-sm hover:bg-white z-10 transition-transform active:scale-95">‹</button>
               <button id="btnNextSlide1" type="button" class="absolute right-3 top-1/2 -translate-y-1/2 rounded-2xl border border-slate-200 bg-white/90 px-3 py-2 text-xs font-bold text-slate-800 shadow-sm hover:bg-white z-10 transition-transform active:scale-95">›</button>
-
               <div class="absolute left-3 top-3 inline-flex items-center gap-1.5 rounded-full border border-slate-200 bg-white/90 px-3 py-1.5 text-[11px] font-bold text-slate-700 shadow-sm z-10">
                 <span id="slideIndex1">0</span> / <span id="slideTotal1">0</span>
               </div>
-
               <div class="border-t border-slate-200 bg-white px-4 py-3">
                 <div class="flex items-start justify-between gap-3">
                   <div class="min-w-0">
@@ -157,79 +330,6 @@
                     <div id="slideCaption1" class="mt-0.5 text-[11px] text-slate-600"></div>
                   </div>
                   <div id="dots1" class="flex shrink-0 items-center gap-1.5 mt-1"></div>
-                </div>
-              </div>
-            </div>
-            
-            <div class="mt-3 rounded-xl border border-emerald-200 bg-emerald-50 px-3 py-2 text-[11px] font-medium text-emerald-800" data-i18n="ts_hint">
-              Hint: Don't stop because of Gas costs. After TS, check below to double your returns.
-            </div>
-          </div>
-
-          <div class="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
-            <div class="flex items-start justify-between gap-3">
-              <div>
-                <div class="text-sm font-semibold" data-i18n="branch1_title">Branch 1: Lock in Returns & Hedge Costs</div>
-                <div class="mt-1 text-[12px] text-slate-600" data-i18n="branch1_desc">
-                  After the main quest, you must execute these three things immediately.
-                </div>
-              </div>
-            </div>
-
-            <div class="mt-4 grid grid-cols-1 gap-4 lg:grid-cols-3">
-              <div class="rounded-2xl border border-emerald-200 bg-emerald-50/40 p-5 flex flex-col justify-between hover:shadow-md transition-shadow">
-                <div>
-                  <div class="flex items-center justify-between">
-                    <div class="text-sm font-semibold" data-i18n="z_title">Zealy Leaderboard</div>
-                  </div>
-                  <div class="mt-2 inline-flex items-center rounded-md bg-emerald-100 px-2 py-1 text-[10px] font-bold text-emerald-700 tracking-wide" data-i18n="z_badge">
-                    Reward: Spot USDT
-                  </div>
-                  <div class="mt-3 text-[12px] text-slate-700 leading-relaxed" data-i18n="z_desc">
-                    Includes Twitter engagement, uploading TS screenshots, etc. Easy to reach the top ranks for U.
-                  </div>
-                </div>
-                <div class="mt-5 flex flex-col gap-2.5">
-                  <a href="https://zealy.io/cw/oshit/" target="_blank" class="w-full text-center rounded-xl bg-slate-900 px-3 py-3 text-xs font-semibold text-white shadow-sm hover:bg-slate-800 transition-colors" data-i18n="z_btn">
-                    Get Zealy Tasks
-                  </a>
-                  <button class="detail-btn text-[11px] text-slate-500 hover:text-slate-800 underline underline-offset-2 transition-colors text-center" data-detail="zealy" data-i18n="z_link">View Rules</button>
-                </div>
-              </div>
-
-              <div class="rounded-2xl border border-slate-200 bg-slate-50 p-5 flex flex-col justify-between hover:shadow-md transition-shadow">
-                <div>
-                  <div class="text-sm font-semibold" data-i18n="tsc_title">TS Check-in</div>
-                  <div class="mt-2 inline-flex items-center rounded-md bg-sky-100 px-2 py-1 text-[10px] font-bold text-sky-700 tracking-wide" data-i18n="tsc_badge">
-                    Reward: Up to 25,000 Tokens
-                  </div>
-                  <div class="mt-3 text-[12px] text-slate-600 leading-relaxed" data-i18n="tsc_desc">
-                    Complete 5/10/20 TS within the cycle to check-in, fully covering your on-chain gas costs.
-                  </div>
-                </div>
-                <div class="mt-5 flex flex-col gap-2.5">
-                  <a href="https://oshit.io/check/" target="_blank" class="w-full text-center rounded-xl bg-slate-900 px-3 py-3 text-xs font-semibold text-white shadow-sm hover:bg-slate-800 transition-colors" data-i18n="tsc_btn">
-                    Verify & Check-in
-                  </a>
-                  <button class="detail-btn text-[11px] text-slate-500 hover:text-slate-800 underline underline-offset-2 transition-colors text-center" data-detail="tscheck" data-i18n="tsc_link">View Rules</button>
-                </div>
-              </div>
-
-              <div class="rounded-2xl border border-slate-200 bg-slate-50 p-5 flex flex-col justify-between hover:shadow-md transition-shadow">
-                <div>
-                  <div class="text-sm font-semibold" data-i18n="sb_title">Scoreboard Pool</div>
-                  <div class="mt-2 inline-flex items-center rounded-md bg-indigo-100 px-2 py-1 text-[10px] font-bold text-indigo-700 tracking-wide" data-i18n="sb_badge">
-                    Reward: Share >1500 USDT
-                  </div>
-                  <div class="mt-3 text-[12px] text-slate-600 leading-relaxed" data-i18n="sb_desc">
-                    Q1 Season rewards based on points. Extremely early stage, every point yields high allocation.
-                  </div>
-                </div>
-                <div class="mt-5 flex flex-col gap-2.5">
-                  <a href="https://oshit.io/scoreboard/" target="_blank" class="w-full text-center rounded-xl bg-slate-900 px-3 py-3 text-xs font-semibold text-white shadow-sm hover:bg-slate-800 transition-colors" data-i18n="sb_btn">
-                    Check Your Rank
-                  </a>
-                  <button class="detail-btn text-[11px] text-slate-500 hover:text-slate-800 underline underline-offset-2 transition-colors text-center" data-detail="scoreboard" data-i18n="sb_link">View Rules</button>
                 </div>
               </div>
             </div>
@@ -248,7 +348,7 @@
                   Beyond on-chain ops, daily community engagement yields massive Tokens, Points, and lucky draws. True zero-cost, high-return.
                 </div>
                 <div class="mt-4 text-[11px] font-bold text-indigo-600 flex items-center gap-1 group-hover:translate-x-1 transition-transform">
-                  <span data-i18n="btn_guide">View Guide</span> <svg class="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" /></svg>
+                  <span data-i18n="btn_guide">View Guides</span> <svg class="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" /></svg>
                 </div>
               </button>
 
@@ -286,6 +386,9 @@
           <a href="https://oshit.io/scoreboard/" target="_blank" class="text-[12px] font-medium text-slate-500 hover:text-slate-900 transition-colors">Scoreboard</a>
           <a href="https://zealy.io/cw/oshit" target="_blank" class="text-[12px] font-medium text-slate-500 hover:text-slate-900 transition-colors">Zealy</a>
         </div>
+      </div>
+      <div class="w-full mt-6 text-center text-[11px] text-slate-400 font-medium">
+        Last updated: 27/02/2026 10:38PM | by @Alex
       </div>
     </footer>
 
@@ -337,25 +440,25 @@
             <div class="rounded-2xl border border-slate-200 bg-white p-4 flex flex-col shadow-sm">
               <div class="text-sm font-semibold" data-i18n="cr_title">Creator Hub</div>
               <div class="mt-1 text-[11px] text-slate-500" data-i18n="cr_badge">Reward: 500-5000 Tokens Daily</div>
-              <div class="mt-2 text-[12px] text-slate-600 line-clamp-2" data-i18n="cr_desc">Tweet using official AI meme generator. Guaranteed base tokens + high chance of critical hits.</div>
+              <div class="mt-2 text-[12px] text-slate-600 line-clamp-2" data-i18n="cr_desc">Tweet using official AI meme generator.</div>
               <button class="detail-btn mt-4 w-full rounded-xl bg-slate-100 px-3 py-2 text-xs font-semibold text-slate-700 hover:bg-slate-200 transition-colors" data-detail="creator" data-i18n="cr_link">Image Guide</button>
             </div>
             <div class="rounded-2xl border border-slate-200 bg-white p-4 flex flex-col shadow-sm">
               <div class="text-sm font-semibold" data-i18n="ht_title">SHIT Hunter</div>
               <div class="mt-1 text-[11px] text-slate-500" data-i18n="ht_badge">Reward: Token / USDT / Points</div>
-              <div class="mt-2 text-[12px] text-slate-600 line-clamp-2" data-i18n="ht_desc">Fast hands win! 200+ blind boxes dropped daily in channel. Grab them for rich rewards.</div>
+              <div class="mt-2 text-[12px] text-slate-600 line-clamp-2" data-i18n="ht_desc">Fast hands win! 200+ blind boxes dropped daily in channel.</div>
               <button class="detail-btn mt-4 w-full rounded-xl bg-slate-100 px-3 py-2 text-xs font-semibold text-slate-700 hover:bg-slate-200 transition-colors" data-detail="hunter" data-i18n="ht_link">Image Guide</button>
             </div>
             <div class="rounded-2xl border border-slate-200 bg-white p-4 flex flex-col shadow-sm">
               <div class="text-sm font-semibold" data-i18n="rb_title">Rumble & Lottery</div>
               <div class="mt-1 text-[11px] text-slate-500" data-i18n="rb_badge">Reward: 130K Daily Pool</div>
-              <div class="mt-2 text-[12px] text-slate-600 line-clamp-2" data-i18n="rb_desc">Daily Rumble gives 30K; Submit TS screenshots for Faction Battle to share 100K daily!</div>
+              <div class="mt-2 text-[12px] text-slate-600 line-clamp-2" data-i18n="rb_desc">Daily Rumble gives 30K; Faction Battle shares 100K daily!</div>
               <button class="detail-btn mt-4 w-full rounded-xl bg-slate-100 px-3 py-2 text-xs font-semibold text-slate-700 hover:bg-slate-200 transition-colors" data-detail="rumble" data-i18n="rb_link">Image Guide</button>
             </div>
             <div class="rounded-2xl border border-slate-200 bg-white p-4 flex flex-col shadow-sm">
               <div class="text-sm font-semibold" data-i18n="eg_title">Engage Socials</div>
               <div class="mt-1 text-[11px] text-slate-500" data-i18n="eg_badge">Reward: Engage Points</div>
-              <div class="mt-2 text-[12px] text-slate-600 line-clamp-2" data-i18n="eg_desc">Bind Engage account, RT/Like/Comment on official tweets, system automatically issues points.</div>
+              <div class="mt-2 text-[12px] text-slate-600 line-clamp-2" data-i18n="eg_desc">Bind Engage account, RT/Like/Comment on official tweets.</div>
               <button class="detail-btn mt-4 w-full rounded-xl bg-slate-100 px-3 py-2 text-xs font-semibold text-slate-700 hover:bg-slate-200 transition-colors" data-detail="engage" data-i18n="eg_link">Image Guide</button>
             </div>
           </div>
@@ -402,249 +505,118 @@
   </div>
 
 <script>
-  window.translations = {
-    en: {
-      page_title: "OSHIT — Onboarding",
-      header_desc: "Understand in 1 min, Earn instantly",
-      btn_guide: "View Guide",
-      btn_go_token: "Start Execution",
-      btn_go_token_mobile: "Execute on Website Now",
-      hero_title: "You come to OSHIT to get <span class=\"text-slate-900\">Verifiable</span> Rewards",
-      hero_desc: "Skip the complex whitepapers. We provide a task checklist with clear ROI expectations and minimalist execution steps. <span class=\"font-semibold text-slate-900\">Complete the main quest to unlock, then claim your value.</span>",
-      banner_title: "Core Expected Returns",
-      banner_amount: "Est. monthly yield <span class=\"text-yellow-300\">10–50U</span>",
-      banner_sub1: "+ Massive SHIT Token via Check-in",
-      banner_sub2: "and share of Quarterly Pool (>1500U)",
-      check1_title: "Real Rewards",
-      check1_desc: "USDT / Tokens (Directly distributed via events & leaderboards)",
-      check2_title: "Compound Growth",
-      check2_desc: "Accumulate XP to upgrade roles and unlock high-yield portals",
-      check3_title: "Points = Allocation",
-      check3_desc: "Scoreboard points determine your share of the quarterly pool",
-      ts_title: "Main Quest: Take a SHIT (TS) Guide",
-      ts_desc: "This is the prerequisite for all rewards. Go to <span class=\"font-semibold text-slate-900\">oshit.io/token</span> and follow the guide.",
-      btn_pc_guide: "PC Guide",
-      btn_mobile_guide: "Mobile Guide",
-      ts_hint: "Hint: Don't stop because of Gas costs. After TS, check below to double your returns.",
-      branch1_title: "Branch 1: Lock in Returns & Hedge Costs",
-      branch1_desc: "After the main quest, you must execute these three things immediately.",
-      z_title: "Zealy Leaderboard",
-      z_badge: "Reward: Spot USDT",
-      z_desc: "Includes Twitter engagement, uploading TS screenshots, etc. Easy to reach the top ranks for U.",
-      z_btn: "Get Zealy Tasks",
-      z_link: "View Rules",
-      tsc_title: "TS Check-in",
-      tsc_badge: "Reward: Up to 25,000 Tokens",
-      tsc_desc: "Complete 5/10/20 TS within the cycle to check-in, fully covering your on-chain gas costs.",
-      tsc_btn: "Verify & Check-in",
-      tsc_link: "View Rules",
-      sb_title: "Scoreboard Pool",
-      sb_badge: "Reward: Share >1500 USDT",
-      sb_desc: "Q1 Season rewards based on points. Extremely early stage, every point yields high allocation.",
-      sb_btn: "Check Your Rank",
-      sb_link: "View Rules",
-      branch2_title: "Branch 2: Discord Dailies",
-      branch2_badge: "100% Zero-Cost",
-      branch2_desc: "Beyond on-chain ops, daily community engagement yields massive Tokens, Points, and lucky draws. True zero-cost, high-return.",
-      cr_title: "Creator Hub",
-      cr_badge: "Reward: 500-5000 Tokens Daily",
-      cr_desc: "Tweet using official AI meme generator. Guaranteed base tokens + high chance of critical hits.",
-      cr_link: "Image Guide",
-      ht_title: "SHIT Hunter",
-      ht_badge: "Reward: Token / USDT / Points",
-      ht_desc: "Fast hands win! 200+ blind boxes dropped daily in channel. Grab them for rich rewards.",
-      ht_link: "Image Guide",
-      rb_title: "Rumble & Lottery",
-      rb_badge: "Reward: 130K Daily Pool",
-      rb_desc: "Daily Rumble gives 30K; Submit TS screenshots for Faction Battle to share 100K daily!",
-      rb_link: "Image Guide",
-      eg_title: "Engage Socials",
-      eg_badge: "Reward: Engage Points",
-      eg_desc: "Bind Engage account, RT/Like/Comment on official tweets, system automatically issues points.",
-      eg_link: "Image Guide",
-      wd_title: "Ultimate Guide: How to withdraw Discord rewards?",
-      wd_desc: "Most Discord rewards are issued as <span class=\"font-semibold text-slate-900\">Engage Points</span>. (Rate: 1 Point = 500 Tokens).",
-      wd_hint: "Click any image to enlarge. Swipe left/right to navigate steps.",
-      lightbox_hint: "Click anywhere to close",
-      slides1_pc: [
-        { src: "token1.png", title: "Step 1 — Open Website", caption: "Enter the TS page (transactions occur on official site)" },
-        { src: "token2.png", title: "Step 2 — Connect Wallet", caption: "Connect Solana wallet, ensure small SOL balance for gas" },
-        { src: "token3.png", title: "Step 3 — Take a SHIT", caption: "Click the button on the website to execute transaction" },
-        { src: "token4.png", title: "Step 4 — Complete 20x", caption: "Follow rules to complete (highly recommended to do 20x at once)" }
-      ],
-      slides1_mobile: [
-        { src: "m_token1.png", title: "Step 1 — Open via Wallet Browser", caption: "Enter oshit.io/token in your mobile wallet's DApp browser." },
-        { src: "m_token2.png", title: "Step 2 — Connect Mobile Wallet", caption: "Approve connection to your Solana wallet on mobile." },
-        { src: "m_token3.png", title: "Step 3 — Take a SHIT", caption: "Tap the main button to initiate the transaction." },
-        { src: "m_token4.png", title: "Step 4 — Complete 20x", caption: "Sign the transaction. Recommended to complete 20x." }
-      ],
-      slides2: [
-        { src: "point1.png", title: "Step 1 — Check Points", caption: "Check if you already have engage points." },
-        { src: "point2.png", title: "Step 2 — Redeem Code", caption: "Go to marketplace to redeem SHIT Code." },
-        { src: "point3.png", title: "Step 3 — Open Ticket", caption: "Go to support ticket channel." },
-        { src: "point4.png", title: "Step 4 — Fill Information", caption: "Fill in your SHIT Code (1 pt = 500 Tokens)." },
-        { src: "point5.png", title: "Step 5 — Forward & Wait", caption: "Forward details to ticket channel, wait for admin issuance." },
-        { src: "point6.png", title: "Step 6 — Open Bonus", caption: "Go to oshit.io/token bonus page." },
-        { src: "point7.png", title: "Step 7 — Verify Tx", caption: "Input SHIT Code and execute transaction to withdraw real tokens." }
-      ],
-      details: {
-        zealy: {
-          title: "Zealy Tasks", sub: "Direct USDT Leaderboard",
-          body: `<ul class="list-disc pl-5 space-y-1.5 marker:text-emerald-500"><li>Daily Twitter interactions (Like/RT/Comment)</li><li>Take a SHIT on-chain tasks</li><li>Staking tasks</li></ul><div class="mt-4 rounded-lg bg-emerald-50 p-3 text-[12px] text-emerald-800 border border-emerald-100"><b>Core Advantage:</b> Low barrier to entry and currently very few participants. Extremely easy to rank high and earn Spot U.</div>`,
-          actions: [{ text: "Open Zealy Now", kind: "primary", url: "https://zealy.io/cw/oshit/" }]
-        },
-        tscheck: {
-          title: "TS Check-in Details", sub: "Cost Hedging Path",
-          body: `<div><b>Rules:</b></div><ul class="mt-2 list-disc pl-5 space-y-1.5 marker:text-sky-500"><li>Complete 5, 10, or 20 on-chain interactions in a cycle to unlock tier rewards</li><li>Max payout is a one-time <b>25K SHIT Token</b></li></ul><div class="mt-4 rounded-lg bg-slate-50 p-3 text-[12px] text-slate-600 border border-slate-200"><b>Target:</b> Combined with this reward, your Main Quest TS Gas costs are perfectly covered. Highly recommended to complete 20 times instantly.</div>`,
-          actions: [{ text: "Check-in to Claim", kind: "primary", url: "https://oshit.io/check" }]
-        },
-        scoreboard: {
-          title: "Scoreboard Rules", sub: "Share the Big Pool",
-          body: `<div class="space-y-2"><div><b>Q1 Season:</b> 2026/01/07 — 2026/04/06</div><div><b>Settlement:</b> Airdrops strictly distributed based on point rankings after event ends.</div><div><b>Pool Size:</b> Expected total pool <b>> 30M SHIT</b> (Value > 1500 USDT).</div></div><div class="mt-4 rounded-lg bg-indigo-50 p-3 text-[12px] text-indigo-800 border border-indigo-100"><b>Early Bird Dividend:</b> Currently <100 deep participants. Low competition means every point yields a massive allocation!</div>`,
-          actions: [{ text: "Open Leaderboard", kind: "primary", url: "https://oshit.io/scoreboard/" }]
-        },
-        creator: {
-          title: "Creator Hub Guide", sub: "Tweet for Token Salary",
-          body: `<div class="space-y-2"><div><b>How to play:</b> Tweet using official OSHIT memes. Use your own AI or the official generator.</div><div><b>Submission:</b> Post your tweet link in the Discord <code>image-creation</code> channel.</div></div><div class="mt-6 space-y-4"><div class="text-[13px] font-bold text-slate-900 border-b border-slate-100 pb-1">Visual Guide</div><div class="space-y-2"><div class="text-[12px] text-slate-600 font-medium">1. Generate image and tweet</div><div class="rounded-xl border border-slate-200 overflow-hidden bg-slate-50"><img src="creator1.png" class="w-full h-auto object-cover cursor-zoom-in hover:opacity-90 transition-opacity" onerror="this.outerHTML='<div class=\\'flex aspect-video w-full items-center justify-center bg-slate-100 text-slate-400 text-xs border border-dashed border-slate-300\\'>[Image Missing: creator1.png]</div>'"></div></div><div class="space-y-2"><div class="text-[12px] text-slate-600 font-medium">2. Paste link in Discord</div><div class="rounded-xl border border-slate-200 overflow-hidden bg-slate-50"><img src="creator2.png" class="w-full h-auto object-cover cursor-zoom-in hover:opacity-90 transition-opacity" onerror="this.outerHTML='<div class=\\'flex aspect-video w-full items-center justify-center bg-slate-100 text-slate-400 text-xs border border-dashed border-slate-300\\'>[Image Missing: creator2.png]</div>'"></div></div></div>`,
-          actions: [{ text: "Open Official Generator", kind: "primary", url: "https://oshit.io/creator/" }]
-        },
-        hunter: {
-          title: "SHIT Hunter Guide", sub: "Grab Channel Drops",
-          body: `<div class="space-y-2"><div><b>Location:</b> Only in Discord <code>generate</code> channel.</div><div><b>Golden Hours:</b> 18:00 - 00:00 (GMT+8) has the highest drop rate. Grab to get Tokens/Points/USDT.</div></div><div class="mt-6 space-y-4"><div class="text-[13px] font-bold text-slate-900 border-b border-slate-100 pb-1">Visual Guide</div><div class="space-y-2"><div class="text-[12px] text-slate-600 font-medium">1. Watch the channel and click to grab</div><div class="rounded-xl border border-slate-200 overflow-hidden bg-slate-50"><img src="hunter1.png" class="w-full h-auto object-cover cursor-zoom-in hover:opacity-90 transition-opacity" onerror="this.outerHTML='<div class=\\'flex aspect-video w-full items-center justify-center bg-slate-100 text-slate-400 text-xs border border-dashed border-slate-300\\'>[Image Missing: hunter1.png]</div>'"></div></div><div class="space-y-2"><div class="text-[12px] text-slate-600 font-medium">2. Check system allocated rewards</div><div class="rounded-xl border border-slate-200 overflow-hidden bg-slate-50"><img src="hunter2.png" class="w-full h-auto object-cover cursor-zoom-in hover:opacity-90 transition-opacity" onerror="this.outerHTML='<div class=\\'flex aspect-video w-full items-center justify-center bg-slate-100 text-slate-400 text-xs border border-dashed border-slate-300\\'>[Image Missing: hunter2.png]</div>'"></div></div></div>`,
-          actions: [{ text: "Got it", kind: "ghost" }]
-        },
-        rumble: {
-          title: "Rumble & Lottery Guide", sub: "Factions & Daily Draws",
-          body: `<div class="space-y-2"><div><b>Daily Rumble:</b> Send command to enter, share 30K Tokens.</div><div><b>Faction Battle:</b> Send your TS completion screenshot to <code>take-a-shit-luck</code> for the daily 100K draw.</div></div><div class="mt-6 space-y-4"><div class="text-[13px] font-bold text-slate-900 border-b border-slate-100 pb-1">Visual Guide</div><div class="space-y-2"><div class="text-[12px] text-slate-600 font-medium">1. Participate in channel Rumble</div><div class="rounded-xl border border-slate-200 overflow-hidden bg-slate-50"><img src="rumble1.png" class="w-full h-auto object-cover cursor-zoom-in hover:opacity-90 transition-opacity" onerror="this.outerHTML='<div class=\\'flex aspect-video w-full items-center justify-center bg-slate-100 text-slate-400 text-xs border border-dashed border-slate-300\\'>[Image Missing: rumble1.png]</div>'"></div></div><div class="space-y-2"><div class="text-[12px] text-slate-600 font-medium">2. Upload screenshot & choose faction</div><div class="rounded-xl border border-slate-200 overflow-hidden bg-slate-50"><img src="rumble2.png" class="w-full h-auto object-cover cursor-zoom-in hover:opacity-90 transition-opacity" onerror="this.outerHTML='<div class=\\'flex aspect-video w-full items-center justify-center bg-slate-100 text-slate-400 text-xs border border-dashed border-slate-300\\'>[Image Missing: rumble2.png]</div>'"></div></div></div>`,
-          actions: [{ text: "Got it", kind: "ghost" }]
-        },
-        engage: {
-          title: "Engage Socials Guide", sub: "Bind Twitter for Points",
-          body: `<div class="space-y-2"><div><b>Core Gameplay:</b> Go to <code>rank-level</code> channel, type <code>/set twitter</code> and enter your X (Twitter) ID. Visit <a href="https://www.engages.io" target="_blank" class="text-blue-500 hover:underline">engages.io</a> to link Discord and X. Interact with official OSHIT tweets to get points.</div></div><div class="mt-6 space-y-4"><div class="text-[13px] font-bold text-slate-900 border-b border-slate-100 pb-1">Visual Guide</div><div class="space-y-2"><div class="text-[12px] text-slate-600 font-medium">1. Bind Twitter ID in rank-level</div><div class="rounded-xl border border-slate-200 overflow-hidden bg-slate-50"><img src="engage1.png" class="w-full h-auto object-cover cursor-zoom-in hover:opacity-90 transition-opacity" onerror="this.outerHTML='<div class=\\'flex aspect-video w-full items-center justify-center bg-slate-100 text-slate-400 text-xs border border-dashed border-slate-300\\'>[Image Missing: engage1.png]</div>'"></div></div><div class="space-y-2"><div class="text-[12px] text-slate-600 font-medium">2. Connect accounts on engages.io</div><div class="rounded-xl border border-slate-200 overflow-hidden bg-slate-50"><img src="engage2.png" class="w-full h-auto object-cover cursor-zoom-in hover:opacity-90 transition-opacity" onerror="this.outerHTML='<div class=\\'flex aspect-video w-full items-center justify-center bg-slate-100 text-slate-400 text-xs border border-dashed border-slate-300\\'>[Image Missing: engage2.png]</div>'"></div></div><div class="space-y-2"><div class="text-[12px] text-slate-600 font-medium">3. Wait for daily official tweets & interact</div><div class="rounded-xl border border-slate-200 overflow-hidden bg-slate-50"><img src="engage3.png" class="w-full h-auto object-cover cursor-zoom-in hover:opacity-90 transition-opacity" onerror="this.outerHTML='<div class=\\'flex aspect-video w-full items-center justify-center bg-slate-100 text-slate-400 text-xs border border-dashed border-slate-300\\'>[Image Missing: engage3.png]</div>'"></div></div><div class="space-y-2"><div class="text-[12px] text-slate-600 font-medium">4. Click verify button to receive points</div><div class="rounded-xl border border-slate-200 overflow-hidden bg-slate-50"><img src="engage4.png" class="w-full h-auto object-cover cursor-zoom-in hover:opacity-90 transition-opacity" onerror="this.outerHTML='<div class=\\'flex aspect-video w-full items-center justify-center bg-slate-100 text-slate-400 text-xs border border-dashed border-slate-300\\'>[Image Missing: engage4.png]</div>'"></div></div></div>`,
-          actions: [{ text: "Got it", kind: "ghost" }]
-        }
-      }
-    },
-    zh: {
-      page_title: "OSHIT — Onboarding",
-      header_desc: "1分钟看懂，立刻拿收益",
-      btn_guide: "先看教程",
-      btn_go_token: "立即前往执行",
-      btn_go_token_mobile: "立即前往官网执行",
-      hero_title: "你来 OSHIT，是为了拿到 <span class=\"text-slate-900\">真实可对账</span> 的奖励",
-      hero_desc: "摒弃繁杂的项目白皮书。我们只提供带有明确 ROI 预期、极简执行步骤的任务清单。<span class=\"font-semibold text-slate-900\">先做主线解锁入口，然后把价值拿回来。</span>",
-      banner_title: "核心收益预期",
-      banner_amount: "预计本月可获得 <span class=\"text-yellow-300\">10–50U</span>",
-      banner_sub1: "+ 签到领取海量 SHIT Token",
-      banner_sub2: "及 季度大池（>1500U）瓜分份额",
-      check1_title: "真实奖励",
-      check1_desc: "USDT / 代币（活动与冲榜直接发放）",
-      check2_title: "越做越加成",
-      check2_desc: "积累 XP 升级角色，解锁更多高额奖励入口",
-      check3_title: "积分=份额",
-      check3_desc: "Scoreboard 积分决定季度瓜分大池比例",
-      ts_title: "主线：Take a SHIT（TS）引导",
-      ts_desc: "这是所有收益的前提。去 <span class=\"font-semibold text-slate-900\">oshit.io/token</span>，顺着图文做即可。",
-      btn_pc_guide: "电脑版教程",
-      btn_mobile_guide: "手机版教程",
-      ts_hint: "提示：担心 Gas 成本就别停，做完 TS 后立刻往下看，把花掉的成本加倍拿回来。",
-      branch1_title: "分支 1：锁定收益与对冲成本",
-      branch1_desc: "做完上述主线后，必须立刻执行以下三件事。",
-      z_title: "Zealy 冲榜",
-      z_badge: "奖励：现货 USDT",
-      z_desc: "含推特互动、上传截图等。当前参与人极少，很容易冲进排行榜前列分 U。",
-      z_btn: "去 Zealy 领任务",
-      z_link: "查看任务规则",
-      tsc_title: "TS Check 签到",
-      tsc_badge: "奖励：最高 25,000 代币",
-      tsc_desc: "周期内完成 5/10/20 次即可打卡，全额覆盖你的链上交互成本。",
-      tsc_btn: "去验证并签到",
-      tsc_link: "查看打卡规则",
-      sb_title: "Scoreboard 大盘",
-      sb_badge: "奖励：瓜分 >1500 USDT",
-      sb_desc: "Q1 赛季按积分发奖。参与者不足百人，每一点积分都能换取极高份额。",
-      sb_btn: "查看你的排名",
-      sb_link: "查看发奖规则",
-      branch2_title: "分支 2：Discord 社区日常",
-      branch2_badge: "100% 零撸",
-      branch2_desc: "除链上操作外，每天参与社区互动也能白嫖大量 Token、积分与抽奖机会。真正的零成本高回报。",
-      cr_title: "Creator Hub",
-      cr_badge: "奖励：每日 500-5000 Token",
-      cr_desc: "用官方表情包 AI 制图发推，保底获取代币工资，高概率暴击。",
-      cr_link: "图文指南",
-      ht_title: "SHIT Hunter",
-      ht_badge: "奖励：Token / USDT / 积分",
-      ht_desc: "拼手速抓掉落！频道每日掉落 200+ 次，抢到即得丰厚盲盒奖励。",
-      ht_link: "图文指南",
-      rb_title: "Rumble & 阵营抽奖",
-      rb_badge: "奖励：每日 130K 奖池",
-      rb_desc: "Rumble 每天送 30K；提交当日 TS 截图参与红蓝战队，每日再抽 100K！",
-      rb_link: "图文指南",
-      eg_title: "Engage 社交交互",
-      eg_badge: "奖励：Engage Points",
-      eg_desc: "绑定 Engage 账号，在官方推特转评赞，系统自动发放点数。",
-      eg_link: "图文指南",
-      wd_title: "终极指南：Discord 奖励如何提现兑换？",
-      wd_desc: "你在 Discord 获得的绝大多数奖励，将由管理员统一以 <span class=\"font-semibold text-slate-900\">Engage Points</span> 的形式发放至你的账户（汇率：1 Points = 500 Token）。",
-      wd_hint: "指南图片均可点击全屏放大查看细节。左右滑动切换步骤。",
-      lightbox_hint: "点击任意区域关闭",
-      slides1_pc: [
-        { src: "token1.png", title: "Step 1 — 打开官网", caption: "进入 TS 页面（交易在官网完成）" },
-        { src: "token2.png", title: "Step 2 — 连接钱包", caption: "连接 Solana 钱包，确保有少量 SOL 作为 gas" },
-        { src: "token3.png", title: "Step 3 — 进行 Take a SHIT", caption: "在官网点击按钮进行交易" },
-        { src: "token4.png", title: "Step 4 — 完成20次操作", caption: "在官网按规则完成（强烈建议一次性做满 20 次）" }
-      ],
-      slides1_mobile: [
-        { src: "m_token1.png", title: "Step 1 — 钱包内打开官网", caption: "在手机钱包的 DApp 浏览器中输入 oshit.io/token" },
-        { src: "m_token2.png", title: "Step 2 — 授权连接钱包", caption: "允许页面连接你的手机端 Solana 钱包" },
-        { src: "m_token3.png", title: "Step 3 — 执行交互", caption: "点击页面主按钮发起链上交易" },
-        { src: "m_token4.png", title: "Step 4 — 确认并完成20次", caption: "在弹出的钱包签名请求中点击确认（建议做满20次）" }
-      ],
-      slides2: [
-        { src: "point1.png", title: "Step 1 — 查询积分", caption: "查询自己是否已经有 engage points 了。" },
-        { src: "point2.png", title: "Step 2 — 兑换资格", caption: "去到 marketplace 兑换 SHIT Code。" },
-        { src: "point3.png", title: "Step 3 — 开设 Ticket", caption: "去到 support ticket 频道开票。" },
-        { src: "point4.png", title: "Step 4 — 填写信息", caption: "填写自己获得的 SHIT Code（1 pt = 500 Token）。" },
-        { src: "point5.png", title: "Step 5 — 转发查收", caption: "将兑换信息转发到开票频道，等待管理员发放。" },
-        { src: "point6.png", title: "Step 6 — 打开 Bonus", caption: "去到官网 oshit.io/token 的 bonus 页面。" },
-        { src: "point7.png", title: "Step 7 — 验证交易", caption: "输入 SHIT Code 并执行交易即可提取真实代币。" }
-      ],
-      details: {
-        zealy: {
-          title: "Zealy 任务详情", sub: "直接冲榜拿 U",
-          body: `<ul class="list-disc pl-5 space-y-1.5 marker:text-emerald-500"><li>推特日常互动（点赞/转发/评论等）</li><li>Take a SHIT 链上相关任务</li><li>质押相关任务</li></ul><div class="mt-4 rounded-lg bg-emerald-50 p-3 text-[12px] text-emerald-800 border border-emerald-100"><b>核心优势：</b>目前由于早期参与人数少，按照页面规则绑定账号后，极易冲进前列拿到现货 U。</div>`,
-          actions: [{ text: "立即打开 Zealy", kind: "primary", url: "https://zealy.io/cw/oshit/" }]
-        },
-        tscheck: {
-          title: "TS check 打卡详情", sub: "签到回血路径",
-          body: `<div><b>规则说明：</b></div><ul class="mt-2 list-disc pl-5 space-y-1.5 marker:text-sky-500"><li>周期内完成 5 次、10 次、20 次链上交互，均解锁对应档位奖励</li><li>最高一次性可获得 <b>25K SHIT Token</b></li></ul><div class="mt-4 rounded-lg bg-slate-50 p-3 text-[12px] text-slate-600 border border-slate-200"><b>目标设定：</b>配合该奖励，完美覆盖你在主线做 TS 的 Gas 成本。强烈建议一次性做满 20 次。</div>`,
-          actions: [{ text: "去签到领取", kind: "primary", url: "https://oshit.io/check/" }]
-        },
-        scoreboard: {
-          title: "Scoreboard 发奖规则", sub: "瓜分大池份额",
-          body: `<div class="space-y-2"><div><b>Q1 赛季时间：</b>2026/01/07 — 2026/04/06</div><div><b>结算机制：</b>活动结束后，系统严格按积分排行发放空投。</div><div><b>大盘规模：</b>预计总奖池 <b>> 3000万 SHIT</b>（价值 > 1500 USDT）。</div></div><div class="mt-4 rounded-lg bg-indigo-50 p-3 text-[12px] text-indigo-800 border border-indigo-100"><b>早期红利：</b>当前全网深度参与者极少，这意味着你的每一分都能换来极高的大池瓜分比例！</div>`,
-          actions: [{ text: "打开榜单", kind: "primary", url: "https://oshit.io/scoreboard/" }]
-        },
-        creator: {
-          title: "Creator Hub 指南", sub: "发推特拿代币工资",
-          body: `<div class="space-y-2"><div><b>玩法简介：</b>使用 OSHIT 官方表情包发推文。你可以用自己的 AI 跑图，也可以用官网生成工具。</div><div><b>提交方式：</b>将推文链接发送到 Discord 的 <code>image-creation</code> 频道即算完成。</div></div><div class="mt-6 space-y-4"><div class="text-[13px] font-bold text-slate-900 border-b border-slate-100 pb-1">操作步骤演示</div><div class="space-y-2"><div class="text-[12px] text-slate-600 font-medium">1. 生成图片并发送推文</div><div class="rounded-xl border border-slate-200 overflow-hidden bg-slate-50"><img src="creator1.png" class="w-full h-auto object-cover cursor-zoom-in hover:opacity-90 transition-opacity" onerror="this.outerHTML='<div class=\\'flex aspect-video w-full items-center justify-center bg-slate-100 text-slate-400 text-xs border border-dashed border-slate-300\\'>[图片占位]</div>'"></div></div><div class="space-y-2"><div class="text-[12px] text-slate-600 font-medium">2. 将链接粘贴至 Discord</div><div class="rounded-xl border border-slate-200 overflow-hidden bg-slate-50"><img src="creator2.png" class="w-full h-auto object-cover cursor-zoom-in hover:opacity-90 transition-opacity" onerror="this.outerHTML='<div class=\\'flex aspect-video w-full items-center justify-center bg-slate-100 text-slate-400 text-xs border border-dashed border-slate-300\\'>[图片占位]</div>'"></div></div></div>`,
-          actions: [{ text: "打开官方制图工具", kind: "primary", url: "https://oshit.io/creator/" }]
-        },
-        hunter: {
-          title: "SHIT Hunter 指南", sub: "抢频道掉落红包",
-          body: `<div class="space-y-2"><div><b>掉落位置：</b>仅在 Discord 的 <code>generate</code> 频道。</div><div><b>黄金时间：</b>每天 18:00 - 00:00 (GMT+8) 掉落最频繁，抢到即得 Token/积分/USDT。</div></div><div class="mt-6 space-y-4"><div class="text-[13px] font-bold text-slate-900 border-b border-slate-100 pb-1">操作步骤演示</div><div class="space-y-2"><div class="text-[12px] text-slate-600 font-medium">1. 看到掉落立即点击抓取</div><div class="rounded-xl border border-slate-200 overflow-hidden bg-slate-50"><img src="hunter1.png" class="w-full h-auto object-cover cursor-zoom-in hover:opacity-90 transition-opacity" onerror="this.outerHTML='<div class=\\'flex aspect-video w-full items-center justify-center bg-slate-100 text-slate-400 text-xs border border-dashed border-slate-300\\'>[图片占位]</div>'"></div></div><div class="space-y-2"><div class="text-[12px] text-slate-600 font-medium">2. 查看系统分配的奖励</div><div class="rounded-xl border border-slate-200 overflow-hidden bg-slate-50"><img src="hunter2.png" class="w-full h-auto object-cover cursor-zoom-in hover:opacity-90 transition-opacity" onerror="this.outerHTML='<div class=\\'flex aspect-video w-full items-center justify-center bg-slate-100 text-slate-400 text-xs border border-dashed border-slate-300\\'>[图片占位]</div>'"></div></div></div>`,
-          actions: [{ text: "我知道了", kind: "ghost" }]
-        },
-        rumble: {
-          title: "Rumble & 抽奖指南", sub: "红蓝阵营与日常抽签",
-          body: `<div class="space-y-2"><div><b>每日 Rumble：</b>发送指令即可参与，平分 30K Token。</div><div><b>阵营对战：</b>将官网完成的 TS 截图发至 <code>take-a-shit-luck</code> 参与每日 100K 抽奖。</div></div><div class="mt-6 space-y-4"><div class="text-[13px] font-bold text-slate-900 border-b border-slate-100 pb-1">操作步骤演示</div><div class="space-y-2"><div class="text-[12px] text-slate-600 font-medium">1. 频道内参与 Rumble 抽奖</div><div class="rounded-xl border border-slate-200 overflow-hidden bg-slate-50"><img src="rumble1.png" class="w-full h-auto object-cover cursor-zoom-in hover:opacity-90 transition-opacity" onerror="this.outerHTML='<div class=\\'flex aspect-video w-full items-center justify-center bg-slate-100 text-slate-400 text-xs border border-dashed border-slate-300\\'>[图片占位]</div>'"></div></div><div class="space-y-2"><div class="text-[12px] text-slate-600 font-medium">2. 上传截图选择支持阵营</div><div class="rounded-xl border border-slate-200 overflow-hidden bg-slate-50"><img src="rumble2.png" class="w-full h-auto object-cover cursor-zoom-in hover:opacity-90 transition-opacity" onerror="this.outerHTML='<div class=\\'flex aspect-video w-full items-center justify-center bg-slate-100 text-slate-400 text-xs border border-dashed border-slate-300\\'>[图片占位]</div>'"></div></div></div>`,
-          actions: [{ text: "我知道了", kind: "ghost" }]
-        },
-        engage: {
-          title: "Engage 交互指南", sub: "绑定推特赚积分",
-          body: `<div class="space-y-2"><div><b>核心玩法：</b>进入频道 <code>rank-level</code> 输入 <code>/set twitter</code> 绑定 X 账号。前往 <a href="https://www.engages.io" target="_blank" class="text-blue-500 hover:underline">engages.io</a> 链接 Discord 账号。随后对官方推文进行互动即可获得积分。</div></div><div class="mt-6 space-y-4"><div class="text-[13px] font-bold text-slate-900 border-b border-slate-100 pb-1">操作步骤演示</div><div class="space-y-2"><div class="text-[12px] text-slate-600 font-medium">1. 进入频道 rank-level 输入 /set twitter，输入自己的 X id</div><div class="rounded-xl border border-slate-200 overflow-hidden bg-slate-50"><img src="engage1.png" class="w-full h-auto object-cover cursor-zoom-in hover:opacity-90 transition-opacity" onerror="this.outerHTML='<div class=\\'flex aspect-video w-full items-center justify-center bg-slate-100 text-slate-400 text-xs border border-dashed border-slate-300\\'>[图片占位: engage1.png]</div>'"></div></div><div class="space-y-2"><div class="text-[12px] text-slate-600 font-medium">2. 前往 engages.io，链接 Discord 账户，在 Profile 中绑定 X 账号</div><div class="rounded-xl border border-slate-200 overflow-hidden bg-slate-50"><img src="engage2.png" class="w-full h-auto object-cover cursor-zoom-in hover:opacity-90 transition-opacity" onerror="this.outerHTML='<div class=\\'flex aspect-video w-full items-center justify-center bg-slate-100 text-slate-400 text-xs border border-dashed border-slate-300\\'>[图片占位: engage2.png]</div>'"></div></div><div class="space-y-2"><div class="text-[12px] text-slate-600 font-medium">3. 关注 OSHIT 官方推文，第一时间进行互动（点赞/转推等）</div><div class="rounded-xl border border-slate-200 overflow-hidden bg-slate-50"><img src="engage3.png" class="w-full h-auto object-cover cursor-zoom-in hover:opacity-90 transition-opacity" onerror="this.outerHTML='<div class=\\'flex aspect-video w-full items-center justify-center bg-slate-100 text-slate-400 text-xs border border-dashed border-slate-300\\'>[图片占位: engage3.png]</div>'"></div></div><div class="space-y-2"><div class="text-[12px] text-slate-600 font-medium">4. 互动后返回 Discord 点击验证按钮，即可获得对应积分</div><div class="rounded-xl border border-slate-200 overflow-hidden bg-slate-50"><img src="engage4.png" class="w-full h-auto object-cover cursor-zoom-in hover:opacity-90 transition-opacity" onerror="this.outerHTML='<div class=\\'flex aspect-video w-full items-center justify-center bg-slate-100 text-slate-400 text-xs border border-dashed border-slate-300\\'>[图片占位: engage4.png]</div>'"></div></div></div>`,
-          actions: [{ text: "我知道了", kind: "ghost" }]
-        }
+  window.translations = window.translations || {};
+  window.translations.en = {
+    page_title: "OSHIT — Interactive Task Board",
+    header_desc: "Understand in 1 min, Earn instantly",
+    btn_guide: "View Guide",
+    btn_go_token: "Go to /token",
+    btn_go_token_short: "Execute",
+    btn_go_link: "Open Link",
+    btn_discord_login: "Connect",
+    btn_go_token_mobile: "Execute on Website Now",
+    hero_title: "You come to OSHIT to get <span class=\"text-slate-900\">Verifiable</span> Rewards",
+    hero_desc: "Skip the complex whitepapers. We provide a task checklist with clear ROI expectations and minimalist execution steps. <span class=\"font-semibold text-slate-900\">Complete the main quest to unlock, then claim your value.</span>",
+    banner_title: "Core Expected Returns",
+    banner_amount: "Est. monthly yield <span class=\"text-yellow-300\">10–50U</span>",
+    banner_sub1: "+ Massive SHIT Token via Check-in",
+    banner_sub2: "and share of Quarterly Pool (>1500U)",
+    check1_title: "Real Rewards", check1_desc: "USDT / Tokens (Directly distributed)",
+    check2_title: "Compound Growth", check2_desc: "Accumulate XP to upgrade roles",
+    check3_title: "Points = Allocation", check3_desc: "Points determine pool share",
+    
+    board_title: "Execution Board",
+    board_desc: "Track your yield. Daily tasks trigger reminders; periodic tasks are tracked separately.",
+    board_reset: "(Resets daily at 00:00 UTC / 08:00 BJT)",
+    board_progress: "Daily Progress",
+    board_daily_title: "Daily Tasks",
+    board_periodic_title: "Periodic High-Yield Events",
+    board_periodic_desc: "These are cycle-based events. Completion status is saved permanently until you untick them.",
+
+    daily_task1_title: "1. Main Quest: Complete TS (20x)", daily_task1_reward: "Reward: Unlock Base",
+    daily_task2_title: "2. Discord: Post via Creator Hub", daily_task2_reward: "Reward: Daily 500-5000 Tokens",
+    daily_task3_title: "3. Discord: Engage Socials", daily_task3_reward: "Reward: Engage Points",
+    
+    periodic_task1_title: "1. Rank up on Zealy", periodic_task1_reward: "Reward: Spot USDT",
+    periodic_task2_title: "2. Verify TS Check-in", periodic_task2_reward: "Reward: Up to 25K Tokens",
+    
+    sub_title: "Smart Daily Reminder",
+    sub_desc: "Connect Discord and subscribe to get a direct message from our Bot if you haven't completed your daily tasks by <span class=\"font-bold text-white\">20:00 (UTC+8)</span>.",
+    sub_btn_connect: "Connect Discord First",
+    sub_status_on: "On", sub_status_off: "Off",
+    toast_sender: "AirdropHub Bot",
+    toast_msg: "Successfully verified <span class='font-bold text-white'>{0}</span>! Reward criteria met.",
+    toast_sub_title: "Subscription Active",
+    toast_sub_desc: "Our bot will DM you on Discord at 20:00 daily if tasks are incomplete.",
+
+    ts_title: "Main Quest: Take a SHIT (TS) Guide",
+    ts_desc: "This is the prerequisite for all rewards. Go to <span class=\"font-semibold text-slate-900\">oshit.io/token</span> and follow the guide.",
+    btn_pc_guide: "PC Guide",
+    btn_mobile_guide: "Mobile Guide",
+    ts_hint: "Hint: Don't stop because of Gas costs. After TS, check below to double your returns.",
+    branch2_title: "Branch 2: Discord Dailies",
+    branch2_badge: "100% Zero-Cost",
+    branch2_desc: "Beyond on-chain ops, daily community engagement yields massive Tokens, Points, and lucky draws. True zero-cost, high-return.",
+    cr_title: "Creator Hub", cr_badge: "Reward: 500-5000 Tokens Daily", cr_desc: "Tweet using official AI meme generator.", cr_link: "Image Guide",
+    ht_title: "SHIT Hunter", ht_badge: "Reward: Token / USDT / Points", ht_desc: "Fast hands win! 200+ blind boxes dropped daily in channel.", ht_link: "Image Guide",
+    rb_title: "Rumble & Lottery", rb_badge: "Reward: 130K Daily Pool", rb_desc: "Daily Rumble gives 30K; Faction Battle shares 100K daily!", rb_link: "Image Guide",
+    eg_title: "Engage Socials", eg_badge: "Reward: Engage Points", eg_desc: "Bind Engage account, RT/Like/Comment on official tweets.", eg_link: "Image Guide",
+    wd_title: "Ultimate Guide: How to withdraw Discord rewards?",
+    wd_desc: "Most Discord rewards are issued as <span class=\"font-semibold text-slate-900\">Engage Points</span>. (Rate: 1 Point = 500 Tokens).",
+    wd_hint: "Click any image to enlarge. Swipe left/right to navigate steps.",
+    lightbox_hint: "Click anywhere to close",
+    
+    slides1_pc: [
+      { src: "token1.png", title: "Step 1 — Open Website", caption: "Enter the TS page (transactions occur on official site)" },
+      { src: "token2.png", title: "Step 2 — Connect Wallet", caption: "Connect Solana wallet, ensure small SOL balance for gas" },
+      { src: "token3.png", title: "Step 3 — Take a SHIT", caption: "Click the button on the website to execute transaction" },
+      { src: "token4.png", title: "Step 4 — Complete 20x", caption: "Follow rules to complete (highly recommended to do 20x at once)" }
+    ],
+    slides1_mobile: [
+      { src: "m_token1.png", title: "Step 1 — Open via Wallet Browser", caption: "Enter oshit.io/token in your mobile wallet's DApp browser." },
+      { src: "m_token2.png", title: "Step 2 — Connect Mobile Wallet", caption: "Approve connection to your Solana wallet on mobile." },
+      { src: "m_token3.png", title: "Step 3 — Take a SHIT", caption: "Tap the main button to initiate the transaction." },
+      { src: "m_token4.png", title: "Step 4 — Complete 20x", caption: "Sign the transaction. Recommended to complete 20x." }
+    ],
+    slides2: [
+      { src: "point1.png", title: "Step 1 — Check Points", caption: "Check if you already have engage points." },
+      { src: "point2.png", title: "Step 2 — Redeem Code", caption: "Go to marketplace to redeem SHIT Code." },
+      { src: "point3.png", title: "Step 3 — Open Ticket", caption: "Go to support ticket channel." },
+      { src: "point4.png", title: "Step 4 — Fill Information", caption: "Fill in your SHIT Code (1 pt = 500 Tokens)." },
+      { src: "point5.png", title: "Step 5 — Forward & Wait", caption: "Forward details to ticket channel, wait for admin issuance." },
+      { src: "point6.png", title: "Step 6 — Open Bonus", caption: "Go to oshit.io/token bonus page." },
+      { src: "point7.png", title: "Step 7 — Verify Tx", caption: "Input SHIT Code and execute transaction to withdraw real tokens." }
+    ],
+    details: {
+      zealy: {
+        title: "Zealy Tasks", sub: "Direct USDT Leaderboard",
+        body: `<ul class="list-disc pl-5 space-y-1.5 marker:text-emerald-500"><li>Daily Twitter interactions</li><li>Take a SHIT on-chain tasks</li></ul><div class="mt-4 rounded-lg bg-emerald-50 p-3 text-[12px] text-emerald-800 border border-emerald-100"><b>Core Advantage:</b> Low barrier to entry and currently very few participants. Extremely easy to rank high and earn Spot U.</div>`,
+        actions: [{ text: "Open Zealy Now", kind: "primary", url: "https://zealy.io/cw/oshit/" }]
+      },
+      tscheck: {
+        title: "TS Check-in Details", sub: "Cost Hedging Path",
+        body: `<div><b>Rules:</b></div><ul class="mt-2 list-disc pl-5 space-y-1.5 marker:text-sky-500"><li>Complete 5, 10, or 20 on-chain interactions in a cycle</li><li>Max payout is a one-time <b>25K SHIT Token</b></li></ul><div class="mt-4 rounded-lg bg-slate-50 p-3 text-[12px] text-slate-600 border border-slate-200"><b>Target:</b> Combined with this reward, your Main Quest TS Gas costs are perfectly covered.</div>`,
+        actions: [{ text: "Check-in to Claim", kind: "primary", url: "https://oshit.io/check/" }]
+      },
+      creator: {
+        title: "Creator Hub Guide", sub: "Tweet for Token Salary",
+        body: `<div class="space-y-2"><div><b>How to play:</b> Tweet using official OSHIT memes.</div><div><b>Submission:</b> Post your tweet link in the Discord <code>image-creation</code> channel.</div></div><div class="mt-6 space-y-4"><div class="text-[13px] font-bold text-slate-900 border-b border-slate-100 pb-1">Visual Guide</div><div class="space-y-2"><div class="text-[12px] text-slate-600 font-medium">1. Generate image and tweet</div><div class="rounded-xl border border-slate-200 overflow-hidden bg-slate-50"><img src="creator1.png" class="w-full h-auto object-cover cursor-zoom-in hover:opacity-90 transition-opacity" onerror="this.outerHTML='<div class=\\'flex aspect-video w-full items-center justify-center bg-slate-100 text-slate-400 text-xs border border-dashed border-slate-300\\'>[Image Missing]</div>'"></div></div><div class="space-y-2"><div class="text-[12px] text-slate-600 font-medium">2. Paste link in Discord</div><div class="rounded-xl border border-slate-200 overflow-hidden bg-slate-50"><img src="creator2.png" class="w-full h-auto object-cover cursor-zoom-in hover:opacity-90 transition-opacity" onerror="this.outerHTML='<div class=\\'flex aspect-video w-full items-center justify-center bg-slate-100 text-slate-400 text-xs border border-dashed border-slate-300\\'>[Image Missing]</div>'"></div></div></div>`,
+        actions: [{ text: "Open Official Generator", kind: "primary", url: "https://oshit.io/creator/" }]
+      },
+      hunter: {
+        title: "SHIT Hunter Guide", sub: "Grab Channel Drops",
+        body: `<div class="space-y-2"><div><b>Location:</b> Only in Discord <code>generate</code> channel.</div></div><div class="mt-6 space-y-4"><div class="text-[13px] font-bold text-slate-900 border-b border-slate-100 pb-1">Visual Guide</div><div class="space-y-2"><div class="text-[12px] text-slate-600 font-medium">1. Watch the channel and click to grab</div><div class="rounded-xl border border-slate-200 overflow-hidden bg-slate-50"><img src="hunter1.png" class="w-full h-auto object-cover cursor-zoom-in hover:opacity-90 transition-opacity" onerror="this.outerHTML='<div class=\\'flex aspect-video w-full items-center justify-center bg-slate-100 text-slate-400 text-xs border border-dashed border-slate-300\\'>[Image Missing]</div>'"></div></div><div class="space-y-2"><div class="text-[12px] text-slate-600 font-medium">2. Check system allocated rewards</div><div class="rounded-xl border border-slate-200 overflow-hidden bg-slate-50"><img src="hunter2.png" class="w-full h-auto object-cover cursor-zoom-in hover:opacity-90 transition-opacity" onerror="this.outerHTML='<div class=\\'flex aspect-video w-full items-center justify-center bg-slate-100 text-slate-400 text-xs border border-dashed border-slate-300\\'>[Image Missing]</div>'"></div></div></div>`,
+        actions: [{ text: "Got it", kind: "ghost" }]
+      },
+      rumble: {
+        title: "Rumble & Lottery Guide", sub: "Factions & Daily Draws",
+        body: `<div class="space-y-2"><div><b>Daily Rumble:</b> Send command to enter, share 30K Tokens.</div><div><b>Faction Battle:</b> Send your TS completion screenshot to <code>take-a-shit-luck</code> for the daily 100K draw.</div></div><div class="mt-6 space-y-4"><div class="text-[13px] font-bold text-slate-900 border-b border-slate-100 pb-1">Visual Guide</div><div class="space-y-2"><div class="text-[12px] text-slate-600 font-medium">1. Participate in channel Rumble</div><div class="rounded-xl border border-slate-200 overflow-hidden bg-slate-50"><img src="rumble1.png" class="w-full h-auto object-cover cursor-zoom-in hover:opacity-90 transition-opacity" onerror="this.outerHTML='<div class=\\'flex aspect-video w-full items-center justify-center bg-slate-100 text-slate-400 text-xs border border-dashed border-slate-300\\'>[Image Missing]</div>'"></div></div><div class="space-y-2"><div class="text-[12px] text-slate-600 font-medium">2. Upload screenshot & choose faction</div><div class="rounded-xl border border-slate-200 overflow-hidden bg-slate-50"><img src="rumble2.png" class="w-full h-auto object-cover cursor-zoom-in hover:opacity-90 transition-opacity" onerror="this.outerHTML='<div class=\\'flex aspect-video w-full items-center justify-center bg-slate-100 text-slate-400 text-xs border border-dashed border-slate-300\\'>[Image Missing]</div>'"></div></div></div>`,
+        actions: [{ text: "Got it", kind: "ghost" }]
+      },
+      engage: {
+        title: "Engage Socials Guide", sub: "Bind Twitter for Points",
+        body: `<div class="space-y-2"><div><b>Core Gameplay:</b> Go to <code>rank-level</code> channel, type <code>/set twitter</code> and enter your X (Twitter) ID. Visit <a href="https://www.engages.io" target="_blank" class="text-blue-500 hover:underline">engages.io</a> to link Discord and X. Interact with official OSHIT tweets to get points.</div></div><div class="mt-6 space-y-4"><div class="text-[13px] font-bold text-slate-900 border-b border-slate-100 pb-1">Visual Guide</div><div class="space-y-2"><div class="text-[12px] text-slate-600 font-medium">1. Bind Twitter ID in rank-level</div><div class="rounded-xl border border-slate-200 overflow-hidden bg-slate-50"><img src="engage1.png" class="w-full h-auto object-cover cursor-zoom-in hover:opacity-90 transition-opacity" onerror="this.outerHTML='<div class=\\'flex aspect-video w-full items-center justify-center bg-slate-100 text-slate-400 text-xs border border-dashed border-slate-300\\'>[Image Missing]</div>'"></div></div><div class="space-y-2"><div class="text-[12px] text-slate-600 font-medium">2. Connect accounts on engages.io</div><div class="rounded-xl border border-slate-200 overflow-hidden bg-slate-50"><img src="engage2.png" class="w-full h-auto object-cover cursor-zoom-in hover:opacity-90 transition-opacity" onerror="this.outerHTML='<div class=\\'flex aspect-video w-full items-center justify-center bg-slate-100 text-slate-400 text-xs border border-dashed border-slate-300\\'>[Image Missing]</div>'"></div></div><div class="space-y-2"><div class="text-[12px] text-slate-600 font-medium">3. Wait for daily official tweets & interact</div><div class="rounded-xl border border-slate-200 overflow-hidden bg-slate-50"><img src="engage3.png" class="w-full h-auto object-cover cursor-zoom-in hover:opacity-90 transition-opacity" onerror="this.outerHTML='<div class=\\'flex aspect-video w-full items-center justify-center bg-slate-100 text-slate-400 text-xs border border-dashed border-slate-300\\'>[Image Missing]</div>'"></div></div><div class="space-y-2"><div class="text-[12px] text-slate-600 font-medium">4. Click verify button to receive points</div><div class="rounded-xl border border-slate-200 overflow-hidden bg-slate-50"><img src="engage4.png" class="w-full h-auto object-cover cursor-zoom-in hover:opacity-90 transition-opacity" onerror="this.outerHTML='<div class=\\'flex aspect-video w-full items-center justify-center bg-slate-100 text-slate-400 text-xs border border-dashed border-slate-300\\'>[Image Missing]</div>'"></div></div></div>`,
+        actions: [{ text: "Got it", kind: "ghost" }]
       }
     }
   };
@@ -663,7 +635,7 @@
     if(!data) return;
 
     document.documentElement.lang = currentLang === 'zh' ? 'zh-Hans' : 'en';
-    document.title = data.page_title;
+    document.title = data.page_title || "OSHIT — Interactive Task Board";
 
     const switchers = [$('#langSwitcher'), $('#langSwitcherMobile')];
     switchers.forEach(el => {
@@ -682,9 +654,12 @@
 
     if(window.carousels) {
       const slides1 = currentGuideDevice === 'pc' ? data.slides1_pc : data.slides1_mobile;
-      window.carousels.c1.updateData(slides1);
-      window.carousels.c2.updateData(data.slides2);
+      if (slides1) window.carousels.c1.updateData(slides1);
+      if (data.slides2) window.carousels.c2.updateData(data.slides2);
     }
+    
+    updateProgressUI();
+    updateSubscriptionText();
   }
 
   function toggleLang() {
@@ -695,52 +670,306 @@
 
   function switchDeviceGuide(device) {
     currentGuideDevice = device;
+    if(!window.translations) return;
     const data = window.translations[currentLang];
+    if(!data) return;
     
     const btnPC = $('#btnDevicePC');
     const btnMobile = $('#btnDeviceMobile');
     
     if(device === 'pc') {
-      btnPC.className = "px-4 py-1.5 text-xs font-bold rounded-md bg-white text-slate-900 shadow-sm transition-all";
-      btnMobile.className = "px-4 py-1.5 text-xs font-bold rounded-md text-slate-500 hover:text-slate-900 transition-all bg-transparent";
-      window.carousels.c1.updateData(data.slides1_pc);
+      if(btnPC) btnPC.className = "px-4 py-1.5 text-xs font-bold rounded-md bg-white text-slate-900 shadow-sm transition-all";
+      if(btnMobile) btnMobile.className = "px-4 py-1.5 text-xs font-bold rounded-md text-slate-500 hover:text-slate-900 transition-all bg-transparent";
+      if (data.slides1_pc && window.carousels) window.carousels.c1.updateData(data.slides1_pc);
     } else {
-      btnMobile.className = "px-4 py-1.5 text-xs font-bold rounded-md bg-white text-slate-900 shadow-sm transition-all";
-      btnPC.className = "px-4 py-1.5 text-xs font-bold rounded-md text-slate-500 hover:text-slate-900 transition-all bg-transparent";
-      window.carousels.c1.updateData(data.slides1_mobile);
+      if(btnMobile) btnMobile.className = "px-4 py-1.5 text-xs font-bold rounded-md bg-white text-slate-900 shadow-sm transition-all";
+      if(btnPC) btnPC.className = "px-4 py-1.5 text-xs font-bold rounded-md text-slate-500 hover:text-slate-900 transition-all bg-transparent";
+      if (data.slides1_mobile && window.carousels) window.carousels.c1.updateData(data.slides1_mobile);
     }
+  }
+
+  // ==========================================
+  // Discord OAuth2
+  // ==========================================
+  const DISCORD_CLIENT_ID = '1476907202047508684'; 
+  
+  let isDiscordLoggedIn = false;
+  let isSubscribed = localStorage.getItem('isSubscribed') === 'true';
+
+  function initDiscordAuth() {
+    const fragment = new URLSearchParams(window.location.hash.slice(1));
+    const [accessToken, tokenType] = [fragment.get('access_token'), fragment.get('token_type')];
+
+    if (accessToken) {
+      window.history.replaceState({}, document.title, window.location.pathname + window.location.search);
+      
+      fetch('https://discord.com/api/users/@me', {
+        headers: { authorization: `${tokenType} ${accessToken}` }
+      })
+      .then(result => result.json())
+      .then(response => {
+        const { username, avatar, id } = response;
+        const avatarUrl = avatar ? `https://cdn.discordapp.com/avatars/${id}/${avatar}.png` : '';
+        
+        isDiscordLoggedIn = true;
+        localStorage.setItem('discordUser', JSON.stringify({ username, avatarUrl }));
+        renderDiscordUI();
+      })
+      .catch(err => {
+        console.error("Discord API fetch error:", err);
+        isDiscordLoggedIn = false;
+        renderDiscordUI();
+      });
+    } else {
+      const savedUserStr = localStorage.getItem('discordUser');
+      if (savedUserStr) {
+        try {
+          JSON.parse(savedUserStr);
+          isDiscordLoggedIn = true;
+        } catch(e) {
+          localStorage.removeItem('discordUser');
+          isDiscordLoggedIn = false;
+        }
+      }
+      renderDiscordUI();
+    }
+  }
+
+  function loginWithDiscord() {
+    const redirectUri = encodeURIComponent(window.location.origin + window.location.pathname);
+    const oauthUrl = `https://discord.com/api/oauth2/authorize?client_id=${DISCORD_CLIENT_ID}&redirect_uri=${redirectUri}&response_type=token&scope=identify`;
+    
+    if(window.location.protocol === 'file:') {
+      alert("Error: Discord OAuth2 requires a valid web server (http:// or https://).\nPlease run this via VSCode Live Server or deploy it to test login.");
+      return;
+    }
+    window.location.href = oauthUrl;
+  }
+
+  function renderDiscordUI() {
+    const btn = $('#btnDiscordLogin');
+    const userArea = $('#discordUserArea');
+    const btnReqLogin = $('#btnSubRequireLogin');
+    const toggleSub = $('#toggleSubWrapper');
+    const subCheckbox = $('#toggleReminder');
+
+    if(isDiscordLoggedIn) {
+      try {
+        const userDataStr = localStorage.getItem('discordUser');
+        if(!userDataStr) throw new Error("Missing user data");
+        const userData = JSON.parse(userDataStr);
+        
+        if(btn) btn.classList.add('is-hidden');
+        if(userArea) userArea.classList.remove('is-hidden');
+        if($('#discordUserName')) $('#discordUserName').textContent = userData.username || 'User';
+        
+        if(userData.avatarUrl) {
+           if($('#discordAvatar')) {
+             $('#discordAvatar').src = userData.avatarUrl;
+             $('#discordAvatar').classList.remove('hidden');
+           }
+           if($('#discordAvatarFallback')) $('#discordAvatarFallback').classList.add('hidden');
+        }
+      } catch(e) {
+        console.error("Parse error for discordUser:", e);
+        isDiscordLoggedIn = false;
+        localStorage.removeItem('discordUser');
+        renderDiscordUI();
+        return;
+      }
+      
+      if(btnReqLogin) btnReqLogin.classList.add('is-hidden');
+      if(toggleSub) toggleSub.classList.remove('is-hidden');
+      if(subCheckbox) subCheckbox.checked = isSubscribed;
+      updateSubscriptionText();
+    } else {
+      if(btn) btn.classList.remove('is-hidden');
+      if(userArea) userArea.classList.add('is-hidden');
+      if(btnReqLogin) btnReqLogin.classList.remove('is-hidden');
+      if(toggleSub) toggleSub.classList.add('is-hidden');
+    }
+  }
+
+  function logoutDiscord() {
+    if(confirm("Log out of Discord?")) {
+       localStorage.removeItem('discordUser');
+       isDiscordLoggedIn = false;
+       isSubscribed = false;
+       localStorage.removeItem('isSubscribed');
+       renderDiscordUI();
+    }
+  }
+
+  function updateSubscriptionText() {
+    const isChecked = $('#toggleReminder') ? $('#toggleReminder').checked : false;
+    const textEl = $('#subStatusText');
+    if(!window.translations) return;
+    const data = window.translations[currentLang];
+    if(!data || !textEl) return;
+    textEl.textContent = isChecked ? data.sub_status_on : data.sub_status_off;
+    textEl.className = isChecked ? "ml-3 text-xs font-bold text-emerald-400" : "ml-3 text-xs font-bold text-slate-400";
+  }
+
+  function toggleSubscription() {
+    isSubscribed = $('#toggleReminder').checked;
+    localStorage.setItem('isSubscribed', isSubscribed.toString());
+    updateSubscriptionText();
+
+    if(isSubscribed) {
+      const toast = $('#systemToast');
+      if(toast) {
+        toast.classList.remove('toast-hide');
+        toast.classList.add('toast-show');
+        setTimeout(() => {
+          toast.classList.remove('toast-show');
+          toast.classList.add('toast-hide');
+        }, 4000);
+      }
+    }
+  }
+
+  // ==========================================
+  // Daily Reset Engine
+  // ==========================================
+  function checkAndResetDailyTasks() {
+    const todayUTC = new Date().toISOString().split('T')[0];
+    const savedDate = localStorage.getItem('oshit_last_reset');
+
+    if (savedDate !== todayUTC) {
+      const dailyTaskIds = ['task_ts', 'task_creator', 'task_engage'];
+      dailyTaskIds.forEach(id => localStorage.removeItem(id));
+      localStorage.setItem('oshit_last_reset', todayUTC);
+    }
+  }
+
+  let discordToastTimer = null;
+  function showDiscordToast(taskTitleKey) {
+    const toast = $('#discordToast');
+    const msgEl = $('#discordToastMsg');
+    const timeEl = $('#toastTime');
+    if(!toast || !msgEl || !timeEl) return;
+    if(!window.translations) return;
+    const data = window.translations[currentLang];
+    if(!data) return;
+    
+    const now = new Date();
+    timeEl.textContent = now.getHours() + ':' + now.getMinutes().toString().padStart(2, '0');
+    
+    const taskName = data[taskTitleKey] || "Task";
+    msgEl.innerHTML = data.toast_msg.replace('{0}', taskName);
+    
+    toast.classList.remove('toast-hide');
+    toast.classList.add('toast-show');
+    
+    clearTimeout(discordToastTimer);
+    discordToastTimer = setTimeout(() => {
+      toast.classList.remove('toast-show');
+      toast.classList.add('toast-hide');
+    }, 3500); 
+  }
+
+  function updateProgressUI() {
+    const dailyTasks = document.querySelectorAll('.daily-task');
+    let completedDaily = 0;
+    
+    dailyTasks.forEach(row => {
+      const id = row.getAttribute('data-task-id');
+      const isChecked = localStorage.getItem(id) === 'true';
+      const btn = row.querySelector('.check-btn');
+      if(!btn) return;
+      
+      if(isChecked) {
+        completedDaily++;
+        row.classList.add('checked');
+        btn.classList.add('checked');
+      } else {
+        row.classList.remove('checked');
+        btn.classList.remove('checked');
+      }
+    });
+
+    if(dailyTasks.length > 0) {
+       const percentage = Math.round((completedDaily / dailyTasks.length) * 100);
+       if($('#progressBar')) $('#progressBar').style.width = percentage + '%';
+       if($('#progressText')) $('#progressText').textContent = percentage + '%';
+    }
+
+    const periodicTasks = document.querySelectorAll('.periodic-task');
+    periodicTasks.forEach(row => {
+      const id = row.getAttribute('data-task-id');
+      const isChecked = localStorage.getItem(id) === 'true';
+      const btn = row.querySelector('.check-btn');
+      if(!btn) return;
+      
+      if(isChecked) {
+        row.classList.add('checked');
+        btn.classList.add('checked');
+      } else {
+        row.classList.remove('checked');
+        btn.classList.remove('checked');
+      }
+    });
+  }
+
+  function initChecklist() {
+    checkAndResetDailyTasks();
+    
+    const tasks = document.querySelectorAll('.task-row');
+    tasks.forEach(row => {
+      const btn = row.querySelector('.check-btn');
+      const titleEl = row.querySelector('.task-title');
+      if(!btn || !titleEl) return;
+      const taskId = row.getAttribute('data-task-id');
+      const titleKey = titleEl.getAttribute('data-i18n');
+      
+      btn.addEventListener('click', (e) => {
+        e.stopPropagation(); 
+        const currentState = localStorage.getItem(taskId) === 'true';
+        const newState = !currentState;
+        localStorage.setItem(taskId, newState);
+        
+        updateProgressUI();
+        
+        if(newState) showDiscordToast(titleKey);
+      });
+    });
+    updateProgressUI();
   }
 
   function openDetail(key) {
     if(!window.translations) return;
     const dict = window.translations[currentLang].details;
+    if(!dict) return;
     const d = dict[key]; if(!d) return;
 
-    $("#detailTitle").textContent = d.title; 
-    $("#detailSub").textContent = d.sub; 
-    $("#detailBody").innerHTML = d.body;
+    if($("#detailTitle")) $("#detailTitle").textContent = d.title; 
+    if($("#detailSub")) $("#detailSub").textContent = d.sub; 
+    if($("#detailBody")) $("#detailBody").innerHTML = d.body;
     
-    const actions = $("#detailActions"); actions.innerHTML = "";
-    d.actions.forEach((a) => {
-      const btn = document.createElement("button"); btn.type = "button";
-      const base = "w-full rounded-2xl px-4 py-3.5 text-sm font-bold shadow-sm transition-transform active:scale-95";
-      btn.className = a.kind === "primary" ? base + " bg-slate-900 text-white hover:bg-slate-800" : base + " border border-slate-200 bg-slate-50 text-slate-700 hover:bg-slate-100";
-      btn.textContent = a.text;
-      btn.addEventListener("click", () => { 
-        if (a.url) window.open(a.url, "_blank"); 
-        $("#detailModal").classList.add("is-hidden");
-        if($("#discordModal").classList.contains("is-hidden")) {
-           $("#modalMask").classList.add("is-hidden");
-           document.body.style.overflow = "";
-        }
+    const actions = $("#detailActions"); 
+    if(actions) {
+      actions.innerHTML = "";
+      d.actions.forEach((a) => {
+        const btn = document.createElement("button"); btn.type = "button";
+        const base = "w-full rounded-2xl px-4 py-3.5 text-sm font-bold shadow-sm transition-transform active:scale-95";
+        btn.className = a.kind === "primary" ? base + " bg-slate-900 text-white hover:bg-slate-800" : base + " border border-slate-200 bg-slate-50 text-slate-700 hover:bg-slate-100";
+        btn.textContent = a.text;
+        btn.addEventListener("click", () => { 
+          if (a.url) window.open(a.url, "_blank"); 
+          if($("#detailModal")) $("#detailModal").classList.add("is-hidden");
+          if($("#discordModal") && $("#discordModal").classList.contains("is-hidden")) {
+             if($("#modalMask")) $("#modalMask").classList.add("is-hidden");
+             document.body.style.overflow = "";
+          }
+        });
+        actions.appendChild(btn);
       });
-      actions.appendChild(btn);
-    });
+    }
     
-    $("#modalMask").classList.remove("is-hidden");
-    $("#detailModal").classList.remove("is-hidden");
+    if($("#modalMask")) $("#modalMask").classList.remove("is-hidden");
+    if($("#detailModal")) $("#detailModal").classList.remove("is-hidden");
     document.body.style.overflow = "hidden";
-    const modalBody = $("#detailModal").querySelector('.custom-scroll');
+    const modalBody = $("#detailModal") ? $("#detailModal").querySelector('.custom-scroll') : null;
     if (modalBody) modalBody.scrollTop = 0;
   }
 
@@ -762,11 +991,14 @@
       if(!track || !dots) return;
       track.innerHTML = ""; dots.innerHTML = "";
       if($(this.cfg.totalId)) $(this.cfg.totalId).textContent = this.cfg.slides ? this.cfg.slides.length : 0;
-      if(!this.cfg.slides || this.cfg.slides.length === 0) return;
+      if(!this.cfg.slides || this.cfg.slides.length === 0) {
+        track.innerHTML = `<div class="w-full aspect-[4/3] sm:max-h-[600px] flex flex-col gap-2 items-center justify-center bg-slate-50 text-slate-400 text-xs border border-dashed border-slate-300 rounded-2xl"><span>[Image Missing]</span></div>`;
+        return;
+      }
 
       this.cfg.slides.forEach((s, i) => {
         const slide = document.createElement("div"); slide.className = "w-full flex-none bg-slate-50 relative group";
-        slide.innerHTML = `<img src="${s.src}" class="w-full aspect-[4/3] sm:aspect-auto sm:max-h-[600px] object-contain bg-slate-50 cursor-zoom-in hover:opacity-95 transition-opacity" draggable="false" onerror="this.outerHTML='<div class=\\'flex aspect-video w-full items-center justify-center bg-slate-100 text-slate-400 text-xs border border-dashed border-slate-300\\'>[Image Missing: ${s.src}]</div>'"/>`;
+        slide.innerHTML = `<img src="${s.src}" class="w-full aspect-[4/3] sm:aspect-auto sm:max-h-[600px] object-contain bg-slate-50 cursor-zoom-in hover:opacity-95 transition-opacity" draggable="false" onerror="this.outerHTML='<div class=\\'flex flex-col gap-2 aspect-[4/3] sm:max-h-[600px] w-full items-center justify-center bg-slate-50 text-slate-400 text-xs border border-dashed border-slate-300\\'><span>[Image Missing]</span><span>${s.src}</span></div>'"/>`;
         track.appendChild(slide);
         
         const d = document.createElement("button"); d.type = "button";
@@ -835,95 +1067,130 @@
   };
 
   function openModal(id) {
-    $("#modalMask").classList.remove("is-hidden");
-    $(id).classList.remove("is-hidden");
+    if($("#modalMask")) $("#modalMask").classList.remove("is-hidden");
+    if($(id)) $(id).classList.remove("is-hidden");
     document.body.style.overflow = "hidden";
   }
   function closeAllModals() {
-    $("#modalMask").classList.add("is-hidden");
-    ["#detailModal", "#discordModal", "#withdrawModal"].forEach(id => $(id).classList.add("is-hidden"));
+    if($("#modalMask")) $("#modalMask").classList.add("is-hidden");
+    ["#detailModal", "#discordModal", "#withdrawModal"].forEach(id => {
+      if($(id)) $(id).classList.add("is-hidden");
+    });
     document.body.style.overflow = "";
   }
 
   window.addEventListener("DOMContentLoaded", () => {
-    if(!window.translations) return;
+    // 强制防御性初始化
+    try {
+      applyTranslation();
+    } catch(e) { console.error("Translation init error", e); }
 
-    if($('#langSwitcher')) $('#langSwitcher').addEventListener('click', toggleLang);
-    if($('#langSwitcherMobile')) $('#langSwitcherMobile').addEventListener('click', toggleLang);
+    try {
+      const initialData = window.translations ? window.translations[currentLang] : null;
+      window.carousels = {
+        c1: new UnifiedCarousel({
+          areaId: "carouselArea1", trackId: "#carouselTrack1", dotsId: "#dots1", prevBtn: "btnPrevSlide1", nextBtn: "btnNextSlide1",
+          indexId: "#slideIndex1", totalId: "#slideTotal1", titleId: "#slideTitle1", captionId: "#slideCaption1", 
+          slides: initialData && initialData.slides1_pc ? initialData.slides1_pc : []
+        }),
+        c2: new UnifiedCarousel({
+          areaId: "carouselArea2", trackId: "#carouselTrack2", dotsId: "#dots2", prevBtn: "btnPrevSlide2", nextBtn: "btnNextSlide2",
+          indexId: "#slideIndex2", totalId: "#slideTotal2", titleId: "#slideTitle2", captionId: "#slideCaption2", 
+          slides: initialData && initialData.slides2 ? initialData.slides2 : []
+        })
+      };
+      initObserver();
+    } catch(e) { console.error("Carousel init error", e); }
 
-    if($('#btnDevicePC')) $('#btnDevicePC').addEventListener('click', () => switchDeviceGuide('pc'));
-    if($('#btnDeviceMobile')) $('#btnDeviceMobile').addEventListener('click', () => switchDeviceGuide('mobile'));
+    try {
+      initDiscordAuth();
+    } catch(e) { console.error("Discord Auth error", e); }
 
-    on("btnOpenTokenTop", "click", openToken);
-    on("btnOpenTokenHero", "click", openToken);
-    on("btnOpenTokenBottom", "click", openToken);
+    try {
+      initChecklist();
+    } catch(e) { console.error("Checklist init error", e); }
 
-    if($("#btnScrollToGuide")) {
-       $("#btnScrollToGuide").addEventListener("click", () => document.getElementById('ts-guide-section').scrollIntoView({behavior: 'smooth'}));
-    }
-    if($("#btnScrollToGuideHero")) {
-       $("#btnScrollToGuideHero").addEventListener("click", () => document.getElementById('ts-guide-section').scrollIntoView({behavior: 'smooth'}));
-    }
+    try {
+      if($('#langSwitcher')) $('#langSwitcher').addEventListener('click', toggleLang);
+      if($('#langSwitcherMobile')) $('#langSwitcherMobile').addEventListener('click', toggleLang);
 
-    on("btnOpenDiscordModal", "click", () => openModal("#discordModal"));
-    on("btnOpenWithdrawModal", "click", () => { openModal("#withdrawModal"); window.dispatchEvent(new Event('resize')); });
-    
-    document.querySelectorAll(".detail-btn").forEach(btn => btn.addEventListener("click", () => openDetail(btn.dataset.detail)));
-    
-    document.querySelectorAll(".btnCloseModal").forEach(btn => {
-      btn.addEventListener("click", () => {
-        const tid = "#" + btn.dataset.target;
-        $(tid).classList.add("is-hidden");
-        if($("#detailModal").classList.contains("is-hidden") && $("#discordModal").classList.contains("is-hidden") && $("#withdrawModal").classList.contains("is-hidden")) {
-           $("#modalMask").classList.add("is-hidden"); document.body.style.overflow = "";
+      if($('#btnDevicePC')) $('#btnDevicePC').addEventListener('click', () => switchDeviceGuide('pc'));
+      if($('#btnDeviceMobile')) $('#btnDeviceMobile').addEventListener('click', () => switchDeviceGuide('mobile'));
+      
+      if($('#btnDiscordLogin')) $('#btnDiscordLogin').addEventListener('click', loginWithDiscord);
+      if($('#btnSubRequireLogin')) $('#btnSubRequireLogin').addEventListener('click', loginWithDiscord);
+      if($('#discordUserArea')) $('#discordUserArea').addEventListener('click', logoutDiscord);
+      if($('#toggleReminder')) $('#toggleReminder').addEventListener('change', toggleSubscription);
+
+      on("btnOpenTokenTop", "click", openToken);
+      on("btnOpenTokenHero", "click", openToken);
+      on("btnOpenTokenBottom", "click", openToken);
+
+      if($("#btnScrollToGuide")) {
+         $("#btnScrollToGuide").addEventListener("click", () => document.getElementById('ts-guide-section').scrollIntoView({behavior: 'smooth'}));
+      }
+      if($("#btnScrollToGuideHero")) {
+         $("#btnScrollToGuideHero").addEventListener("click", () => document.getElementById('ts-guide-section').scrollIntoView({behavior: 'smooth'}));
+      }
+
+      on("btnOpenDiscordModal", "click", () => openModal("#discordModal"));
+      on("btnOpenWithdrawModal", "click", () => { openModal("#withdrawModal"); window.dispatchEvent(new Event('resize')); });
+      
+      document.querySelectorAll(".detail-btn").forEach(btn => btn.addEventListener("click", (e) => {
+        e.stopPropagation();
+        openDetail(btn.dataset.detail);
+      }));
+      
+      document.querySelectorAll(".btnCloseModal").forEach(btn => {
+        btn.addEventListener("click", () => {
+          const tid = "#" + btn.dataset.target;
+          if($(tid)) $(tid).classList.add("is-hidden");
+          if($("#detailModal") && $("#detailModal").classList.contains("is-hidden") && 
+             $("#discordModal") && $("#discordModal").classList.contains("is-hidden") && 
+             $("#withdrawModal") && $("#withdrawModal").classList.contains("is-hidden")) {
+             if($("#modalMask")) $("#modalMask").classList.add("is-hidden"); 
+             document.body.style.overflow = "";
+          }
+        });
+      });
+
+      if($("#modalMask")) {
+         $("#modalMask").addEventListener("click", () => {
+           if($("#detailModal") && !$("#detailModal").classList.contains("is-hidden")) {
+              $("#detailModal").classList.add("is-hidden");
+              if($("#discordModal") && $("#discordModal").classList.contains("is-hidden") && 
+                 $("#withdrawModal") && $("#withdrawModal").classList.contains("is-hidden")) closeAllModals();
+           } else { closeAllModals(); }
+         });
+      }
+
+      document.addEventListener("keydown", (e)=>{
+        if (['input', 'textarea'].includes((document.activeElement?.tagName || "").toLowerCase())) return;
+        if(e.key === "Escape") { 
+          if($("#lightbox") && !$("#lightbox").classList.contains("is-hidden")) {
+            $("#lightbox").click();
+          } else {
+            closeAllModals(); 
+          }
+        }
+        if(e.key === "ArrowLeft" && window.activeCarousel && $("#lightbox") && $("#lightbox").classList.contains("is-hidden")) window.activeCarousel.prevSlide();
+        if(e.key === "ArrowRight" && window.activeCarousel && $("#lightbox") && $("#lightbox").classList.contains("is-hidden")) window.activeCarousel.nextSlide();
+      });
+
+      document.body.addEventListener('click', (e) => {
+        if(e.target.tagName === 'IMG' && e.target.classList.contains('cursor-zoom-in') && !e.target.closest('#lightbox')) {
+          const lb = $("#lightbox"); const lbImg = $("#lightboxImg");
+          if(lb && lbImg) { lbImg.src = e.target.src; lb.classList.remove("is-hidden"); document.body.style.overflow = "hidden"; }
         }
       });
-    });
 
-    if($("#modalMask")) {
-       $("#modalMask").addEventListener("click", () => {
-         if(!$("#detailModal").classList.contains("is-hidden")) {
-            $("#detailModal").classList.add("is-hidden");
-            if($("#discordModal").classList.contains("is-hidden") && $("#withdrawModal").classList.contains("is-hidden")) closeAllModals();
-         } else { closeAllModals(); }
-       });
-    }
-
-    document.addEventListener("keydown", (e)=>{
-      if (['input', 'textarea'].includes((document.activeElement?.tagName || "").toLowerCase())) return;
-      if(e.key === "Escape") { !$("#lightbox").classList.contains("is-hidden") ? $("#lightbox").click() : closeAllModals(); }
-      if(e.key === "ArrowLeft" && window.activeCarousel && $("#lightbox").classList.contains("is-hidden")) window.activeCarousel.prevSlide();
-      if(e.key === "ArrowRight" && window.activeCarousel && $("#lightbox").classList.contains("is-hidden")) window.activeCarousel.nextSlide();
-    });
-
-    document.body.addEventListener('click', (e) => {
-      if(e.target.tagName === 'IMG' && e.target.classList.contains('cursor-zoom-in') && !e.target.closest('#lightbox')) {
-        const lb = $("#lightbox"); const lbImg = $("#lightboxImg");
-        if(lb && lbImg) { lbImg.src = e.target.src; lb.classList.remove("is-hidden"); document.body.style.overflow = "hidden"; }
+      if($("#lightbox")) {
+        $("#lightbox").addEventListener('click', function() {
+          this.classList.add("is-hidden");
+          if($("#modalMask") && $("#modalMask").classList.contains("is-hidden")) document.body.style.overflow = "";
+        });
       }
-    });
-
-    $("#lightbox").addEventListener('click', function() {
-      this.classList.add("is-hidden");
-      if($("#modalMask").classList.contains("is-hidden")) document.body.style.overflow = "";
-    });
-
-    const initialData = window.translations[currentLang];
-    window.carousels = {
-      c1: new UnifiedCarousel({
-        areaId: "carouselArea1", trackId: "#carouselTrack1", dotsId: "#dots1", prevBtn: "btnPrevSlide1", nextBtn: "btnNextSlide1",
-        indexId: "#slideIndex1", totalId: "#slideTotal1", titleId: "#slideTitle1", captionId: "#slideCaption1", 
-        slides: initialData.slides1_pc 
-      }),
-      c2: new UnifiedCarousel({
-        areaId: "carouselArea2", trackId: "#carouselTrack2", dotsId: "#dots2", prevBtn: "btnPrevSlide2", nextBtn: "btnNextSlide2",
-        indexId: "#slideIndex2", totalId: "#slideTotal2", titleId: "#slideTitle2", captionId: "#slideCaption2", 
-        slides: initialData.slides2
-      })
-    };
-
-    applyTranslation();
-    initObserver();
+    } catch(e) { console.error("Event bindings error", e); }
   });
 </script>
 </body>
