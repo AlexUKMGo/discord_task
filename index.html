@@ -1,0 +1,429 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>SHITHub</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="lang.js"></script>
+  <style>
+    body { -webkit-tap-highlight-color: transparent; }
+    .glass { background: rgba(255,255,255,0.85); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); }
+    .card-hover { transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
+    .card-hover:hover { transform: translateY(-4px); box-shadow: 0 20px 40px -10px rgba(0,0,0,0.08); border-color: rgba(16, 185, 129, 0.3); }
+    .no-scrollbar::-webkit-scrollbar { display: none; }
+    .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+  </style>
+</head>
+
+<body class="min-h-screen bg-[#FAFAFA] text-slate-900 font-sans antialiased selection:bg-emerald-100 selection:text-emerald-900">
+  
+  <div class="pointer-events-none fixed inset-0 overflow-hidden z-0">
+    <div class="absolute -top-[20%] -right-[10%] w-[70vw] h-[70vw] rounded-full bg-gradient-to-b from-emerald-50 to-transparent blur-3xl opacity-60"></div>
+    <div class="absolute top-[40%] -left-[10%] w-[50vw] h-[50vw] rounded-full bg-gradient-to-tr from-sky-50 to-transparent blur-3xl opacity-60"></div>
+  </div>
+
+  <header class="sticky top-0 z-40 border-b border-slate-200/50 glass">
+    <div class="mx-auto max-w-6xl px-5 py-4 flex items-center justify-between">
+      <div class="flex items-center gap-2">
+        <div class="h-8 w-8 rounded-lg bg-slate-900 flex items-center justify-center shadow-sm">
+          <svg class="w-4 h-4 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" />
+          </svg>
+        </div>
+        <span class="text-xl font-black tracking-tight text-slate-900">SHITHub</span>
+      </div>
+      <button id="langSwitcher" class="inline-flex items-center justify-center rounded-lg border border-slate-200 bg-white px-3 py-1.5 text-xs font-bold text-slate-600 shadow-sm hover:bg-slate-50 transition-colors tracking-widest">
+        中文
+      </button>
+    </div>
+  </header>
+
+  <main class="relative z-10 mx-auto max-w-6xl px-5 pb-32 pt-8 md:pt-12">
+    
+    <section class="max-w-3xl mb-10">
+      <h1 class="text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight text-slate-900 leading-[1.15]" data-i18n-html="hero_hub_title">
+        Skip invalid interactions,<br class="hidden sm:block" />
+        Focus on <span class="text-transparent bg-clip-text bg-gradient-to-r from-emerald-600 to-teal-500">Definitive Yields.</span>
+      </h1>
+      <p class="mt-4 text-base text-slate-500 leading-relaxed font-medium" data-i18n="hero_hub_desc">
+        Ditch the complex whitepapers. We provide task checklists with clear ROI expectations and step-by-step guides. Filter, click, execute.
+      </p>
+    </section>
+
+    <section class="mb-8 flex items-center gap-2 overflow-x-auto pb-2 no-scrollbar" id="filterContainer">
+      <button class="filter-btn active shrink-0 rounded-full bg-slate-900 text-white px-5 py-2.5 text-xs font-bold shadow-md transition-colors" data-filter="all" data-i18n="f_all">All Selected</button>
+      <button class="filter-btn shrink-0 rounded-full bg-white text-slate-600 border border-slate-200 px-5 py-2.5 text-xs font-semibold hover:bg-slate-50 transition-colors" data-filter="live" data-i18n="f_live">Live Rewards</button>
+      <button class="filter-btn shrink-0 rounded-full bg-white text-slate-600 border border-slate-200 px-5 py-2.5 text-xs font-semibold hover:bg-slate-50 transition-colors" data-filter="tge" data-i18n="f_tge">Waiting for TGE</button>
+      <button class="filter-btn shrink-0 rounded-full bg-white text-slate-600 border border-slate-200 px-5 py-2.5 text-xs font-semibold hover:bg-slate-50 transition-colors" data-filter="testnet" data-i18n="f_testnet">Testnet</button>
+      <button class="filter-btn shrink-0 rounded-full bg-white text-slate-600 border border-slate-200 px-5 py-2.5 text-xs font-semibold hover:bg-slate-50 transition-colors" data-filter="exchange" data-i18n="f_exchange">Exchange Launch</button>
+      <button class="filter-btn shrink-0 rounded-full bg-white text-slate-600 border border-slate-200 px-5 py-2.5 text-xs font-semibold hover:bg-slate-50 transition-colors" data-filter="social" data-i18n="f_social">SocialFi</button>
+      <button class="filter-btn shrink-0 rounded-full bg-white text-slate-600 border border-slate-200 px-5 py-2.5 text-xs font-semibold hover:bg-slate-50 transition-colors" data-filter="node" data-i18n="f_node">Node / Idle</button>
+    </section>
+
+    <section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="projectGrid">
+
+      <a href="oshit.html" data-category="live" class="project-card group card-hover flex flex-col relative rounded-[2rem] bg-white border border-slate-200 p-6 md:p-8 h-full overflow-hidden">
+        <div class="flex justify-between items-center mb-6">
+          <div class="inline-flex items-center gap-1.5 rounded-md bg-emerald-50 px-2.5 py-1 text-[10px] font-bold tracking-wider text-emerald-700 uppercase border border-emerald-100">
+            <span class="relative flex h-1.5 w-1.5"><span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span><span class="relative inline-flex rounded-full h-1.5 w-1.5 bg-emerald-500"></span></span>
+            <span data-i18n="f_live">Live Rewards</span>
+          </div>
+          <div class="flex items-center gap-1 text-slate-400">
+            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
+            <span class="text-xs font-semibold">Solana</span>
+          </div>
+        </div>
+        
+        <h3 class="text-2xl font-bold text-slate-900 mb-2 group-hover:text-emerald-600 transition-colors">OSHIT Protocol</h3>
+        <p class="text-sm text-slate-500 mb-8 line-clamp-2 leading-relaxed" data-i18n="card_oshit_desc">Community experiment with clear spot USDT rewards and quarterly token pool allocation. Extremely low entry barrier.</p>
+
+        <div class="grid grid-cols-2 gap-3 mb-8 mt-auto">
+          <div class="rounded-2xl bg-slate-50 border border-slate-100 p-4">
+            <div class="text-[10px] font-bold text-slate-400 uppercase tracking-wide mb-1" data-i18n="lbl_time">Est. Time</div>
+            <div class="text-sm font-extrabold text-slate-900" data-i18n="card_oshit_time">5 Mins</div>
+          </div>
+          <div class="rounded-2xl bg-slate-50 border border-slate-100 p-4">
+            <div class="text-[10px] font-bold text-slate-400 uppercase tracking-wide mb-1" data-i18n="lbl_cost">Est. Cost</div>
+            <div class="text-sm font-extrabold text-slate-900" data-i18n="card_oshit_cost">~0.01 SOL</div>
+          </div>
+        </div>
+
+        <div class="pt-5 border-t border-slate-100 flex items-center justify-between">
+          <div>
+            <div class="text-[10px] font-bold text-slate-400 uppercase tracking-wide mb-0.5" data-i18n="lbl_yield">Expected Yield</div>
+            <div class="text-base font-black text-slate-900" data-i18n="card_oshit_yield">10-50U + Airdrop</div>
+          </div>
+          <div class="h-10 w-10 rounded-full bg-slate-900 flex items-center justify-center group-hover:bg-emerald-500 transition-colors">
+            <svg class="w-4 h-4 text-white transform group-hover:translate-x-0.5 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
+          </div>
+        </div>
+      </a>
+
+      <a href="https://hashgame.io/?ref=168" target="_blank" data-category="tge" class="project-card group card-hover flex flex-col relative rounded-[2rem] bg-white border border-slate-200 p-6 md:p-8 h-full overflow-hidden">
+        <div class="flex justify-between items-center mb-6">
+          <div class="inline-flex items-center gap-1.5 rounded-md bg-purple-50 px-2.5 py-1 text-[10px] font-bold tracking-wider text-purple-700 uppercase border border-purple-100">
+            <span data-i18n="f_tge">Waiting for TGE</span>
+          </div>
+          <div class="flex items-center gap-1 text-slate-400">
+            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" /><path stroke-linecap="round" stroke-linejoin="round" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+            <span class="text-xs font-semibold">GameFi</span>
+          </div>
+        </div>
+        
+        <h3 class="text-2xl font-bold text-slate-900 mb-2 group-hover:text-purple-600 transition-colors" data-i18n="card_hash_title">Hashgame</h3>
+        <p class="text-sm text-slate-500 mb-8 line-clamp-2 leading-relaxed" data-i18n="card_hash_desc">Top crypto gaming & prediction market. Participate in daily activities to accumulate points and lock in upcoming TGE airdrops.</p>
+
+        <div class="grid grid-cols-2 gap-3 mb-8 mt-auto">
+          <div class="rounded-2xl bg-slate-50 border border-slate-100 p-4">
+            <div class="text-[10px] font-bold text-slate-400 uppercase tracking-wide mb-1" data-i18n="lbl_time">Est. Time</div>
+            <div class="text-sm font-extrabold text-slate-900" data-i18n="card_hash_time">Daily 3 Mins</div>
+          </div>
+          <div class="rounded-2xl bg-slate-50 border border-slate-100 p-4">
+            <div class="text-[10px] font-bold text-slate-400 uppercase tracking-wide mb-1" data-i18n="lbl_cost">Est. Cost</div>
+            <div class="text-sm font-extrabold text-slate-900" data-i18n="card_hash_cost">On-demand</div>
+          </div>
+        </div>
+
+        <div class="pt-5 border-t border-slate-100 flex items-center justify-between">
+          <div>
+            <div class="text-[10px] font-bold text-slate-400 uppercase tracking-wide mb-0.5" data-i18n="lbl_yield">Expected Yield</div>
+            <div class="text-base font-black text-slate-900" data-i18n="card_hash_yield">TGE Airdrop</div>
+          </div>
+          <div class="h-10 w-10 rounded-full bg-slate-900 flex items-center justify-center group-hover:bg-purple-500 transition-colors">
+            <svg class="w-4 h-4 text-white transform group-hover:translate-x-0.5 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
+          </div>
+        </div>
+      </a>
+
+      <a href="https://satsume.com/" target="_blank" data-category="live" class="project-card group card-hover flex flex-col relative rounded-[2rem] bg-white border border-slate-200 p-6 md:p-8 h-full overflow-hidden">
+        <div class="flex justify-between items-center mb-6">
+          <div class="inline-flex items-center gap-1.5 rounded-md bg-emerald-50 px-2.5 py-1 text-[10px] font-bold tracking-wider text-emerald-700 uppercase border border-emerald-100">
+            <span data-i18n="f_live">Live Rewards</span>
+          </div>
+          <div class="flex items-center gap-1 text-slate-400">
+            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" /></svg>
+            <span class="text-xs font-semibold">Ecosystem</span>
+          </div>
+        </div>
+        
+        <h3 class="text-2xl font-bold text-slate-900 mb-2 group-hover:text-emerald-600 transition-colors" data-i18n="card_satsume_title">Satsume</h3>
+        <p class="text-sm text-slate-500 mb-8 line-clamp-2 leading-relaxed" data-i18n="card_satsume_desc">Highly potential Web3 innovative ecosystem. Complete social binding and daily check-ins to get exclusive rewards.</p>
+
+        <div class="grid grid-cols-2 gap-3 mb-8 mt-auto">
+          <div class="rounded-2xl bg-slate-50 border border-slate-100 p-4">
+            <div class="text-[10px] font-bold text-slate-400 uppercase tracking-wide mb-1" data-i18n="lbl_time">Est. Time</div>
+            <div class="text-sm font-extrabold text-slate-900" data-i18n="card_satsume_time">2 Mins/Tx</div>
+          </div>
+          <div class="rounded-2xl bg-slate-50 border border-slate-100 p-4">
+            <div class="text-[10px] font-bold text-slate-400 uppercase tracking-wide mb-1" data-i18n="lbl_cost">Est. Cost</div>
+            <div class="text-sm font-extrabold text-emerald-600" data-i18n="card_satsume_cost">Zero Cost</div>
+          </div>
+        </div>
+
+        <div class="pt-5 border-t border-slate-100 flex items-center justify-between">
+          <div>
+            <div class="text-[10px] font-bold text-slate-400 uppercase tracking-wide mb-0.5" data-i18n="lbl_yield">Expected Yield</div>
+            <div class="text-base font-black text-slate-900" data-i18n="card_satsume_yield">Spot / Points</div>
+          </div>
+          <div class="h-10 w-10 rounded-full bg-slate-900 flex items-center justify-center group-hover:bg-emerald-500 transition-colors">
+            <svg class="w-4 h-4 text-white transform group-hover:translate-x-0.5 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
+          </div>
+        </div>
+      </a>
+
+      <a href="oshit.html" data-category="tge" class="project-card group card-hover flex flex-col relative rounded-[2rem] bg-white border border-slate-200 p-6 md:p-8 h-full overflow-hidden">
+        <div class="flex justify-between items-center mb-6">
+          <div class="inline-flex items-center gap-1.5 rounded-md bg-purple-50 px-2.5 py-1 text-[10px] font-bold tracking-wider text-purple-700 uppercase border border-purple-100">
+            <span data-i18n="f_tge">Waiting for TGE</span>
+          </div>
+          <div class="flex items-center gap-1 text-slate-400">
+            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 002-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" /></svg>
+            <span class="text-xs font-semibold">Ethereum</span>
+          </div>
+        </div>
+        
+        <h3 class="text-2xl font-bold text-slate-900 mb-2 group-hover:text-purple-600 transition-colors" data-i18n="card_eigen_title">EigenLayer Eco</h3>
+        <p class="text-sm text-slate-500 mb-8 line-clamp-2 leading-relaxed" data-i18n="card_eigen_desc">Top restaking protocol. Deposit ETH or LST to accumulate dual points and secure genesis airdrop allocation.</p>
+
+        <div class="grid grid-cols-2 gap-3 mb-8 mt-auto">
+          <div class="rounded-2xl bg-slate-50 border border-slate-100 p-4">
+            <div class="text-[10px] font-bold text-slate-400 uppercase tracking-wide mb-1" data-i18n="lbl_time">Est. Time</div>
+            <div class="text-sm font-extrabold text-slate-900" data-i18n="card_eigen_time">One-time 10 Mins</div>
+          </div>
+          <div class="rounded-2xl bg-slate-50 border border-slate-100 p-4">
+            <div class="text-[10px] font-bold text-slate-400 uppercase tracking-wide mb-1" data-i18n="lbl_req">Requirement</div>
+            <div class="text-sm font-extrabold text-slate-900" data-i18n="card_eigen_req">Deposit Assets</div>
+          </div>
+        </div>
+
+        <div class="pt-5 border-t border-slate-100 flex items-center justify-between">
+          <div>
+            <div class="text-[10px] font-bold text-slate-400 uppercase tracking-wide mb-0.5" data-i18n="lbl_yield">Expected Yield</div>
+            <div class="text-base font-black text-slate-900" data-i18n="card_eigen_yield">Points to Tokens</div>
+          </div>
+          <div class="h-10 w-10 rounded-full bg-slate-900 flex items-center justify-center group-hover:bg-purple-500 transition-colors">
+            <svg class="w-4 h-4 text-white transform group-hover:translate-x-0.5 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
+          </div>
+        </div>
+      </a>
+
+      <a href="oshit.html" data-category="testnet" class="project-card group card-hover flex flex-col relative rounded-[2rem] bg-white border border-slate-200 p-6 md:p-8 h-full overflow-hidden">
+        <div class="flex justify-between items-center mb-6">
+          <div class="inline-flex items-center gap-1.5 rounded-md bg-sky-50 px-2.5 py-1 text-[10px] font-bold tracking-wider text-sky-700 uppercase border border-sky-100">
+            <span data-i18n="f_testnet">Testnet</span>
+          </div>
+          <div class="flex items-center gap-1 text-slate-400">
+            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9" /></svg>
+            <span class="text-xs font-semibold">Testnet</span>
+          </div>
+        </div>
+        
+        <h3 class="text-2xl font-bold text-slate-900 mb-2 group-hover:text-sky-600 transition-colors" data-i18n="card_bera_title">Berachain V2</h3>
+        <p class="text-sm text-slate-500 mb-8 line-clamp-2 leading-relaxed" data-i18n="card_bera_desc">Highly anticipated testnet. Claim daily faucets and complete contract interactions to build wallet weight.</p>
+
+        <div class="grid grid-cols-2 gap-3 mb-8 mt-auto">
+          <div class="rounded-2xl bg-slate-50 border border-slate-100 p-4">
+            <div class="text-[10px] font-bold text-slate-400 uppercase tracking-wide mb-1" data-i18n="lbl_time">Est. Time</div>
+            <div class="text-sm font-extrabold text-slate-900" data-i18n="card_bera_time">Daily 5 Mins</div>
+          </div>
+          <div class="rounded-2xl bg-slate-50 border border-slate-100 p-4">
+            <div class="text-[10px] font-bold text-slate-400 uppercase tracking-wide mb-1" data-i18n="lbl_cost">Est. Cost</div>
+            <div class="text-sm font-extrabold text-sky-600" data-i18n="card_bera_cost">Zero (0 Gas)</div>
+          </div>
+        </div>
+
+        <div class="pt-5 border-t border-slate-100 flex items-center justify-between">
+          <div>
+            <div class="text-[10px] font-bold text-slate-400 uppercase tracking-wide mb-0.5" data-i18n="lbl_yield">Expected Yield</div>
+            <div class="text-base font-black text-slate-900" data-i18n="card_bera_yield">Mainnet Airdrop</div>
+          </div>
+          <div class="h-10 w-10 rounded-full bg-slate-900 flex items-center justify-center group-hover:bg-sky-500 transition-colors">
+            <svg class="w-4 h-4 text-white transform group-hover:translate-x-0.5 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
+          </div>
+        </div>
+      </a>
+
+      <a href="oshit.html" data-category="exchange" class="project-card group card-hover flex flex-col relative rounded-[2rem] bg-white border border-slate-200 p-6 md:p-8 h-full overflow-hidden">
+        <div class="flex justify-between items-center mb-6">
+          <div class="inline-flex items-center gap-1.5 rounded-md bg-amber-50 px-2.5 py-1 text-[10px] font-bold tracking-wider text-amber-700 uppercase border border-amber-100">
+            <span class="relative flex h-1.5 w-1.5"><span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-400 opacity-75"></span><span class="relative inline-flex rounded-full h-1.5 w-1.5 bg-amber-500"></span></span>
+            <span data-i18n="f_exchange">Exchange Launch</span>
+          </div>
+          <div class="flex items-center gap-1 text-slate-400">
+            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+            <span class="text-xs font-semibold">Binance</span>
+          </div>
+        </div>
+        
+        <h3 class="text-2xl font-bold text-slate-900 mb-2 group-hover:text-amber-500 transition-colors" data-i18n="card_bnb_title">BNB Megadrop</h3>
+        <p class="text-sm text-slate-500 mb-8 line-clamp-2 leading-relaxed" data-i18n="card_bnb_desc">Bind Web3 wallet for DApp interactions + lock BNB to get high multipliers for guaranteed new token launches.</p>
+
+        <div class="grid grid-cols-2 gap-3 mb-8 mt-auto">
+          <div class="rounded-2xl bg-slate-50 border border-slate-100 p-4">
+            <div class="text-[10px] font-bold text-slate-400 uppercase tracking-wide mb-1" data-i18n="lbl_method">Method</div>
+            <div class="text-sm font-extrabold text-slate-900" data-i18n="card_bnb_method">Task + Lock</div>
+          </div>
+          <div class="rounded-2xl bg-slate-50 border border-slate-100 p-4">
+            <div class="text-[10px] font-bold text-slate-400 uppercase tracking-wide mb-1" data-i18n="lbl_cert">Certainty</div>
+            <div class="text-sm font-extrabold text-amber-600" data-i18n="card_bnb_cert">Very High</div>
+          </div>
+        </div>
+
+        <div class="pt-5 border-t border-slate-100 flex items-center justify-between">
+          <div>
+            <div class="text-[10px] font-bold text-slate-400 uppercase tracking-wide mb-0.5" data-i18n="lbl_yield">Expected Yield</div>
+            <div class="text-base font-black text-slate-900" data-i18n="card_bnb_yield">Direct Trading</div>
+          </div>
+          <div class="h-10 w-10 rounded-full bg-slate-900 flex items-center justify-center group-hover:bg-amber-400 transition-colors">
+            <svg class="w-4 h-4 text-white transform group-hover:translate-x-0.5 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
+          </div>
+        </div>
+      </a>
+
+      <a href="oshit.html" data-category="social" class="project-card group card-hover flex flex-col relative rounded-[2rem] bg-white border border-slate-200 p-6 md:p-8 h-full overflow-hidden">
+        <div class="flex justify-between items-center mb-6">
+          <div class="inline-flex items-center gap-1.5 rounded-md bg-blue-50 px-2.5 py-1 text-[10px] font-bold tracking-wider text-blue-700 uppercase border border-blue-100">
+            <span data-i18n="f_social">SocialFi</span>
+          </div>
+          <div class="flex items-center gap-1 text-slate-400">
+            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" /></svg>
+            <span class="text-xs font-semibold">SocialFi</span>
+          </div>
+        </div>
+        
+        <h3 class="text-2xl font-bold text-slate-900 mb-2 group-hover:text-blue-600 transition-colors" data-i18n="card_far_title">Farcaster Echo</h3>
+        <p class="text-sm text-slate-500 mb-8 line-clamp-2 leading-relaxed" data-i18n="card_far_desc">No asset purchase required. Accumulate points by posting, liking, and getting tipped on decentralized social platforms.</p>
+
+        <div class="grid grid-cols-2 gap-3 mb-8 mt-auto">
+          <div class="rounded-2xl bg-slate-50 border border-slate-100 p-4">
+            <div class="text-[10px] font-bold text-slate-400 uppercase tracking-wide mb-1" data-i18n="lbl_time">Est. Time</div>
+            <div class="text-sm font-extrabold text-slate-900" data-i18n="card_far_time">Fragmented Time</div>
+          </div>
+          <div class="rounded-2xl bg-slate-50 border border-slate-100 p-4">
+            <div class="text-[10px] font-bold text-slate-400 uppercase tracking-wide mb-1" data-i18n="lbl_cost">Est. Cost</div>
+            <div class="text-sm font-extrabold text-blue-600" data-i18n="card_far_cost">Zero Cost</div>
+          </div>
+        </div>
+
+        <div class="pt-5 border-t border-slate-100 flex items-center justify-between">
+          <div>
+            <div class="text-[10px] font-bold text-slate-400 uppercase tracking-wide mb-0.5" data-i18n="lbl_yield">Expected Yield</div>
+            <div class="text-base font-black text-slate-900" data-i18n="card_far_yield">Tips & Airdrops</div>
+          </div>
+          <div class="h-10 w-10 rounded-full bg-slate-900 flex items-center justify-center group-hover:bg-blue-500 transition-colors">
+            <svg class="w-4 h-4 text-white transform group-hover:translate-x-0.5 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
+          </div>
+        </div>
+      </a>
+
+      <a href="oshit.html" data-category="node" class="project-card group card-hover flex flex-col relative rounded-[2rem] bg-white border border-slate-200 p-6 md:p-8 h-full overflow-hidden">
+        <div class="flex justify-between items-center mb-6">
+          <div class="inline-flex items-center gap-1.5 rounded-md bg-rose-50 px-2.5 py-1 text-[10px] font-bold tracking-wider text-rose-700 uppercase border border-rose-100">
+            <span data-i18n="f_node">Node / Idle</span>
+          </div>
+          <div class="flex items-center gap-1 text-slate-400">
+            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0zm6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+            <span class="text-xs font-semibold">DePIN</span>
+          </div>
+        </div>
+        
+        <h3 class="text-2xl font-bold text-slate-900 mb-2 group-hover:text-rose-500 transition-colors" data-i18n="card_grass_title">Grass Network</h3>
+        <p class="text-sm text-slate-500 mb-8 line-clamp-2 leading-relaxed" data-i18n="card_grass_desc">Install browser extension to share idle bandwidth for automatic mining. Perfect for background running.</p>
+
+        <div class="grid grid-cols-2 gap-3 mb-8 mt-auto">
+          <div class="rounded-2xl bg-slate-50 border border-slate-100 p-4">
+            <div class="text-[10px] font-bold text-slate-400 uppercase tracking-wide mb-1" data-i18n="lbl_time">Est. Time</div>
+            <div class="text-sm font-extrabold text-slate-900" data-i18n="card_grass_time">1 Min Install</div>
+          </div>
+          <div class="rounded-2xl bg-slate-50 border border-slate-100 p-4">
+            <div class="text-[10px] font-bold text-slate-400 uppercase tracking-wide mb-1" data-i18n="lbl_method">Method</div>
+            <div class="text-sm font-extrabold text-rose-600" data-i18n="card_grass_method">Auto Idle</div>
+          </div>
+        </div>
+
+        <div class="pt-5 border-t border-slate-100 flex items-center justify-between">
+          <div>
+            <div class="text-[10px] font-bold text-slate-400 uppercase tracking-wide mb-0.5" data-i18n="lbl_yield">Expected Yield</div>
+            <div class="text-base font-black text-slate-900" data-i18n="card_grass_yield">Accumulate Vouchers</div>
+          </div>
+          <div class="h-10 w-10 rounded-full bg-slate-900 flex items-center justify-center group-hover:bg-rose-500 transition-colors">
+            <svg class="w-4 h-4 text-white transform group-hover:translate-x-0.5 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
+          </div>
+        </div>
+      </a>
+
+    </section>
+  </main>
+
+  <script>
+    // ----------------------------------------------------
+    // 多语言与过滤逻辑
+    // ----------------------------------------------------
+    let currentLang = localStorage.getItem('oshit_lang') || 'en';
+
+    function applyTranslation() {
+      const data = window.translations[currentLang];
+      if(!data) return;
+
+      document.documentElement.lang = currentLang === 'zh' ? 'zh-Hans' : 'en';
+      document.title = data.hub_title || "SHITHub";
+
+      const btn = document.getElementById('langSwitcher');
+      if(btn) btn.textContent = currentLang === 'en' ? '中文' : 'EN';
+
+      document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.getAttribute('data-i18n');
+        if (data[key]) el.textContent = data[key];
+      });
+
+      document.querySelectorAll('[data-i18n-html]').forEach(el => {
+        const key = el.getAttribute('data-i18n-html');
+        if (data[key]) el.innerHTML = data[key];
+      });
+    }
+
+    function toggleLang() {
+      currentLang = currentLang === 'zh' ? 'en' : 'zh';
+      localStorage.setItem('oshit_lang', currentLang);
+      applyTranslation();
+    }
+
+    // 筛选逻辑绑定
+    function setupFilters() {
+      const filterBtns = document.querySelectorAll('.filter-btn');
+      const projectCards = document.querySelectorAll('.project-card');
+
+      filterBtns.forEach(btn => {
+        btn.addEventListener('click', function() {
+          // 更新按钮 UI 状态
+          filterBtns.forEach(b => {
+            b.classList.remove('bg-slate-900', 'text-white', 'shadow-md', 'border-transparent');
+            b.classList.add('bg-white', 'text-slate-600', 'border-slate-200');
+          });
+          this.classList.remove('bg-white', 'text-slate-600', 'border-slate-200');
+          this.classList.add('bg-slate-900', 'text-white', 'shadow-md', 'border-transparent');
+
+          // 执行过滤
+          const filterValue = this.getAttribute('data-filter');
+          projectCards.forEach(card => {
+            if (filterValue === 'all' || card.getAttribute('data-category') === filterValue) {
+              card.style.display = 'flex'; // 卡片是 flex 布局
+            } else {
+              card.style.display = 'none';
+            }
+          });
+        });
+      });
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+      const switcher = document.getElementById('langSwitcher');
+      if(switcher) switcher.addEventListener('click', toggleLang);
+      
+      applyTranslation();
+      setupFilters();
+    });
+  </script>
+</body>
+</html>
