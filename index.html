@@ -14,7 +14,6 @@
     .no-scrollbar::-webkit-scrollbar { display: none; }
     .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
     
-    /* 自动滚动动画墙 */
     @keyframes marquee {
       0% { transform: translateX(0); }
       100% { transform: translateX(-50%); }
@@ -27,8 +26,6 @@
     .animate-marquee:hover {
       animation-play-state: paused;
     }
-    
-    /* Lightbox */
     .is-hidden { display: none !important; }
   </style>
 </head>
@@ -73,10 +70,9 @@
         <div class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></div>
         <h2 class="text-sm font-bold text-slate-900 uppercase tracking-wider" data-i18n="proof_title">Recent Verified Yields</h2>
       </div>
-      
       <div class="flex overflow-hidden group mask-edges">
         <div id="marqueeTrack" class="animate-marquee gap-4 px-5 sm:px-0">
-          </div>
+        </div>
       </div>
     </section>
 
@@ -391,34 +387,6 @@
   </div>
 
   <script>
-    // 防御性内置英文数据
-    window.translations = window.translations || {};
-    window.translations.en = {
-      hub_title: "SHITHub — Airdrop & Yield Aggregator",
-      hero_hub_title: "Skip the noise,<br class=\"hidden sm:block\"/>Focus on <span class=\"text-transparent bg-clip-text bg-gradient-to-r from-emerald-600 to-teal-500\">High-Conviction Yields.</span>",
-      hero_hub_desc: "Ditch the complex whitepapers and low-ROI tasks. We provide curated checklists with clear expected returns and step-by-step guides. Filter, click, execute.",
-      proof_title: "Recent Verified Yields",
-      f_all: "All Selected", f_live: "Live Rewards", f_tge: "Waiting for TGE", f_testnet: "Testnet", f_exchange: "Exchange Launch", f_social: "SocialFi", f_node: "Node / Idle",
-      lbl_time: "Est. Time", lbl_cost: "Est. Cost", lbl_req: "Requirement", lbl_method: "Method", lbl_cert: "Certainty", lbl_yield: "Expected Yield",
-      card_oshit_desc: "Community experiment with clear spot USDT rewards and quarterly token pool allocation. Extremely low entry barrier.",
-      card_oshit_time: "5 Mins", card_oshit_cost: "~0.01 SOL", card_oshit_yield: "10-50U + Airdrop",
-      card_hash_title: "Hashgame", card_hash_desc: "Top crypto gaming & prediction market. Participate in daily activities to accumulate points and lock in upcoming TGE airdrops.",
-      card_hash_time: "Daily 3 Mins", card_hash_cost: "On-demand", card_hash_yield: "TGE Airdrop",
-      card_satsume_title: "Satsume", card_satsume_desc: "Highly potential Web3 innovative ecosystem. Complete social binding and daily check-ins to get exclusive rewards.",
-      card_satsume_time: "2 Mins/Tx", card_satsume_cost: "Zero Cost", card_satsume_yield: "Spot / Points",
-      card_eigen_title: "EigenLayer Eco", card_eigen_desc: "Top restaking protocol. Deposit ETH or LST to accumulate dual points and secure genesis airdrop allocation.",
-      card_eigen_time: "One-time 10 Mins", card_eigen_req: "Deposit Assets", card_eigen_yield: "Points to Tokens",
-      card_bera_title: "Berachain V2", card_bera_desc: "Highly anticipated testnet. Claim daily faucets and complete contract interactions to build wallet weight.",
-      card_bera_time: "Daily 5 Mins", card_bera_cost: "Zero (0 Gas)", card_bera_yield: "Mainnet Airdrop",
-      card_bnb_title: "BNB Megadrop", card_bnb_desc: "Bind Web3 wallet for DApp interactions + lock BNB to get high multipliers for guaranteed new token launches.",
-      card_bnb_method: "Task + Lock", card_bnb_cert: "Very High", card_bnb_yield: "Direct Trading",
-      card_far_title: "Farcaster Echo", card_far_desc: "No asset purchase required. Accumulate points by posting, liking, and getting tipped on decentralized social platforms.",
-      card_far_time: "Fragmented Time", card_far_cost: "Zero Cost", card_far_yield: "Tips & Airdrops",
-      card_grass_title: "Grass Network", card_grass_desc: "Install browser extension to share idle bandwidth for automatic mining. Perfect for background running.",
-      card_grass_time: "1 Min Install", card_grass_method: "Auto Idle", card_grass_yield: "Accumulate Vouchers",
-      lightbox_hint: "Click anywhere to close"
-    };
-
     let currentLang = localStorage.getItem('oshit_lang') || 'en';
 
     function applyTranslation() {
@@ -474,12 +442,10 @@
       });
     }
 
-    // 渲染收益证明横幅
     function renderYieldProofs() {
       const track = document.getElementById('marqueeTrack');
       if(!track) return;
       
-      // 准备几张占位截图，你可以替换为真实的收益截图路径
       const yieldProofs = [
         { src: 'proof1.png', tag: 'OSHIT', text: '+$10.1 M SHIT' },
         { src: 'proof2.png', tag: 'OpenMind', text: '+2.69K ROBO' },
@@ -488,7 +454,6 @@
         { src: 'proof5.png', tag: 'BackPact', text: 'Potential Airdrop' }
       ];
 
-      // 将数组复制三份以确保可以无缝循环滚动
       const allProofs = [...yieldProofs, ...yieldProofs, ...yieldProofs];
       
       track.innerHTML = allProofs.map(p => `
@@ -503,7 +468,6 @@
         </div>
       `).join('');
 
-      // 绑定图片放大功能
       track.querySelectorAll('.cursor-zoom-in').forEach(card => {
         card.addEventListener('click', (e) => {
           const img = card.querySelector('img');
@@ -518,7 +482,6 @@
       });
     }
 
-    // 关闭 Lightbox
     document.getElementById('lightbox')?.addEventListener('click', function() {
       this.classList.add('is-hidden');
       document.body.style.overflow = '';

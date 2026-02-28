@@ -46,29 +46,29 @@
                 <div class="text-xs text-slate-500" data-i18n="header_desc">Understand in 1 min, Earn instantly</div>
               </div>
               <div class="h-6 w-px bg-slate-300 mx-1 hidden sm:block"></div>
-              <button id="langSwitcher" class="hidden sm:inline-flex items-center justify-center rounded-lg border border-slate-200 bg-white px-2 py-1 text-[11px] font-bold text-slate-600 shadow-sm hover:bg-slate-50 transition-colors tracking-widest">
+              <button id="langSwitcher" onclick="toggleLang()" class="hidden sm:inline-flex items-center justify-center rounded-lg border border-slate-200 bg-white px-2 py-1 text-[11px] font-bold text-slate-600 shadow-sm hover:bg-slate-50 transition-colors tracking-widest">
                 中文
               </button>
             </div>
 
             <div class="flex items-center gap-2">
-              <button id="btnScrollToGuide" type="button"
+              <button id="btnScrollToGuide" type="button" onclick="document.getElementById('ts-guide-section').scrollIntoView({behavior: 'smooth'})"
                       class="hidden sm:inline-flex rounded-2xl border border-slate-200 bg-white px-3 py-2 text-xs font-semibold text-slate-700 shadow-sm hover:bg-slate-50 transition-colors" data-i18n="btn_guide">
                 View Guide
               </button>
-              <button id="btnOpenTokenTop" type="button"
+              <button id="btnOpenTokenTop" type="button" onclick="openToken()"
                       class="hidden sm:inline-flex rounded-2xl bg-emerald-500 px-4 py-2 text-xs font-bold text-white shadow-sm hover:bg-emerald-600 transition-colors" data-i18n="btn_go_token">
                 Go to /token
               </button>
               
               <div class="h-5 w-px bg-slate-200 mx-1 hidden sm:block"></div>
               
-              <button id="btnDiscordLogin" type="button" class="inline-flex items-center gap-1.5 rounded-2xl bg-discord hover-bg-discord px-3 py-2 text-xs font-bold text-white shadow-sm transition-colors">
+              <button id="btnDiscordLogin" type="button" onclick="loginWithDiscord()" class="inline-flex items-center gap-1.5 rounded-2xl bg-discord hover-bg-discord px-3 py-2 text-xs font-bold text-white shadow-sm transition-colors">
                 <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M20.317 4.3698a19.7913 19.7913 0 00-4.8851-1.5152.0741.0741 0 00-.0785.0371c-.211.3753-.4447.8648-.6083 1.2495-1.8447-.2762-3.68-.2762-5.4868 0-.1636-.3933-.4058-.8742-.6177-1.2495a.077.077 0 00-.0785-.037 19.7363 19.7363 0 00-4.8852 1.515.0699.0699 0 00-.0321.0277C.5334 9.0458-.319 13.5799.0992 18.0578a.0824.0824 0 00.0312.0561c2.0528 1.5076 4.0413 2.4228 5.9929 3.0294a.0777.0777 0 00.0842-.0276c.4616-.6304.8731-1.2952 1.226-1.9942a.076.076 0 00-.0416-.1057c-.6528-.2476-1.2743-.5495-1.8722-.8923a.077.077 0 01-.0076-.1277c.1258-.0943.2517-.1923.3718-.2914a.0743.0743 0 01.0776-.0105c3.9278 1.7933 8.18 1.7933 12.0614 0a.0739.0739 0 01.0785.0095c.1202.099.246.1981.3728.2924a.077.077 0 01-.0066.1276 12.2986 12.2986 0 01-1.873.8914.0766.0766 0 00-.0407.1067c.3604.698.7719 1.3628 1.225 1.9932a.076.076 0 00.0842.0286c1.961-.6067 3.9495-1.5219 6.0023-3.0294a.077.077 0 00.0313-.0552c.5004-5.177-.8382-9.6739-3.5485-13.6604a.061.061 0 00-.0312-.0286zM8.02 15.3312c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9555-2.4189 2.157-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.9555 2.4189-2.1569 2.4189zm7.9748 0c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9554-2.4189 2.1569-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.946 2.4189-2.1568 2.4189Z"/></svg>
                 <span class="hidden sm:inline" data-i18n="btn_discord_login">Connect</span>
               </button>
               
-              <div id="discordUserArea" class="is-hidden flex items-center gap-2 rounded-2xl border border-slate-200 bg-white px-2 py-1.5 shadow-sm cursor-pointer hover:bg-slate-50 transition-colors" title="Click to logout">
+              <div id="discordUserArea" onclick="logoutDiscord()" class="is-hidden flex items-center gap-2 rounded-2xl border border-slate-200 bg-white px-2 py-1.5 shadow-sm cursor-pointer hover:bg-slate-50 transition-colors" title="Click to logout">
                 <div class="w-5 h-5 rounded-full bg-slate-200 overflow-hidden shrink-0">
                   <img id="discordAvatar" src="" class="w-full h-full object-cover hidden" />
                   <svg id="discordAvatarFallback" class="w-full h-full text-slate-400" fill="currentColor" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
@@ -76,7 +76,7 @@
                 <span class="text-[11px] font-bold text-slate-700 hidden sm:inline mr-1" id="discordUserName">User</span>
               </div>
 
-              <button id="langSwitcherMobile" class="sm:hidden inline-flex items-center justify-center rounded-lg border border-slate-200 bg-white px-2 py-2 text-[11px] font-bold text-slate-600 shadow-sm hover:bg-slate-50 transition-colors tracking-widest">
+              <button id="langSwitcherMobile" onclick="toggleLang()" class="sm:hidden inline-flex items-center justify-center rounded-lg border border-slate-200 bg-white px-2 py-2 text-[11px] font-bold text-slate-600 shadow-sm hover:bg-slate-50 transition-colors tracking-widest">
                 中文
               </button>
             </div>
@@ -142,12 +142,12 @@
               </div>
 
               <div class="mt-8 pt-6 border-t border-slate-100 hidden sm:flex flex-col sm:flex-row items-center gap-3">
-                <button id="btnOpenTokenHero" type="button" 
+                <button id="btnOpenTokenHero" type="button" onclick="openToken()"
                         class="w-full sm:w-auto px-8 py-3.5 rounded-2xl bg-emerald-500 text-white text-sm font-bold shadow-[0_4px_20px_-4px_rgba(16,185,129,0.5)] hover:bg-emerald-600 hover:-translate-y-0.5 transition-all flex items-center justify-center gap-2" 
                         data-i18n="btn_go_token_mobile">
                   Execute on Website Now
                 </button>
-                <button id="btnScrollToGuideHero" type="button" 
+                <button id="btnScrollToGuideHero" type="button" onclick="document.getElementById('ts-guide-section').scrollIntoView({behavior: 'smooth'})"
                         class="w-full sm:w-auto px-8 py-3.5 rounded-2xl bg-slate-50 border border-slate-200 text-slate-700 text-sm font-bold hover:bg-slate-100 transition-all flex items-center justify-center gap-2" 
                         data-i18n="btn_guide">
                   View Guide
@@ -182,7 +182,7 @@
             <div class="space-y-3 mb-8" id="dailyTaskContainer">
               <div class="task-row daily-task flex flex-col sm:flex-row sm:items-center justify-between p-4 rounded-2xl border border-slate-200 bg-slate-50 transition-all hover:border-slate-300 gap-4" data-task-id="task_ts">
                 <div class="flex items-start sm:items-center gap-4 flex-1 min-w-0">
-                  <button class="check-btn mt-0.5 sm:mt-0 shrink-0 w-6 h-6 rounded-full border-2 border-slate-300 flex items-center justify-center bg-white text-transparent focus:outline-none">
+                  <button class="check-btn mt-0.5 sm:mt-0 shrink-0 w-6 h-6 rounded-full border-2 border-slate-300 flex items-center justify-center bg-white text-transparent focus:outline-none" onclick="toggleTask('task_ts', 'daily_task1_title')">
                     <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg>
                   </button>
                   <div class="min-w-0">
@@ -199,7 +199,7 @@
 
               <div class="task-row daily-task flex flex-col sm:flex-row sm:items-center justify-between p-4 rounded-2xl border border-slate-200 bg-white transition-all hover:border-slate-300 gap-4" data-task-id="task_creator">
                 <div class="flex items-start sm:items-center gap-4 flex-1 min-w-0">
-                  <button class="check-btn mt-0.5 sm:mt-0 shrink-0 w-6 h-6 rounded-full border-2 border-slate-300 flex items-center justify-center bg-white text-transparent focus:outline-none">
+                  <button class="check-btn mt-0.5 sm:mt-0 shrink-0 w-6 h-6 rounded-full border-2 border-slate-300 flex items-center justify-center bg-white text-transparent focus:outline-none" onclick="toggleTask('task_creator', 'daily_task2_title')">
                     <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg>
                   </button>
                   <div class="min-w-0">
@@ -207,7 +207,7 @@
                     <div class="mt-1 text-[11px] text-slate-500 flex flex-wrap items-center gap-2">
                       <span class="text-emerald-600 font-semibold" data-i18n="daily_task2_reward">Reward: Daily 500-5000 Tokens</span>
                       <span class="hidden sm:inline text-slate-300">|</span>
-                      <button class="text-slate-500 underline hover:text-slate-800 detail-btn" data-detail="creator" data-i18n="btn_guide">View Guide</button>
+                      <button class="text-slate-500 underline hover:text-slate-800" onclick="openDetail('creator')" data-i18n="btn_guide">View Guide</button>
                     </div>
                   </div>
                 </div>
@@ -215,7 +215,7 @@
 
               <div class="task-row daily-task flex flex-col sm:flex-row sm:items-center justify-between p-4 rounded-2xl border border-slate-200 bg-white transition-all hover:border-slate-300 gap-4" data-task-id="task_engage">
                 <div class="flex items-start sm:items-center gap-4 flex-1 min-w-0">
-                  <button class="check-btn mt-0.5 sm:mt-0 shrink-0 w-6 h-6 rounded-full border-2 border-slate-300 flex items-center justify-center bg-white text-transparent focus:outline-none">
+                  <button class="check-btn mt-0.5 sm:mt-0 shrink-0 w-6 h-6 rounded-full border-2 border-slate-300 flex items-center justify-center bg-white text-transparent focus:outline-none" onclick="toggleTask('task_engage', 'daily_task3_title')">
                     <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg>
                   </button>
                   <div class="min-w-0">
@@ -223,7 +223,7 @@
                     <div class="mt-1 text-[11px] text-slate-500 flex flex-wrap items-center gap-2">
                       <span class="text-emerald-600 font-semibold" data-i18n="daily_task3_reward">Reward: Engage Points</span>
                       <span class="hidden sm:inline text-slate-300">|</span>
-                      <button class="text-slate-500 underline hover:text-slate-800 detail-btn" data-detail="engage" data-i18n="btn_guide">View Guide</button>
+                      <button class="text-slate-500 underline hover:text-slate-800" onclick="openDetail('engage')" data-i18n="btn_guide">View Guide</button>
                     </div>
                   </div>
                 </div>
@@ -243,12 +243,12 @@
                 </div>
               </div>
               
-              <button id="btnSubRequireLogin" class="shrink-0 w-full sm:w-auto rounded-xl bg-discord px-5 py-3 text-xs font-bold text-white shadow-sm hover:bg-[#4752C4] transition-colors" data-i18n="sub_btn_connect">
+              <button id="btnSubRequireLogin" onclick="loginWithDiscord()" class="shrink-0 w-full sm:w-auto rounded-xl bg-discord px-5 py-3 text-xs font-bold text-white shadow-sm hover:bg-[#4752C4] transition-colors" data-i18n="sub_btn_connect">
                 Connect Discord First
               </button>
 
               <label id="toggleSubWrapper" class="is-hidden relative inline-flex items-center justify-center sm:justify-start w-full sm:w-auto cursor-pointer shrink-0">
-                <input type="checkbox" id="toggleReminder" class="sr-only peer">
+                <input type="checkbox" id="toggleReminder" class="sr-only peer" onchange="toggleSubscription()">
                 <div class="w-11 h-6 bg-slate-600 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] sm:after:left-[2px] after:left-[calc(50%-18px)] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-emerald-500 shadow-inner"></div>
                 <span class="ml-3 text-xs font-bold text-slate-300" id="subStatusText" data-i18n="sub_status_off">Off</span>
               </label>
@@ -268,7 +268,7 @@
             <div class="space-y-3 relative z-10" id="periodicTaskContainer">
               <div class="task-row periodic-task flex flex-col sm:flex-row sm:items-center justify-between p-4 rounded-2xl border border-indigo-100 bg-indigo-50/30 transition-all hover:border-indigo-200 gap-4" data-task-id="task_zealy">
                 <div class="flex items-start sm:items-center gap-4 flex-1 min-w-0 pr-4">
-                  <button class="check-btn mt-0.5 sm:mt-0 shrink-0 w-6 h-6 rounded-full border-2 border-slate-300 flex items-center justify-center bg-white text-transparent focus:outline-none">
+                  <button class="check-btn mt-0.5 sm:mt-0 shrink-0 w-6 h-6 rounded-full border-2 border-slate-300 flex items-center justify-center bg-white text-transparent focus:outline-none" onclick="toggleTask('task_zealy', 'periodic_task1_title')">
                     <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg>
                   </button>
                   <div class="min-w-0">
@@ -276,7 +276,12 @@
                     <div class="mt-1 text-[11px] text-slate-500 flex flex-wrap items-center gap-2">
                       <span class="text-indigo-600 font-semibold" data-i18n="periodic_task1_reward">Reward: Spot USDT</span>
                       <span class="hidden sm:inline text-slate-300">|</span>
-                      <button class="text-slate-500 underline hover:text-slate-800 detail-btn" data-detail="zealy" data-i18n="btn_guide">View Details</button>
+                      <div class="flex items-center gap-1 text-slate-400">
+                        <svg class="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>
+                        <span data-i18n="periodic_task1_time">Feb 21, 10:00 PM - Mar 21, 12:00 PM</span>
+                      </div>
+                      <span class="hidden sm:inline text-slate-300">|</span>
+                      <button class="text-slate-500 underline hover:text-slate-800" onclick="openDetail('zealy')" data-i18n="btn_guide">View Details</button>
                     </div>
                   </div>
                 </div>
@@ -285,7 +290,7 @@
 
               <div class="task-row periodic-task flex flex-col sm:flex-row sm:items-center justify-between p-4 rounded-2xl border border-indigo-100 bg-indigo-50/30 transition-all hover:border-indigo-200 gap-4" data-task-id="task_check">
                 <div class="flex items-start sm:items-center gap-4 flex-1 min-w-0 pr-4">
-                  <button class="check-btn mt-0.5 sm:mt-0 shrink-0 w-6 h-6 rounded-full border-2 border-slate-300 flex items-center justify-center bg-white text-transparent focus:outline-none">
+                  <button class="check-btn mt-0.5 sm:mt-0 shrink-0 w-6 h-6 rounded-full border-2 border-slate-300 flex items-center justify-center bg-white text-transparent focus:outline-none" onclick="toggleTask('task_check', 'periodic_task2_title')">
                     <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg>
                   </button>
                   <div class="min-w-0">
@@ -293,11 +298,38 @@
                     <div class="mt-1 text-[11px] text-slate-500 flex flex-wrap items-center gap-2">
                       <span class="text-indigo-600 font-semibold" data-i18n="periodic_task2_reward">Reward: Up to 25K Tokens</span>
                       <span class="hidden sm:inline text-slate-300">|</span>
-                      <button class="text-slate-500 underline hover:text-slate-800 detail-btn" data-detail="tscheck" data-i18n="btn_guide">View Details</button>
+                      <div class="flex items-center gap-1 text-slate-400">
+                        <svg class="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>
+                        <span data-i18n="periodic_task2_time">Feb 24 - Mar 20, 2026</span>
+                      </div>
+                      <span class="hidden sm:inline text-slate-300">|</span>
+                      <button class="text-slate-500 underline hover:text-slate-800" onclick="openDetail('tscheck')" data-i18n="btn_guide">View Details</button>
                     </div>
                   </div>
                 </div>
                 <button class="shrink-0 w-full sm:w-auto rounded-xl bg-white border border-slate-200 px-5 py-2.5 text-[11px] font-bold text-slate-700 hover:bg-slate-50 transition-colors shadow-sm" onclick="window.open('https://oshit.io/check/','_blank')" data-i18n="btn_go_link">Open Link</button>
+              </div>
+
+              <div class="task-row periodic-task flex flex-col sm:flex-row sm:items-center justify-between p-4 rounded-2xl border border-indigo-100 bg-indigo-50/30 transition-all hover:border-indigo-200 gap-4" data-task-id="task_scoreboard">
+                <div class="flex items-start sm:items-center gap-4 flex-1 min-w-0 pr-4">
+                  <button class="check-btn mt-0.5 sm:mt-0 shrink-0 w-6 h-6 rounded-full border-2 border-slate-300 flex items-center justify-center bg-white text-transparent focus:outline-none" onclick="toggleTask('task_scoreboard', 'periodic_task3_title')">
+                    <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg>
+                  </button>
+                  <div class="min-w-0">
+                    <div class="text-sm font-bold text-slate-900 truncate task-title" data-i18n="periodic_task3_title">3. Scoreboard Ranking</div>
+                    <div class="mt-1 text-[11px] text-slate-500 flex flex-wrap items-center gap-2">
+                      <span class="text-indigo-600 font-semibold" data-i18n="periodic_task3_reward">Reward: Share >1500 USDT</span>
+                      <span class="hidden sm:inline text-slate-300">|</span>
+                      <div class="flex items-center gap-1 text-slate-400">
+                        <svg class="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>
+                        <span data-i18n="periodic_task3_time">Jan 7 – Apr 6, 2026</span>
+                      </div>
+                      <span class="hidden sm:inline text-slate-300">|</span>
+                      <button class="text-slate-500 underline hover:text-slate-800" onclick="openDetail('scoreboard')" data-i18n="btn_guide">View Details</button>
+                    </div>
+                  </div>
+                </div>
+                <button class="shrink-0 w-full sm:w-auto rounded-xl bg-white border border-slate-200 px-5 py-2.5 text-[11px] font-bold text-slate-700 hover:bg-slate-50 transition-colors shadow-sm" onclick="window.open('https://oshit.io/scoreboard/','_blank')" data-i18n="btn_go_link">Open Link</button>
               </div>
             </div>
           </div>
@@ -311,8 +343,8 @@
                 </div>
               </div>
               <div class="flex items-center gap-1 p-1 bg-slate-100 rounded-lg w-fit shrink-0">
-                <button id="btnDevicePC" class="px-4 py-1.5 text-xs font-bold rounded-md bg-white text-slate-900 shadow-sm transition-all" data-i18n="btn_pc_guide">PC Guide</button>
-                <button id="btnDeviceMobile" class="px-4 py-1.5 text-xs font-bold rounded-md text-slate-500 hover:text-slate-900 transition-all bg-transparent" data-i18n="btn_mobile_guide">Mobile Guide</button>
+                <button id="btnDevicePC" class="px-4 py-1.5 text-xs font-bold rounded-md bg-white text-slate-900 shadow-sm transition-all" onclick="switchDeviceGuide('pc')" data-i18n="btn_pc_guide">PC Guide</button>
+                <button id="btnDeviceMobile" class="px-4 py-1.5 text-xs font-bold rounded-md text-slate-500 hover:text-slate-900 transition-all bg-transparent" onclick="switchDeviceGuide('mobile')" data-i18n="btn_mobile_guide">Mobile Guide</button>
               </div>
             </div>
 
@@ -339,7 +371,7 @@
             <div class="absolute right-0 top-0 w-32 h-32 bg-slate-50 rounded-bl-full pointer-events-none"></div>
             
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 relative z-10">
-              <button id="btnOpenDiscordModal" type="button" class="group rounded-2xl border border-indigo-100 bg-indigo-50/40 p-5 text-left hover:bg-indigo-50 hover:border-indigo-200 transition-all">
+              <button id="btnOpenDiscordModal" type="button" onclick="openModal('#discordModal')" class="group rounded-2xl border border-indigo-100 bg-indigo-50/40 p-5 text-left hover:bg-indigo-50 hover:border-indigo-200 transition-all">
                 <div class="flex items-center justify-between">
                   <div class="text-sm font-bold text-indigo-900" data-i18n="branch2_title">Branch 2: Discord Dailies</div>
                   <div class="rounded-full bg-white px-2 py-1 text-[10px] font-bold text-indigo-500 shadow-sm" data-i18n="branch2_badge">100% Zero-Cost</div>
@@ -352,7 +384,7 @@
                 </div>
               </button>
 
-              <button id="btnOpenWithdrawModal" type="button" class="group rounded-2xl border border-slate-200 bg-slate-50 p-5 text-left hover:bg-slate-100 hover:border-slate-300 transition-all">
+              <button id="btnOpenWithdrawModal" type="button" onclick="openModal('#withdrawModal'); window.dispatchEvent(new Event('resize'));" class="group rounded-2xl border border-slate-200 bg-slate-50 p-5 text-left hover:bg-slate-100 hover:border-slate-300 transition-all">
                 <div class="text-sm font-bold text-slate-900" data-i18n="wd_title">Ultimate Guide: How to withdraw Discord rewards?</div>
                 <div class="mt-2 text-[11px] text-slate-600 leading-relaxed pr-6" data-i18n-html="wd_desc">
                   Most Discord rewards are issued as <span class="font-semibold text-slate-900">Engage Points</span>. (Rate: 1 Point = 500 Tokens).
@@ -394,23 +426,23 @@
 
     <nav class="fixed bottom-0 left-0 right-0 z-40 safe-bottom md:hidden pointer-events-none">
       <div class="glass border-t border-slate-200/70 p-4 pointer-events-auto">
-        <button id="btnOpenTokenBottom" type="button"
+        <button id="btnOpenTokenBottom" type="button" onclick="openToken()"
                 class="w-full rounded-2xl bg-emerald-500 px-4 py-3.5 text-base font-bold text-white shadow-[0_4px_20px_-4px_rgba(16,185,129,0.5)] hover:bg-emerald-600 active:scale-[0.98] transition-all flex justify-center items-center gap-2" data-i18n="btn_go_token_mobile">
           Execute on Website Now
         </button>
       </div>
     </nav>
 
-    <div id="modalMask" class="is-hidden fixed inset-0 z-[60] bg-slate-900/60 backdrop-blur-sm transition-opacity"></div>
+    <div id="modalMask" class="is-hidden fixed inset-0 z-[60] bg-slate-900/60 backdrop-blur-sm transition-opacity" onclick="closeAllModals()"></div>
 
-    <div id="detailModal" class="is-hidden fixed inset-0 z-[80] flex items-center justify-center p-4">
-      <div id="detailCard" class="w-full max-w-md rounded-3xl border border-slate-100 bg-white shadow-2xl flex flex-col max-h-[85vh] overflow-hidden">
+    <div id="detailModal" class="is-hidden fixed inset-0 z-[80] flex items-center justify-center p-4 pointer-events-none">
+      <div id="detailCard" class="w-full max-w-md rounded-3xl border border-slate-100 bg-white shadow-2xl flex flex-col max-h-[85vh] overflow-hidden pointer-events-auto">
         <div class="flex items-start justify-between gap-3 border-b border-slate-100 p-5 bg-slate-50/50 shrink-0">
           <div class="min-w-0">
             <div id="detailTitle" class="text-base font-bold text-slate-900"></div>
             <div id="detailSub" class="mt-0.5 text-[12px] font-medium text-slate-500"></div>
           </div>
-          <button class="btnCloseModal rounded-full p-1.5 hover:bg-slate-200 text-slate-400 hover:text-slate-600 transition-colors" data-target="detailModal">
+          <button class="btnCloseModal rounded-full p-1.5 hover:bg-slate-200 text-slate-400 hover:text-slate-600 transition-colors" onclick="closeModal('detailModal')">
             <svg class="w-5 h-5 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"></path></svg>
           </button>
         </div>
@@ -421,8 +453,8 @@
       </div>
     </div>
 
-    <div id="discordModal" class="is-hidden fixed inset-0 z-[70] flex items-center justify-center p-4">
-      <div id="discordCard" class="w-full max-w-2xl rounded-3xl border border-slate-100 bg-white shadow-2xl flex flex-col max-h-[85vh] overflow-hidden">
+    <div id="discordModal" class="is-hidden fixed inset-0 z-[70] flex items-center justify-center p-4 pointer-events-none">
+      <div id="discordCard" class="w-full max-w-2xl rounded-3xl border border-slate-100 bg-white shadow-2xl flex flex-col max-h-[85vh] overflow-hidden pointer-events-auto">
         <div class="flex items-start justify-between gap-3 border-b border-slate-100 p-5 bg-slate-50/50 shrink-0">
           <div>
             <div class="text-base font-bold text-slate-900 flex items-center gap-2">
@@ -431,7 +463,7 @@
             </div>
             <div class="mt-0.5 text-[12px] font-medium text-slate-500" data-i18n="btn_guide">Click buttons below for guides</div>
           </div>
-          <button class="btnCloseModal rounded-full p-1.5 hover:bg-slate-200 text-slate-400 hover:text-slate-600 transition-colors" data-target="discordModal">
+          <button class="btnCloseModal rounded-full p-1.5 hover:bg-slate-200 text-slate-400 hover:text-slate-600 transition-colors" onclick="closeModal('discordModal')">
             <svg class="w-5 h-5 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"></path></svg>
           </button>
         </div>
@@ -441,39 +473,39 @@
               <div class="text-sm font-semibold" data-i18n="cr_title">Creator Hub</div>
               <div class="mt-1 text-[11px] text-slate-500" data-i18n="cr_badge">Reward: 500-5000 Tokens Daily</div>
               <div class="mt-2 text-[12px] text-slate-600 line-clamp-2" data-i18n="cr_desc">Tweet using official AI meme generator.</div>
-              <button class="detail-btn mt-4 w-full rounded-xl bg-slate-100 px-3 py-2 text-xs font-semibold text-slate-700 hover:bg-slate-200 transition-colors" data-detail="creator" data-i18n="cr_link">Image Guide</button>
+              <button class="detail-btn mt-4 w-full rounded-xl bg-slate-100 px-3 py-2 text-xs font-semibold text-slate-700 hover:bg-slate-200 transition-colors" onclick="openDetail('creator')" data-i18n="cr_link">Image Guide</button>
             </div>
             <div class="rounded-2xl border border-slate-200 bg-white p-4 flex flex-col shadow-sm">
               <div class="text-sm font-semibold" data-i18n="ht_title">SHIT Hunter</div>
               <div class="mt-1 text-[11px] text-slate-500" data-i18n="ht_badge">Reward: Token / USDT / Points</div>
               <div class="mt-2 text-[12px] text-slate-600 line-clamp-2" data-i18n="ht_desc">Fast hands win! 200+ blind boxes dropped daily in channel.</div>
-              <button class="detail-btn mt-4 w-full rounded-xl bg-slate-100 px-3 py-2 text-xs font-semibold text-slate-700 hover:bg-slate-200 transition-colors" data-detail="hunter" data-i18n="ht_link">Image Guide</button>
+              <button class="detail-btn mt-4 w-full rounded-xl bg-slate-100 px-3 py-2 text-xs font-semibold text-slate-700 hover:bg-slate-200 transition-colors" onclick="openDetail('hunter')" data-i18n="ht_link">Image Guide</button>
             </div>
             <div class="rounded-2xl border border-slate-200 bg-white p-4 flex flex-col shadow-sm">
               <div class="text-sm font-semibold" data-i18n="rb_title">Rumble & Lottery</div>
               <div class="mt-1 text-[11px] text-slate-500" data-i18n="rb_badge">Reward: 130K Daily Pool</div>
               <div class="mt-2 text-[12px] text-slate-600 line-clamp-2" data-i18n="rb_desc">Daily Rumble gives 30K; Faction Battle shares 100K daily!</div>
-              <button class="detail-btn mt-4 w-full rounded-xl bg-slate-100 px-3 py-2 text-xs font-semibold text-slate-700 hover:bg-slate-200 transition-colors" data-detail="rumble" data-i18n="rb_link">Image Guide</button>
+              <button class="detail-btn mt-4 w-full rounded-xl bg-slate-100 px-3 py-2 text-xs font-semibold text-slate-700 hover:bg-slate-200 transition-colors" onclick="openDetail('rumble')" data-i18n="rb_link">Image Guide</button>
             </div>
             <div class="rounded-2xl border border-slate-200 bg-white p-4 flex flex-col shadow-sm">
               <div class="text-sm font-semibold" data-i18n="eg_title">Engage Socials</div>
               <div class="mt-1 text-[11px] text-slate-500" data-i18n="eg_badge">Reward: Engage Points</div>
               <div class="mt-2 text-[12px] text-slate-600 line-clamp-2" data-i18n="eg_desc">Bind Engage account, RT/Like/Comment on official tweets.</div>
-              <button class="detail-btn mt-4 w-full rounded-xl bg-slate-100 px-3 py-2 text-xs font-semibold text-slate-700 hover:bg-slate-200 transition-colors" data-detail="engage" data-i18n="eg_link">Image Guide</button>
+              <button class="detail-btn mt-4 w-full rounded-xl bg-slate-100 px-3 py-2 text-xs font-semibold text-slate-700 hover:bg-slate-200 transition-colors" onclick="openDetail('engage')" data-i18n="eg_link">Image Guide</button>
             </div>
           </div>
         </div>
       </div>
     </div>
 
-    <div id="withdrawModal" class="is-hidden fixed inset-0 z-[70] flex items-center justify-center p-4 sm:p-8">
-      <div id="withdrawCard" class="w-full max-w-4xl rounded-3xl border border-slate-100 bg-white shadow-2xl flex flex-col max-h-full overflow-hidden">
+    <div id="withdrawModal" class="is-hidden fixed inset-0 z-[70] flex items-center justify-center p-4 sm:p-8 pointer-events-none">
+      <div id="withdrawCard" class="w-full max-w-4xl rounded-3xl border border-slate-100 bg-white shadow-2xl flex flex-col max-h-full overflow-hidden pointer-events-auto">
         <div class="flex items-start justify-between gap-3 border-b border-slate-100 p-5 bg-slate-50/50 shrink-0">
           <div>
             <div class="text-base font-bold text-slate-900" data-i18n="wd_title">Ultimate Guide: How to withdraw Discord rewards?</div>
             <div class="mt-0.5 text-[12px] font-medium text-slate-500" data-i18n="wd_hint">Click any image to enlarge. Swipe left/right to navigate steps.</div>
           </div>
-          <button class="btnCloseModal rounded-full p-1.5 hover:bg-slate-200 text-slate-400 hover:text-slate-600 transition-colors" data-target="withdrawModal">
+          <button class="btnCloseModal rounded-full p-1.5 hover:bg-slate-200 text-slate-400 hover:text-slate-600 transition-colors" onclick="closeModal('withdrawModal')">
             <svg class="w-5 h-5 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"></path></svg>
           </button>
         </div>
@@ -497,137 +529,85 @@
       </div>
     </div>
 
-    <div id="lightbox" class="is-hidden fixed inset-0 z-[100] bg-slate-900/95 backdrop-blur-md flex items-center justify-center p-4 sm:p-10 cursor-zoom-out transition-opacity duration-300">
-      <img id="lightboxImg" src="" class="max-w-full max-h-full object-contain rounded-xl shadow-2xl" draggable="false" />
+    <div id="lightbox" class="is-hidden fixed inset-0 z-[100] bg-slate-900/95 backdrop-blur-md flex items-center justify-center p-4 sm:p-10 cursor-zoom-out transition-opacity duration-300" onclick="closeAllModals()">
+      <img id="lightboxImg" src="" class="max-w-full max-h-full object-contain rounded-xl shadow-2xl" draggable="false" onclick="event.stopPropagation()" />
       <div class="absolute bottom-6 text-white/50 text-xs tracking-wider" data-i18n="lightbox_hint">Click anywhere to close</div>
+    </div>
+
+    <div id="discordToast" class="toast-hide fixed bottom-6 right-6 sm:bottom-10 sm:right-10 bg-[#313338] text-[#dbdee1] p-4 rounded-xl shadow-[0_10px_40px_-10px_rgba(0,0,0,0.5)] flex gap-3 w-80 z-[110] border border-white/5 pointer-events-none">
+      <div class="w-10 h-10 rounded-full bg-emerald-500 shrink-0 flex items-center justify-center text-white">
+        <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg>
+      </div>
+      <div class="flex-1 min-w-0">
+        <div class="flex items-baseline justify-between gap-2">
+          <span class="font-bold text-white text-[13px]" data-i18n="toast_sender">System Bot</span>
+          <span class="text-[10px] text-[#949ba4]" id="toastTime">Just now</span>
+        </div>
+        <div class="text-[12px] mt-1 leading-snug" id="discordToastMsg">Task Verified!</div>
+      </div>
+    </div>
+    
+    <div id="systemToast" class="toast-hide fixed bottom-6 left-1/2 -translate-x-1/2 sm:translate-x-0 sm:left-auto sm:right-10 sm:bottom-10 bg-slate-900 text-white p-4 rounded-2xl shadow-2xl flex items-center gap-3 w-[90vw] sm:w-80 z-[110] pointer-events-none">
+      <div class="w-8 h-8 rounded-full bg-indigo-500 shrink-0 flex items-center justify-center">
+        <svg class="w-4 h-4 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" /></svg>
+      </div>
+      <div class="flex-1 min-w-0">
+        <div class="font-bold text-[13px]" data-i18n="toast_sub_title">Subscription Active</div>
+        <div class="text-[11px] text-slate-300 mt-0.5 leading-snug" data-i18n="toast_sub_desc">Our bot will DM you on Discord at 20:00 daily if tasks are incomplete.</div>
+      </div>
     </div>
 
   </div>
 
 <script>
-  window.translations = window.translations || {};
-  window.translations.en = {
-    page_title: "OSHIT — Interactive Task Board",
-    header_desc: "Understand in 1 min, Earn instantly",
-    btn_guide: "View Guide",
-    btn_go_token: "Go to /token",
-    btn_go_token_short: "Execute",
-    btn_go_link: "Open Link",
-    btn_discord_login: "Connect",
-    btn_go_token_mobile: "Execute on Website Now",
-    hero_title: "You come to OSHIT to get <span class=\"text-slate-900\">Verifiable</span> Rewards",
-    hero_desc: "Skip the complex whitepapers. We provide a task checklist with clear ROI expectations and minimalist execution steps. <span class=\"font-semibold text-slate-900\">Complete the main quest to unlock, then claim your value.</span>",
-    banner_title: "Core Expected Returns",
-    banner_amount: "Est. monthly yield <span class=\"text-yellow-300\">10–50U</span>",
-    banner_sub1: "+ Massive SHIT Token via Check-in",
-    banner_sub2: "and share of Quarterly Pool (>1500U)",
-    check1_title: "Real Rewards", check1_desc: "USDT / Tokens (Directly distributed)",
-    check2_title: "Compound Growth", check2_desc: "Accumulate XP to upgrade roles",
-    check3_title: "Points = Allocation", check3_desc: "Points determine pool share",
-    
-    board_title: "Execution Board",
-    board_desc: "Track your yield. Daily tasks trigger reminders; periodic tasks are tracked separately.",
-    board_reset: "(Resets daily at 00:00 UTC / 08:00 BJT)",
-    board_progress: "Daily Progress",
-    board_daily_title: "Daily Tasks",
-    board_periodic_title: "Periodic High-Yield Events",
-    board_periodic_desc: "These are cycle-based events. Completion status is saved permanently until you untick them.",
-
-    daily_task1_title: "1. Main Quest: Complete TS (20x)", daily_task1_reward: "Reward: Unlock Base",
-    daily_task2_title: "2. Discord: Post via Creator Hub", daily_task2_reward: "Reward: Daily 500-5000 Tokens",
-    daily_task3_title: "3. Discord: Engage Socials", daily_task3_reward: "Reward: Engage Points",
-    
-    periodic_task1_title: "1. Rank up on Zealy", periodic_task1_reward: "Reward: Spot USDT",
-    periodic_task2_title: "2. Verify TS Check-in", periodic_task2_reward: "Reward: Up to 25K Tokens",
-    
-    sub_title: "Smart Daily Reminder",
-    sub_desc: "Connect Discord and subscribe to get a direct message from our Bot if you haven't completed your daily tasks by <span class=\"font-bold text-white\">20:00 (UTC+8)</span>.",
-    sub_btn_connect: "Connect Discord First",
-    sub_status_on: "On", sub_status_off: "Off",
-    toast_sender: "AirdropHub Bot",
-    toast_msg: "Successfully verified <span class='font-bold text-white'>{0}</span>! Reward criteria met.",
-    toast_sub_title: "Subscription Active",
-    toast_sub_desc: "Our bot will DM you on Discord at 20:00 daily if tasks are incomplete.",
-
-    ts_title: "Main Quest: Take a SHIT (TS) Guide",
-    ts_desc: "This is the prerequisite for all rewards. Go to <span class=\"font-semibold text-slate-900\">oshit.io/token</span> and follow the guide.",
-    btn_pc_guide: "PC Guide",
-    btn_mobile_guide: "Mobile Guide",
-    ts_hint: "Hint: Don't stop because of Gas costs. After TS, check below to double your returns.",
-    branch2_title: "Branch 2: Discord Dailies",
-    branch2_badge: "100% Zero-Cost",
-    branch2_desc: "Beyond on-chain ops, daily community engagement yields massive Tokens, Points, and lucky draws. True zero-cost, high-return.",
-    cr_title: "Creator Hub", cr_badge: "Reward: 500-5000 Tokens Daily", cr_desc: "Tweet using official AI meme generator.", cr_link: "Image Guide",
-    ht_title: "SHIT Hunter", ht_badge: "Reward: Token / USDT / Points", ht_desc: "Fast hands win! 200+ blind boxes dropped daily in channel.", ht_link: "Image Guide",
-    rb_title: "Rumble & Lottery", rb_badge: "Reward: 130K Daily Pool", rb_desc: "Daily Rumble gives 30K; Faction Battle shares 100K daily!", rb_link: "Image Guide",
-    eg_title: "Engage Socials", eg_badge: "Reward: Engage Points", eg_desc: "Bind Engage account, RT/Like/Comment on official tweets.", eg_link: "Image Guide",
-    wd_title: "Ultimate Guide: How to withdraw Discord rewards?",
-    wd_desc: "Most Discord rewards are issued as <span class=\"font-semibold text-slate-900\">Engage Points</span>. (Rate: 1 Point = 500 Tokens).",
-    wd_hint: "Click any image to enlarge. Swipe left/right to navigate steps.",
-    lightbox_hint: "Click anywhere to close",
-    
-    slides1_pc: [
-      { src: "token1.png", title: "Step 1 — Open Website", caption: "Enter the TS page (transactions occur on official site)" },
-      { src: "token2.png", title: "Step 2 — Connect Wallet", caption: "Connect Solana wallet, ensure small SOL balance for gas" },
-      { src: "token3.png", title: "Step 3 — Take a SHIT", caption: "Click the button on the website to execute transaction" },
-      { src: "token4.png", title: "Step 4 — Complete 20x", caption: "Follow rules to complete (highly recommended to do 20x at once)" }
-    ],
-    slides1_mobile: [
-      { src: "m_token1.png", title: "Step 1 — Open via Wallet Browser", caption: "Enter oshit.io/token in your mobile wallet's DApp browser." },
-      { src: "m_token2.png", title: "Step 2 — Connect Mobile Wallet", caption: "Approve connection to your Solana wallet on mobile." },
-      { src: "m_token3.png", title: "Step 3 — Take a SHIT", caption: "Tap the main button to initiate the transaction." },
-      { src: "m_token4.png", title: "Step 4 — Complete 20x", caption: "Sign the transaction. Recommended to complete 20x." }
-    ],
-    slides2: [
-      { src: "point1.png", title: "Step 1 — Check Points", caption: "Check if you already have engage points." },
-      { src: "point2.png", title: "Step 2 — Redeem Code", caption: "Go to marketplace to redeem SHIT Code." },
-      { src: "point3.png", title: "Step 3 — Open Ticket", caption: "Go to support ticket channel." },
-      { src: "point4.png", title: "Step 4 — Fill Information", caption: "Fill in your SHIT Code (1 pt = 500 Tokens)." },
-      { src: "point5.png", title: "Step 5 — Forward & Wait", caption: "Forward details to ticket channel, wait for admin issuance." },
-      { src: "point6.png", title: "Step 6 — Open Bonus", caption: "Go to oshit.io/token bonus page." },
-      { src: "point7.png", title: "Step 7 — Verify Tx", caption: "Input SHIT Code and execute transaction to withdraw real tokens." }
-    ],
-    details: {
-      zealy: {
-        title: "Zealy Tasks", sub: "Direct USDT Leaderboard",
-        body: `<ul class="list-disc pl-5 space-y-1.5 marker:text-emerald-500"><li>Daily Twitter interactions</li><li>Take a SHIT on-chain tasks</li></ul><div class="mt-4 rounded-lg bg-emerald-50 p-3 text-[12px] text-emerald-800 border border-emerald-100"><b>Core Advantage:</b> Low barrier to entry and currently very few participants. Extremely easy to rank high and earn Spot U.</div>`,
-        actions: [{ text: "Open Zealy Now", kind: "primary", url: "https://zealy.io/cw/oshit/" }]
-      },
-      tscheck: {
-        title: "TS Check-in Details", sub: "Cost Hedging Path",
-        body: `<div><b>Rules:</b></div><ul class="mt-2 list-disc pl-5 space-y-1.5 marker:text-sky-500"><li>Complete 5, 10, or 20 on-chain interactions in a cycle</li><li>Max payout is a one-time <b>25K SHIT Token</b></li></ul><div class="mt-4 rounded-lg bg-slate-50 p-3 text-[12px] text-slate-600 border border-slate-200"><b>Target:</b> Combined with this reward, your Main Quest TS Gas costs are perfectly covered.</div>`,
-        actions: [{ text: "Check-in to Claim", kind: "primary", url: "https://oshit.io/check/" }]
-      },
-      creator: {
-        title: "Creator Hub Guide", sub: "Tweet for Token Salary",
-        body: `<div class="space-y-2"><div><b>How to play:</b> Tweet using official OSHIT memes.</div><div><b>Submission:</b> Post your tweet link in the Discord <code>image-creation</code> channel.</div></div><div class="mt-6 space-y-4"><div class="text-[13px] font-bold text-slate-900 border-b border-slate-100 pb-1">Visual Guide</div><div class="space-y-2"><div class="text-[12px] text-slate-600 font-medium">1. Generate image and tweet</div><div class="rounded-xl border border-slate-200 overflow-hidden bg-slate-50"><img src="creator1.png" class="w-full h-auto object-cover cursor-zoom-in hover:opacity-90 transition-opacity" onerror="this.outerHTML='<div class=\\'flex aspect-video w-full items-center justify-center bg-slate-100 text-slate-400 text-xs border border-dashed border-slate-300\\'>[Image Missing]</div>'"></div></div><div class="space-y-2"><div class="text-[12px] text-slate-600 font-medium">2. Paste link in Discord</div><div class="rounded-xl border border-slate-200 overflow-hidden bg-slate-50"><img src="creator2.png" class="w-full h-auto object-cover cursor-zoom-in hover:opacity-90 transition-opacity" onerror="this.outerHTML='<div class=\\'flex aspect-video w-full items-center justify-center bg-slate-100 text-slate-400 text-xs border border-dashed border-slate-300\\'>[Image Missing]</div>'"></div></div></div>`,
-        actions: [{ text: "Open Official Generator", kind: "primary", url: "https://oshit.io/creator/" }]
-      },
-      hunter: {
-        title: "SHIT Hunter Guide", sub: "Grab Channel Drops",
-        body: `<div class="space-y-2"><div><b>Location:</b> Only in Discord <code>generate</code> channel.</div></div><div class="mt-6 space-y-4"><div class="text-[13px] font-bold text-slate-900 border-b border-slate-100 pb-1">Visual Guide</div><div class="space-y-2"><div class="text-[12px] text-slate-600 font-medium">1. Watch the channel and click to grab</div><div class="rounded-xl border border-slate-200 overflow-hidden bg-slate-50"><img src="hunter1.png" class="w-full h-auto object-cover cursor-zoom-in hover:opacity-90 transition-opacity" onerror="this.outerHTML='<div class=\\'flex aspect-video w-full items-center justify-center bg-slate-100 text-slate-400 text-xs border border-dashed border-slate-300\\'>[Image Missing]</div>'"></div></div><div class="space-y-2"><div class="text-[12px] text-slate-600 font-medium">2. Check system allocated rewards</div><div class="rounded-xl border border-slate-200 overflow-hidden bg-slate-50"><img src="hunter2.png" class="w-full h-auto object-cover cursor-zoom-in hover:opacity-90 transition-opacity" onerror="this.outerHTML='<div class=\\'flex aspect-video w-full items-center justify-center bg-slate-100 text-slate-400 text-xs border border-dashed border-slate-300\\'>[Image Missing]</div>'"></div></div></div>`,
-        actions: [{ text: "Got it", kind: "ghost" }]
-      },
-      rumble: {
-        title: "Rumble & Lottery Guide", sub: "Factions & Daily Draws",
-        body: `<div class="space-y-2"><div><b>Daily Rumble:</b> Send command to enter, share 30K Tokens.</div><div><b>Faction Battle:</b> Send your TS completion screenshot to <code>take-a-shit-luck</code> for the daily 100K draw.</div></div><div class="mt-6 space-y-4"><div class="text-[13px] font-bold text-slate-900 border-b border-slate-100 pb-1">Visual Guide</div><div class="space-y-2"><div class="text-[12px] text-slate-600 font-medium">1. Participate in channel Rumble</div><div class="rounded-xl border border-slate-200 overflow-hidden bg-slate-50"><img src="rumble1.png" class="w-full h-auto object-cover cursor-zoom-in hover:opacity-90 transition-opacity" onerror="this.outerHTML='<div class=\\'flex aspect-video w-full items-center justify-center bg-slate-100 text-slate-400 text-xs border border-dashed border-slate-300\\'>[Image Missing]</div>'"></div></div><div class="space-y-2"><div class="text-[12px] text-slate-600 font-medium">2. Upload screenshot & choose faction</div><div class="rounded-xl border border-slate-200 overflow-hidden bg-slate-50"><img src="rumble2.png" class="w-full h-auto object-cover cursor-zoom-in hover:opacity-90 transition-opacity" onerror="this.outerHTML='<div class=\\'flex aspect-video w-full items-center justify-center bg-slate-100 text-slate-400 text-xs border border-dashed border-slate-300\\'>[Image Missing]</div>'"></div></div></div>`,
-        actions: [{ text: "Got it", kind: "ghost" }]
-      },
-      engage: {
-        title: "Engage Socials Guide", sub: "Bind Twitter for Points",
-        body: `<div class="space-y-2"><div><b>Core Gameplay:</b> Go to <code>rank-level</code> channel, type <code>/set twitter</code> and enter your X (Twitter) ID. Visit <a href="https://www.engages.io" target="_blank" class="text-blue-500 hover:underline">engages.io</a> to link Discord and X. Interact with official OSHIT tweets to get points.</div></div><div class="mt-6 space-y-4"><div class="text-[13px] font-bold text-slate-900 border-b border-slate-100 pb-1">Visual Guide</div><div class="space-y-2"><div class="text-[12px] text-slate-600 font-medium">1. Bind Twitter ID in rank-level</div><div class="rounded-xl border border-slate-200 overflow-hidden bg-slate-50"><img src="engage1.png" class="w-full h-auto object-cover cursor-zoom-in hover:opacity-90 transition-opacity" onerror="this.outerHTML='<div class=\\'flex aspect-video w-full items-center justify-center bg-slate-100 text-slate-400 text-xs border border-dashed border-slate-300\\'>[Image Missing]</div>'"></div></div><div class="space-y-2"><div class="text-[12px] text-slate-600 font-medium">2. Connect accounts on engages.io</div><div class="rounded-xl border border-slate-200 overflow-hidden bg-slate-50"><img src="engage2.png" class="w-full h-auto object-cover cursor-zoom-in hover:opacity-90 transition-opacity" onerror="this.outerHTML='<div class=\\'flex aspect-video w-full items-center justify-center bg-slate-100 text-slate-400 text-xs border border-dashed border-slate-300\\'>[Image Missing]</div>'"></div></div><div class="space-y-2"><div class="text-[12px] text-slate-600 font-medium">3. Wait for daily official tweets & interact</div><div class="rounded-xl border border-slate-200 overflow-hidden bg-slate-50"><img src="engage3.png" class="w-full h-auto object-cover cursor-zoom-in hover:opacity-90 transition-opacity" onerror="this.outerHTML='<div class=\\'flex aspect-video w-full items-center justify-center bg-slate-100 text-slate-400 text-xs border border-dashed border-slate-300\\'>[Image Missing]</div>'"></div></div><div class="space-y-2"><div class="text-[12px] text-slate-600 font-medium">4. Click verify button to receive points</div><div class="rounded-xl border border-slate-200 overflow-hidden bg-slate-50"><img src="engage4.png" class="w-full h-auto object-cover cursor-zoom-in hover:opacity-90 transition-opacity" onerror="this.outerHTML='<div class=\\'flex aspect-video w-full items-center justify-center bg-slate-100 text-slate-400 text-xs border border-dashed border-slate-300\\'>[Image Missing]</div>'"></div></div></div>`,
-        actions: [{ text: "Got it", kind: "ghost" }]
-      }
-    }
-  };
-
-  const $ = (sel) => document.querySelector(sel);
-  const on = (id, evt, fn) => { const el = document.getElementById(id); if(el) el.addEventListener(evt, fn); };
-
-  function openToken(){ window.open("https://oshit.io/token", "_blank", "noopener,noreferrer"); }
-
   let currentLang = localStorage.getItem('oshit_lang') || 'en';
   let currentGuideDevice = 'pc';
+
+  // 全局核心函数
+  function openToken() { window.open("https://oshit.io/token", "_blank", "noopener,noreferrer"); }
+
+  function openModal(id) {
+    const mask = document.getElementById("modalMask");
+    const modal = document.querySelector(id);
+    if(mask) mask.classList.remove("is-hidden");
+    if(modal) modal.classList.remove("is-hidden");
+    document.body.style.overflow = "hidden";
+  }
+
+  function closeModal(id) {
+    const modal = document.getElementById(id);
+    if(modal) modal.classList.add("is-hidden");
+    checkMask();
+  }
+
+  function closeAllModals() {
+    const mask = document.getElementById("modalMask");
+    if(mask) mask.classList.add("is-hidden");
+    
+    ["detailModal", "discordModal", "withdrawModal", "lightbox"].forEach(id => {
+      const el = document.getElementById(id);
+      if(el) el.classList.add("is-hidden");
+    });
+    document.body.style.overflow = "";
+  }
+
+  function checkMask() {
+    const m1 = document.getElementById("detailModal");
+    const m2 = document.getElementById("discordModal");
+    const m3 = document.getElementById("withdrawModal");
+    const lb = document.getElementById("lightbox");
+    
+    const isM1Hidden = !m1 || m1.classList.contains("is-hidden");
+    const isM2Hidden = !m2 || m2.classList.contains("is-hidden");
+    const isM3Hidden = !m3 || m3.classList.contains("is-hidden");
+    const isLbHidden = !lb || lb.classList.contains("is-hidden");
+
+    if(isM1Hidden && isM2Hidden && isM3Hidden && isLbHidden) {
+      const mask = document.getElementById("modalMask");
+      if(mask) mask.classList.add("is-hidden");
+      document.body.style.overflow = "";
+    }
+  }
 
   function applyTranslation() {
     if(!window.translations) return;
@@ -637,7 +617,7 @@
     document.documentElement.lang = currentLang === 'zh' ? 'zh-Hans' : 'en';
     document.title = data.page_title || "OSHIT — Interactive Task Board";
 
-    const switchers = [$('#langSwitcher'), $('#langSwitcherMobile')];
+    const switchers = [document.getElementById('langSwitcher'), document.getElementById('langSwitcherMobile')];
     switchers.forEach(el => {
       if(el) el.textContent = currentLang === 'en' ? '中文' : 'EN';
     });
@@ -654,8 +634,8 @@
 
     if(window.carousels) {
       const slides1 = currentGuideDevice === 'pc' ? data.slides1_pc : data.slides1_mobile;
-      if (slides1) window.carousels.c1.updateData(slides1);
-      if (data.slides2) window.carousels.c2.updateData(data.slides2);
+      if (slides1 && window.carousels.c1) window.carousels.c1.updateData(slides1);
+      if (data.slides2 && window.carousels.c2) window.carousels.c2.updateData(data.slides2);
     }
     
     updateProgressUI();
@@ -674,8 +654,8 @@
     const data = window.translations[currentLang];
     if(!data) return;
     
-    const btnPC = $('#btnDevicePC');
-    const btnMobile = $('#btnDeviceMobile');
+    const btnPC = document.getElementById('btnDevicePC');
+    const btnMobile = document.getElementById('btnDeviceMobile');
     
     if(device === 'pc') {
       if(btnPC) btnPC.className = "px-4 py-1.5 text-xs font-bold rounded-md bg-white text-slate-900 shadow-sm transition-all";
@@ -689,10 +669,9 @@
   }
 
   // ==========================================
-  // Discord OAuth2
+  // Discord OAuth2 
   // ==========================================
   const DISCORD_CLIENT_ID = '1476907202047508684'; 
-  
   let isDiscordLoggedIn = false;
   let isSubscribed = localStorage.getItem('isSubscribed') === 'true';
 
@@ -702,7 +681,6 @@
 
     if (accessToken) {
       window.history.replaceState({}, document.title, window.location.pathname + window.location.search);
-      
       fetch('https://discord.com/api/users/@me', {
         headers: { authorization: `${tokenType} ${accessToken}` }
       })
@@ -710,7 +688,6 @@
       .then(response => {
         const { username, avatar, id } = response;
         const avatarUrl = avatar ? `https://cdn.discordapp.com/avatars/${id}/${avatar}.png` : '';
-        
         isDiscordLoggedIn = true;
         localStorage.setItem('discordUser', JSON.stringify({ username, avatarUrl }));
         renderDiscordUI();
@@ -723,13 +700,8 @@
     } else {
       const savedUserStr = localStorage.getItem('discordUser');
       if (savedUserStr) {
-        try {
-          JSON.parse(savedUserStr);
-          isDiscordLoggedIn = true;
-        } catch(e) {
-          localStorage.removeItem('discordUser');
-          isDiscordLoggedIn = false;
-        }
+        try { JSON.parse(savedUserStr); isDiscordLoggedIn = true; } 
+        catch(e) { localStorage.removeItem('discordUser'); isDiscordLoggedIn = false; }
       }
       renderDiscordUI();
     }
@@ -740,18 +712,18 @@
     const oauthUrl = `https://discord.com/api/oauth2/authorize?client_id=${DISCORD_CLIENT_ID}&redirect_uri=${redirectUri}&response_type=token&scope=identify`;
     
     if(window.location.protocol === 'file:') {
-      alert("Error: Discord OAuth2 requires a valid web server (http:// or https://).\nPlease run this via VSCode Live Server or deploy it to test login.");
+      alert("Error: Discord OAuth2 requires a valid web server (http:// or https://).");
       return;
     }
     window.location.href = oauthUrl;
   }
 
   function renderDiscordUI() {
-    const btn = $('#btnDiscordLogin');
-    const userArea = $('#discordUserArea');
-    const btnReqLogin = $('#btnSubRequireLogin');
-    const toggleSub = $('#toggleSubWrapper');
-    const subCheckbox = $('#toggleReminder');
+    const btn = document.getElementById('btnDiscordLogin');
+    const userArea = document.getElementById('discordUserArea');
+    const btnReqLogin = document.getElementById('btnSubRequireLogin');
+    const toggleSub = document.getElementById('toggleSubWrapper');
+    const subCheckbox = document.getElementById('toggleReminder');
 
     if(isDiscordLoggedIn) {
       try {
@@ -761,17 +733,16 @@
         
         if(btn) btn.classList.add('is-hidden');
         if(userArea) userArea.classList.remove('is-hidden');
-        if($('#discordUserName')) $('#discordUserName').textContent = userData.username || 'User';
+        if(document.getElementById('discordUserName')) document.getElementById('discordUserName').textContent = userData.username || 'User';
         
         if(userData.avatarUrl) {
-           if($('#discordAvatar')) {
-             $('#discordAvatar').src = userData.avatarUrl;
-             $('#discordAvatar').classList.remove('hidden');
+           if(document.getElementById('discordAvatar')) {
+             document.getElementById('discordAvatar').src = userData.avatarUrl;
+             document.getElementById('discordAvatar').classList.remove('hidden');
            }
-           if($('#discordAvatarFallback')) $('#discordAvatarFallback').classList.add('hidden');
+           if(document.getElementById('discordAvatarFallback')) document.getElementById('discordAvatarFallback').classList.add('hidden');
         }
       } catch(e) {
-        console.error("Parse error for discordUser:", e);
         isDiscordLoggedIn = false;
         localStorage.removeItem('discordUser');
         renderDiscordUI();
@@ -801,8 +772,8 @@
   }
 
   function updateSubscriptionText() {
-    const isChecked = $('#toggleReminder') ? $('#toggleReminder').checked : false;
-    const textEl = $('#subStatusText');
+    const isChecked = document.getElementById('toggleReminder') ? document.getElementById('toggleReminder').checked : false;
+    const textEl = document.getElementById('subStatusText');
     if(!window.translations) return;
     const data = window.translations[currentLang];
     if(!data || !textEl) return;
@@ -811,12 +782,12 @@
   }
 
   function toggleSubscription() {
-    isSubscribed = $('#toggleReminder').checked;
+    isSubscribed = document.getElementById('toggleReminder').checked;
     localStorage.setItem('isSubscribed', isSubscribed.toString());
     updateSubscriptionText();
 
     if(isSubscribed) {
-      const toast = $('#systemToast');
+      const toast = document.getElementById('systemToast');
       if(toast) {
         toast.classList.remove('toast-hide');
         toast.classList.add('toast-show');
@@ -829,7 +800,7 @@
   }
 
   // ==========================================
-  // Daily Reset Engine
+  // Daily Reset & Tasks Engine
   // ==========================================
   function checkAndResetDailyTasks() {
     const todayUTC = new Date().toISOString().split('T')[0];
@@ -844,11 +815,10 @@
 
   let discordToastTimer = null;
   function showDiscordToast(taskTitleKey) {
-    const toast = $('#discordToast');
-    const msgEl = $('#discordToastMsg');
-    const timeEl = $('#toastTime');
-    if(!toast || !msgEl || !timeEl) return;
-    if(!window.translations) return;
+    const toast = document.getElementById('discordToast');
+    const msgEl = document.getElementById('discordToastMsg');
+    const timeEl = document.getElementById('toastTime');
+    if(!toast || !msgEl || !timeEl || !window.translations) return;
     const data = window.translations[currentLang];
     if(!data) return;
     
@@ -890,8 +860,8 @@
 
     if(dailyTasks.length > 0) {
        const percentage = Math.round((completedDaily / dailyTasks.length) * 100);
-       if($('#progressBar')) $('#progressBar').style.width = percentage + '%';
-       if($('#progressText')) $('#progressText').textContent = percentage + '%';
+       if(document.getElementById('progressBar')) document.getElementById('progressBar').style.width = percentage + '%';
+       if(document.getElementById('progressText')) document.getElementById('progressText').textContent = percentage + '%';
     }
 
     const periodicTasks = document.querySelectorAll('.periodic-task');
@@ -911,29 +881,14 @@
     });
   }
 
-  function initChecklist() {
-    checkAndResetDailyTasks();
+  // 任务切换统一方法 (由 HTML 内的 onclick 触发)
+  function toggleTask(taskId, titleKey) {
+    const currentState = localStorage.getItem(taskId) === 'true';
+    const newState = !currentState;
+    localStorage.setItem(taskId, newState);
     
-    const tasks = document.querySelectorAll('.task-row');
-    tasks.forEach(row => {
-      const btn = row.querySelector('.check-btn');
-      const titleEl = row.querySelector('.task-title');
-      if(!btn || !titleEl) return;
-      const taskId = row.getAttribute('data-task-id');
-      const titleKey = titleEl.getAttribute('data-i18n');
-      
-      btn.addEventListener('click', (e) => {
-        e.stopPropagation(); 
-        const currentState = localStorage.getItem(taskId) === 'true';
-        const newState = !currentState;
-        localStorage.setItem(taskId, newState);
-        
-        updateProgressUI();
-        
-        if(newState) showDiscordToast(titleKey);
-      });
-    });
     updateProgressUI();
+    if(newState) showDiscordToast(titleKey);
   }
 
   function openDetail(key) {
@@ -942,11 +897,11 @@
     if(!dict) return;
     const d = dict[key]; if(!d) return;
 
-    if($("#detailTitle")) $("#detailTitle").textContent = d.title; 
-    if($("#detailSub")) $("#detailSub").textContent = d.sub; 
-    if($("#detailBody")) $("#detailBody").innerHTML = d.body;
+    if(document.getElementById("detailTitle")) document.getElementById("detailTitle").textContent = d.title; 
+    if(document.getElementById("detailSub")) document.getElementById("detailSub").textContent = d.sub; 
+    if(document.getElementById("detailBody")) document.getElementById("detailBody").innerHTML = d.body;
     
-    const actions = $("#detailActions"); 
+    const actions = document.getElementById("detailActions"); 
     if(actions) {
       actions.innerHTML = "";
       d.actions.forEach((a) => {
@@ -956,20 +911,13 @@
         btn.textContent = a.text;
         btn.addEventListener("click", () => { 
           if (a.url) window.open(a.url, "_blank"); 
-          if($("#detailModal")) $("#detailModal").classList.add("is-hidden");
-          if($("#discordModal") && $("#discordModal").classList.contains("is-hidden")) {
-             if($("#modalMask")) $("#modalMask").classList.add("is-hidden");
-             document.body.style.overflow = "";
-          }
+          closeModal("detailModal");
         });
         actions.appendChild(btn);
       });
     }
-    
-    if($("#modalMask")) $("#modalMask").classList.remove("is-hidden");
-    if($("#detailModal")) $("#detailModal").classList.remove("is-hidden");
-    document.body.style.overflow = "hidden";
-    const modalBody = $("#detailModal") ? $("#detailModal").querySelector('.custom-scroll') : null;
+    openModal("#detailModal");
+    const modalBody = document.getElementById("detailModal") ? document.getElementById("detailModal").querySelector('.custom-scroll') : null;
     if (modalBody) modalBody.scrollTop = 0;
   }
 
@@ -987,10 +935,10 @@
       this.init();
     }
     init() {
-      const track = $(this.cfg.trackId); const dots = $(this.cfg.dotsId);
+      const track = document.querySelector(this.cfg.trackId); const dots = document.querySelector(this.cfg.dotsId);
       if(!track || !dots) return;
       track.innerHTML = ""; dots.innerHTML = "";
-      if($(this.cfg.totalId)) $(this.cfg.totalId).textContent = this.cfg.slides ? this.cfg.slides.length : 0;
+      if(document.querySelector(this.cfg.totalId)) document.querySelector(this.cfg.totalId).textContent = this.cfg.slides ? this.cfg.slides.length : 0;
       if(!this.cfg.slides || this.cfg.slides.length === 0) {
         track.innerHTML = `<div class="w-full aspect-[4/3] sm:max-h-[600px] flex flex-col gap-2 items-center justify-center bg-slate-50 text-slate-400 text-xs border border-dashed border-slate-300 rounded-2xl"><span>[Image Missing]</span></div>`;
         return;
@@ -1008,12 +956,14 @@
       });
 
       if(!this._btnsBound) {
-        if(this.cfg.prevBtn) on(this.cfg.prevBtn, "click", () => this.prevSlide());
-        if(this.cfg.nextBtn) on(this.cfg.nextBtn, "click", () => this.nextSlide());
+        const prevBtn = document.getElementById(this.cfg.prevBtn);
+        const nextBtn = document.getElementById(this.cfg.nextBtn);
+        if(prevBtn) prevBtn.addEventListener("click", () => this.prevSlide());
+        if(nextBtn) nextBtn.addEventListener("click", () => this.nextSlide());
         this._btnsBound = true;
       }
 
-      const area = $(this.cfg.areaId);
+      const area = document.getElementById(this.cfg.areaId);
       if(area) area.carouselInstance = this;
 
       this.applySlide(); this.bindSwipe();
@@ -1025,13 +975,13 @@
     }
     applySlide() {
       if(!this.cfg.slides || this.cfg.slides.length === 0) return;
-      const track = $(this.cfg.trackId); if(!track) return;
+      const track = document.querySelector(this.cfg.trackId); if(!track) return;
       track.style.transform = `translateX(-${this.index * 100}%)`;
-      if($(this.cfg.indexId)) $(this.cfg.indexId).textContent = this.index + 1;
-      if($(this.cfg.titleId)) $(this.cfg.titleId).textContent = this.cfg.slides[this.index].title;
-      if($(this.cfg.captionId)) $(this.cfg.captionId).textContent = this.cfg.slides[this.index].caption;
+      if(document.querySelector(this.cfg.indexId)) document.querySelector(this.cfg.indexId).textContent = this.index + 1;
+      if(document.querySelector(this.cfg.titleId)) document.querySelector(this.cfg.titleId).textContent = this.cfg.slides[this.index].title;
+      if(document.querySelector(this.cfg.captionId)) document.querySelector(this.cfg.captionId).textContent = this.cfg.slides[this.index].caption;
 
-      const dots = $(this.cfg.dotsId);
+      const dots = document.querySelector(this.cfg.dotsId);
       if(dots) {
         [...dots.children].forEach((dot, i) => {
           dot.className = "h-1.5 transition-all duration-300 rounded-full " + (i === this.index ? "w-4 bg-slate-900 border-slate-900" : "w-1.5 bg-slate-200 border-transparent hover:bg-slate-300");
@@ -1041,7 +991,7 @@
     nextSlide() { this.setSlide(this.index + 1); }
     prevSlide() { this.setSlide(this.index - 1); }
     bindSwipe() {
-      const area = $(this.cfg.areaId); if(!area || area._bound) return;
+      const area = document.getElementById(this.cfg.areaId); if(!area || area._bound) return;
       area._bound = true;
       area.addEventListener("touchstart", e => { if (e.touches.length !== 1) return; this.isDragging = true; this.startX = e.touches[0].clientX; this.deltaX = 0; }, { passive: true });
       area.addEventListener("touchmove", e => { if (!this.isDragging || e.touches.length !== 1) return; this.deltaX = e.touches[0].clientX - this.startX; }, { passive: true });
@@ -1053,7 +1003,6 @@
     }
   }
 
-  window.activeCarousel = null;
   const initObserver = () => {
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
@@ -1062,30 +1011,18 @@
         }
       });
     }, { threshold: 0.5 });
-    if($("#carouselArea1")) observer.observe($("#carouselArea1"));
-    if($("#carouselArea2")) observer.observe($("#carouselArea2"));
+    if(document.getElementById("carouselArea1")) observer.observe(document.getElementById("carouselArea1"));
+    if(document.getElementById("carouselArea2")) observer.observe(document.getElementById("carouselArea2"));
   };
 
-  function openModal(id) {
-    if($("#modalMask")) $("#modalMask").classList.remove("is-hidden");
-    if($(id)) $(id).classList.remove("is-hidden");
-    document.body.style.overflow = "hidden";
-  }
-  function closeAllModals() {
-    if($("#modalMask")) $("#modalMask").classList.add("is-hidden");
-    ["#detailModal", "#discordModal", "#withdrawModal"].forEach(id => {
-      if($(id)) $(id).classList.add("is-hidden");
-    });
-    document.body.style.overflow = "";
-  }
-
+  // ==========================================
+  // 初始化系统
+  // ==========================================
   window.addEventListener("DOMContentLoaded", () => {
-    // 强制防御性初始化
     try {
-      applyTranslation();
-    } catch(e) { console.error("Translation init error", e); }
+      checkAndResetDailyTasks();
+      initDiscordAuth();
 
-    try {
       const initialData = window.translations ? window.translations[currentLang] : null;
       window.carousels = {
         c1: new UnifiedCarousel({
@@ -1099,98 +1036,26 @@
           slides: initialData && initialData.slides2 ? initialData.slides2 : []
         })
       };
+
+      applyTranslation();
       initObserver();
-    } catch(e) { console.error("Carousel init error", e); }
-
-    try {
-      initDiscordAuth();
-    } catch(e) { console.error("Discord Auth error", e); }
-
-    try {
-      initChecklist();
-    } catch(e) { console.error("Checklist init error", e); }
-
-    try {
-      if($('#langSwitcher')) $('#langSwitcher').addEventListener('click', toggleLang);
-      if($('#langSwitcherMobile')) $('#langSwitcherMobile').addEventListener('click', toggleLang);
-
-      if($('#btnDevicePC')) $('#btnDevicePC').addEventListener('click', () => switchDeviceGuide('pc'));
-      if($('#btnDeviceMobile')) $('#btnDeviceMobile').addEventListener('click', () => switchDeviceGuide('mobile'));
-      
-      if($('#btnDiscordLogin')) $('#btnDiscordLogin').addEventListener('click', loginWithDiscord);
-      if($('#btnSubRequireLogin')) $('#btnSubRequireLogin').addEventListener('click', loginWithDiscord);
-      if($('#discordUserArea')) $('#discordUserArea').addEventListener('click', logoutDiscord);
-      if($('#toggleReminder')) $('#toggleReminder').addEventListener('change', toggleSubscription);
-
-      on("btnOpenTokenTop", "click", openToken);
-      on("btnOpenTokenHero", "click", openToken);
-      on("btnOpenTokenBottom", "click", openToken);
-
-      if($("#btnScrollToGuide")) {
-         $("#btnScrollToGuide").addEventListener("click", () => document.getElementById('ts-guide-section').scrollIntoView({behavior: 'smooth'}));
-      }
-      if($("#btnScrollToGuideHero")) {
-         $("#btnScrollToGuideHero").addEventListener("click", () => document.getElementById('ts-guide-section').scrollIntoView({behavior: 'smooth'}));
-      }
-
-      on("btnOpenDiscordModal", "click", () => openModal("#discordModal"));
-      on("btnOpenWithdrawModal", "click", () => { openModal("#withdrawModal"); window.dispatchEvent(new Event('resize')); });
-      
-      document.querySelectorAll(".detail-btn").forEach(btn => btn.addEventListener("click", (e) => {
-        e.stopPropagation();
-        openDetail(btn.dataset.detail);
-      }));
-      
-      document.querySelectorAll(".btnCloseModal").forEach(btn => {
-        btn.addEventListener("click", () => {
-          const tid = "#" + btn.dataset.target;
-          if($(tid)) $(tid).classList.add("is-hidden");
-          if($("#detailModal") && $("#detailModal").classList.contains("is-hidden") && 
-             $("#discordModal") && $("#discordModal").classList.contains("is-hidden") && 
-             $("#withdrawModal") && $("#withdrawModal").classList.contains("is-hidden")) {
-             if($("#modalMask")) $("#modalMask").classList.add("is-hidden"); 
-             document.body.style.overflow = "";
-          }
-        });
-      });
-
-      if($("#modalMask")) {
-         $("#modalMask").addEventListener("click", () => {
-           if($("#detailModal") && !$("#detailModal").classList.contains("is-hidden")) {
-              $("#detailModal").classList.add("is-hidden");
-              if($("#discordModal") && $("#discordModal").classList.contains("is-hidden") && 
-                 $("#withdrawModal") && $("#withdrawModal").classList.contains("is-hidden")) closeAllModals();
-           } else { closeAllModals(); }
-         });
-      }
 
       document.addEventListener("keydown", (e)=>{
         if (['input', 'textarea'].includes((document.activeElement?.tagName || "").toLowerCase())) return;
         if(e.key === "Escape") { 
-          if($("#lightbox") && !$("#lightbox").classList.contains("is-hidden")) {
-            $("#lightbox").click();
+          if(document.getElementById("lightbox") && !document.getElementById("lightbox").classList.contains("is-hidden")) {
+            document.getElementById("lightbox").click();
           } else {
             closeAllModals(); 
           }
         }
-        if(e.key === "ArrowLeft" && window.activeCarousel && $("#lightbox") && $("#lightbox").classList.contains("is-hidden")) window.activeCarousel.prevSlide();
-        if(e.key === "ArrowRight" && window.activeCarousel && $("#lightbox") && $("#lightbox").classList.contains("is-hidden")) window.activeCarousel.nextSlide();
+        if(e.key === "ArrowLeft" && window.activeCarousel && document.getElementById("lightbox") && document.getElementById("lightbox").classList.contains("is-hidden")) window.activeCarousel.prevSlide();
+        if(e.key === "ArrowRight" && window.activeCarousel && document.getElementById("lightbox") && document.getElementById("lightbox").classList.contains("is-hidden")) window.activeCarousel.nextSlide();
       });
 
-      document.body.addEventListener('click', (e) => {
-        if(e.target.tagName === 'IMG' && e.target.classList.contains('cursor-zoom-in') && !e.target.closest('#lightbox')) {
-          const lb = $("#lightbox"); const lbImg = $("#lightboxImg");
-          if(lb && lbImg) { lbImg.src = e.target.src; lb.classList.remove("is-hidden"); document.body.style.overflow = "hidden"; }
-        }
-      });
-
-      if($("#lightbox")) {
-        $("#lightbox").addEventListener('click', function() {
-          this.classList.add("is-hidden");
-          if($("#modalMask") && $("#modalMask").classList.contains("is-hidden")) document.body.style.overflow = "";
-        });
-      }
-    } catch(e) { console.error("Event bindings error", e); }
+    } catch(err) {
+      console.error("Initialization error: ", err);
+    }
   });
 </script>
 </body>
