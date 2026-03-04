@@ -217,7 +217,9 @@
       'oshit': { id: 'oshit', title: 'OSHIT', color: 'emerald', taskKey: 'task_oshit', url: 'oshit.html', reqTasks: ['task_ts', 'task_creator', 'task_engage'] },
       'hashgame': { id: 'hashgame', title: 'Hashgame', color: 'orange', taskKey: 'task_hashgame', url: 'hashgame.html', reqTasks: ['hg_task_faucet', 'hg_task_play'] },
       'rafa': { id: 'rafa', title: 'RAFA.AI', color: 'teal', taskKey: 'task_rafa', url: 'rafa.html', reqTasks: ['rafa_task_daily1'] },
-      'satsume': { id: 'satsume', title: 'Satsume', color: 'rose', taskKey: 'task_satsume', url: 'satsume.html', reqTasks: ['sat_task_daily1', 'sat_task_daily2'] }
+      
+      // 👇 核心修复：这里原本可能有 'sat_task_daily2'，现在只保留 'sat_task_daily1'
+      'satsume': { id: 'satsume', title: 'Satsume', color: 'rose', taskKey: 'task_satsume', url: 'satsume.html', reqTasks: ['sat_task_daily1'] }
     };
 
     const TREE_STAGES = ['🌰', '🌱', '🌿', '🪴', '🌳']; 
@@ -292,12 +294,17 @@
     function renderYieldProofs() {
       const track = document.getElementById('marqueeTrack');
       if(!track) return;
-      const yieldProofs = [
-        { src: 'index/proof1.png', tag: 'OSHIT', text: '+$45.00 USDT' },
-        { src: 'index/proof2.png', tag: 'Hashgame', text: '+12,000 Pts' },
-        { src: 'index/proof3.png', tag: 'Berachain', text: 'Daily Task Done' },
-        { src: 'index/proof4.png', tag: 'Satsume', text: '+$10.50' }
+      
+      const yieldProofs = 
+      [
+        { src: 'index/proof1.png', tag: 'OSHIT', text: '+10.1M SHIT' },
+        { src: 'index/proof2.png', tag: 'OpenMind', text: '+2.69K ROBO' },
+        { src: 'index/proof3.png', tag: 'HashGame', text: '+25 USDT' }, 
+        { src: 'index/proof4.png', tag: 'Grass', text: '+Points Rewards' },
+        { src: 'index/proof5.png', tag: 'BackPack', text: '+3500 BACKP' }, 
+        { src: 'index/proof6.png', tag: 'SatSume', text: '+5 USDT' },
       ];
+      
       const allProofs = [...yieldProofs, ...yieldProofs, ...yieldProofs, ...yieldProofs];
       track.innerHTML = allProofs.map(p => `
         <div class="relative shrink-0 w-64 h-36 rounded-2xl overflow-hidden shadow-sm border border-slate-200 bg-slate-100 cursor-zoom-in group/proof">
@@ -310,6 +317,7 @@
           </div>
         </div>
       `).join('');
+      
       track.querySelectorAll('.cursor-zoom-in').forEach(card => {
         card.addEventListener('click', (e) => {
           const img = card.querySelector('img');
