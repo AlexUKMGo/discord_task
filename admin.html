@@ -81,6 +81,9 @@
     // TODO: 替换为你的 Ngrok API 地址
     const API_URL = "https://noninferable-brigida-vimineous.ngrok-free.dev/api/admin/analytics";
     
+    // 从本地会话缓存中读取密码，防止刷新页面重复弹窗
+    let currentAdminToken = sessionStorage.getItem('admin_token');
+    
     let pvChartInstance = null;
     let timeChartInstance = null;
 
@@ -88,22 +91,48 @@
     Chart.defaults.font.family = 'Inter, sans-serif';
 
     async function fetchData() {
-        try {
-            const response = await fetch(API_URL, {
-            headers: {
-                "ngrok-skip-browser-warning": "true" // 绕过 ngrok 的警告拦截页
-            }
-            });
-            
-            if (!response.ok) throw new Error("Network response was not ok");
-            
-            const data = await response.json();
-            renderDashboard(data);
-        } catch (err) {
-            console.error("Failed to fetch analytics:", err);
-            alert("Cannot connect to the backend server or parse data. Please check Python console.");
+      // 1. 如果没有密码，弹窗询问
+      if (!currentAdminToken) {
+        currentAdminToken = prompt("🔒 Restricted Area. Please enter Admin Password:");
+        
+        // 如果点取消或没输，直接清空页面并显示拒绝访问
+        if (!currentAdminToken) {
+          document.body.innerHTML = "<div style='display:flex; height:100vh; align-items:center; justify-content:center;'><h2 style='color:#ef4444; font-size:2.5rem; font-weight:900; letter-spacing:2px;'>🚫 ACCESS DENIED</h2></div>";
+          return; 
         }
+      }
+
+      try {
+        const response = await fetch(API_URL, {
+          headers: {
+            "ngrok-skip-browser-warning": "true",
+            "x-admin-token": currentAdminToken // 👈 核心加密：将密码放在请求头里发给后端
+          }
+        });
+        
+        // 2. 如果后端发现密码错误，返回 401 拦截
+        if (response.status === 401) {
+          alert("❌ Incorrect Password!");
+          currentAdminToken = null;
+          sessionStorage.removeItem('admin_token'); // 清空错误密码
+          location.reload(); // 重新加载让用户重输
+          return;
         }
+
+        if (!response.ok) throw new Error("Network response was not ok");
+        
+        const data = await response.json();
+        
+        // 3. 密码正确，把密码临时存起来
+        sessionStorage.setItem('admin_token', currentAdminToken);
+        
+        // 渲染数据
+        renderDashboard(data);
+      } catch (err) {
+        console.error("Failed to fetch analytics:", err);
+        alert("Cannot connect to the backend server or parse data. Please check Python console.");
+      }
+    }
 
     function renderDashboard(data) {
       // 1. 渲染数字概览
@@ -166,7 +195,9 @@
     }
 
     // 初始化加载
-    fetchData();
+    window.addEventListener('DOMContentLoaded', () => {
+      fetchData();
+    });
   </script>
 </body>
 </html>
