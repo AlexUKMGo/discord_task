@@ -126,9 +126,9 @@
                 <div class="rounded-2xl border border-slate-200 bg-slate-50 p-4">
                   <div class="text-sm font-semibold flex items-center gap-1.5">
                     <svg class="w-4 h-4 text-indigo-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-                    <span data-i18n="check1_title">Zero Cost</span>
+                    <span data-i18n="check1_title">Low Cost</span>
                   </div>
-                  <div class="mt-1 text-[11px] text-slate-600 leading-relaxed" data-i18n="check1_desc">Tasks mostly require 0 Gas.</div>
+                  <div class="mt-1 text-[11px] text-slate-600 leading-relaxed" data-i18n="check1_desc">Requires small SOL gas fee.</div>
                 </div>
                 <div class="rounded-2xl border border-slate-200 bg-slate-50 p-4">
                   <div class="text-sm font-semibold flex items-center gap-1.5">
@@ -156,12 +156,37 @@
             </div>
           </div>
 
+          <div class="rounded-3xl border border-emerald-200 bg-emerald-50/50 p-6 shadow-sm flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 relative overflow-hidden">
+            <div class="absolute -right-10 -top-10 w-40 h-40 bg-emerald-200/40 rounded-full blur-3xl pointer-events-none"></div>
+            <div class="z-10">
+              <div class="text-sm font-bold text-emerald-900 flex items-center gap-1.5">
+                <svg class="w-5 h-5 text-emerald-500" fill="currentColor" viewBox="0 0 24 24"><path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.89 2 2 2zm6-6v-5c0-3.07-1.64-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.63 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2z"/></svg>
+                <span data-i18n="sub_title">Task Update Reminder</span>
+              </div>
+              <div class="text-[13px] text-emerald-700/80 mt-1 leading-relaxed max-w-lg" data-i18n="sub_desc">
+                Connect Discord and subscribe. Get a DM from our Bot if new Perle tasks are added or if you haven't completed your current list.
+              </div>
+            </div>
+            
+            <button id="btnSubRequireLogin" type="button" onclick="loginWithDiscord()" class="z-10 shrink-0 rounded-xl bg-slate-900 px-5 py-3 text-xs font-bold text-white shadow-sm transition-transform active:scale-95 whitespace-nowrap" data-i18n="sub_btn_connect">
+              Connect Discord First
+            </button>
+
+            <div id="toggleSubWrapper" class="is-hidden z-10 shrink-0 items-center gap-3">
+              <span id="subStatusText" class="text-xs font-bold text-slate-500" data-i18n="sub_status_off">Off</span>
+              <label class="relative inline-flex items-center cursor-pointer">
+                <input type="checkbox" id="toggleReminder" class="sr-only peer" onchange="toggleSubscription()">
+                <div class="w-11 h-6 bg-slate-300 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-emerald-500"></div>
+              </label>
+            </div>
+          </div>
+
           <div class="rounded-3xl border border-amber-200 bg-amber-50/60 p-6 shadow-sm flex flex-col sm:flex-row gap-4 items-start sm:items-center relative overflow-hidden">
             <div class="absolute -right-4 -top-4 w-32 h-32 bg-amber-200/40 rounded-full blur-2xl pointer-events-none"></div>
             <div class="flex-1 z-10">
               <h3 class="text-sm font-extrabold text-amber-900 mb-1.5" data-i18n="advice_title">Heartfelt Advice for Grinders</h3>
               <p class="text-[13px] text-amber-800/90 leading-relaxed" data-i18n-html="advice_desc">
-                Currently, Perle Labs has launched specific AI labeling tasks. It's a bit of a 'grind' (like customer service screening, medical categorization, voice reading), but very interesting. <br><br><b>Core Strategy:</b> Gas costs for tasks are minimal, but minting certain badges might require a small fee. It's a highly recommended Zero-Cost/Low-Cost project right now!
+                Currently, Perle Labs has launched specific AI labeling tasks. It's a bit of a 'grind' (like customer service screening, medical categorization, voice reading), but very interesting. <br><br><b>Core Strategy:</b> It is a <b>low-cost</b> project (~0.1 SOL), not absolutely zero-cost. Minting badges and submitting requires a small amount of gas. Highly recommended to build early weight!
               </p>
             </div>
           </div>
@@ -247,7 +272,7 @@
         </div>
         <div class="flex flex-wrap items-center justify-center gap-x-6 gap-y-3">
           <a href="https://www.perle.ai/" target="_blank" class="text-[12px] font-medium text-slate-500 hover:text-slate-900 transition-colors">Website</a>
-          <a href="https://app.perle.xyz/" target="_blank" class="text-[12px] font-medium text-slate-500 hover:text-slate-900 transition-colors">Platform</a>
+          <a href="https://app.perle.xyz/join/rUIM5D" target="_blank" class="text-[12px] font-medium text-slate-500 hover:text-slate-900 transition-colors">Platform</a>
           <a href="https://x.com/PerleLabs" target="_blank" class="text-[12px] font-medium text-slate-500 hover:text-slate-900 transition-colors flex items-center gap-1">
             <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.008 5.918H5.078z"/></svg>
             Twitter
@@ -307,10 +332,22 @@
         <div class="text-[12px] mt-1 leading-snug" id="discordToastMsg">Task Verified!</div>
       </div>
     </div>
+
+    <div id="systemToast" class="toast-hide fixed bottom-[100px] left-0 right-0 mx-auto w-[calc(100%-2rem)] max-w-[360px] bg-white p-4 rounded-2xl shadow-xl flex items-start gap-3 z-[10000] border border-slate-100 pointer-events-none">
+      <div class="w-8 h-8 rounded-full bg-emerald-100 flex items-center justify-center shrink-0">
+        <span class="text-emerald-500 text-lg">🔔</span>
+      </div>
+      <div class="flex-1 min-w-0">
+        <div class="text-sm font-bold text-slate-900" data-i18n="toast_sub_title">Subscription Active</div>
+        <div class="text-[12px] text-slate-500 mt-0.5 leading-snug" data-i18n="toast_sub_desc">We will notify you via Discord when new tasks arrive.</div>
+      </div>
+    </div>
+
   </div>
 
 <script>
-  function openToken() { window.open("https://app.perle.xyz/", "_blank", "noopener,noreferrer"); }
+  // 👇 这里的直连打开函数也换成了你的邀请链接
+  function openToken() { window.open("https://app.perle.xyz/join/rUIM5D", "_blank", "noopener,noreferrer"); }
 
   function openModal(id) {
     const mask = document.getElementById("modalMask");
@@ -347,6 +384,7 @@
   }
 
   let currentLang = localStorage.getItem('oshit_lang') || 'en';
+  let currentGuideDevice = 'pc';
 
   function renderTasks() {
     const container = document.getElementById('perleTaskContainer');
@@ -398,7 +436,6 @@
       if (data[key]) el.innerHTML = data[key];
     });
 
-    // 只保留一套全局图（移除了设备切换逻辑）
     if(window.carousels) {
       if (data.slides1_pc && window.carousels.c1) window.carousels.c1.updateData(data.slides1_pc);
     }
@@ -602,7 +639,6 @@
     try {
       if(typeof initDiscordAuth === 'function') initDiscordAuth();
 
-      // 先渲染 10 个任务的框架，再应用多语言翻译
       renderTasks();
       
       const initialData = window.translations ? window.translations[currentLang] : null;
