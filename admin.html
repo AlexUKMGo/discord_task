@@ -10,7 +10,7 @@
 
 <body class="min-h-screen bg-slate-900 text-slate-100 font-sans p-6 sm:p-10">
   
-  <header class="mb-10 flex items-center justify-between border-b border-slate-800 pb-5">
+  <header class="mb-8 flex flex-col sm:flex-row sm:items-end justify-between gap-4 border-b border-slate-800 pb-5">
     <div>
       <h1 class="text-3xl font-black tracking-tight text-white flex items-center gap-3">
         <svg class="w-8 h-8 text-emerald-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" /></svg>
@@ -18,10 +18,19 @@
       </h1>
       <p class="text-slate-400 text-sm mt-1">Real-time user behavior & conversion tracking</p>
     </div>
-    <button onclick="fetchData()" class="bg-indigo-600 hover:bg-indigo-500 text-white px-5 py-2.5 rounded-xl text-sm font-bold shadow-lg transition-colors flex items-center gap-2">
-      <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" /></svg>
-      Refresh Data
-    </button>
+    
+    <div class="flex items-center gap-2 bg-slate-800 p-1.5 rounded-xl border border-slate-700">
+      <button onclick="changeTimeRange('today')" id="btn-today" class="time-btn px-4 py-1.5 rounded-lg text-xs font-bold text-slate-400 hover:text-white transition-all">Today</button>
+      <button onclick="changeTimeRange('7d')" id="btn-7d" class="time-btn px-4 py-1.5 rounded-lg text-xs font-bold text-slate-400 hover:text-white transition-all">7 Days</button>
+      <button onclick="changeTimeRange('30d')" id="btn-30d" class="time-btn px-4 py-1.5 rounded-lg text-xs font-bold text-slate-400 hover:text-white transition-all">30 Days</button>
+      <button onclick="changeTimeRange('all')" id="btn-all" class="time-btn px-4 py-1.5 rounded-lg text-xs font-bold bg-slate-600 text-white shadow-sm transition-all">All Time</button>
+      
+      <div class="w-px h-5 bg-slate-700 mx-1"></div>
+      
+      <button onclick="fetchData()" class="bg-emerald-600 hover:bg-emerald-500 text-white px-3 py-1.5 rounded-lg text-xs font-bold shadow-lg transition-colors flex items-center gap-1.5" title="Force Refresh">
+        <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" /></svg>
+      </button>
+    </div>
   </header>
 
   <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-10">
@@ -31,15 +40,15 @@
     </div>
     <div class="bg-slate-800 border border-slate-700 rounded-2xl p-6 shadow-lg relative overflow-hidden">
       <div class="absolute -right-4 -top-4 w-24 h-24 bg-emerald-500/20 rounded-full blur-xl"></div>
-      <div class="text-emerald-400 text-xs font-bold uppercase tracking-wider mb-2 relative z-10">Today's Active (DAU)</div>
+      <div class="text-emerald-400 text-xs font-bold uppercase tracking-wider mb-2 relative z-10 flex items-center gap-1"><div class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></div> Today's Active (DAU)</div>
       <div class="text-4xl font-black text-emerald-400 relative z-10" id="valDau">-</div>
     </div>
     <div class="bg-slate-800 border border-slate-700 rounded-2xl p-6 shadow-lg">
-      <div class="text-slate-400 text-xs font-bold uppercase tracking-wider mb-2">Unique Devices</div>
+      <div class="text-slate-400 text-xs font-bold uppercase tracking-wider mb-2">Selected Time Devices</div>
       <div class="text-4xl font-black text-white" id="valDevices">-</div>
     </div>
     <div class="bg-slate-800 border border-slate-700 rounded-2xl p-6 shadow-lg">
-      <div class="text-slate-400 text-xs font-bold uppercase tracking-wider mb-2">Total Events Logged</div>
+      <div class="text-slate-400 text-xs font-bold uppercase tracking-wider mb-2">Events In Period</div>
       <div class="text-4xl font-black text-white" id="valEvents">-</div>
     </div>
   </div>
@@ -61,13 +70,14 @@
   </div>
 
   <div class="bg-slate-800 border border-slate-700 rounded-2xl p-6 shadow-lg">
-    <h3 class="text-lg font-bold text-white mb-6">Top 10 Clicked Actions (Conversion Metrics)</h3>
+    <h3 class="text-lg font-bold text-white mb-6">Top Clicked Actions (Behavior Metrics)</h3>
     <div class="overflow-x-auto">
       <table class="w-full text-left text-sm text-slate-300">
         <thead class="text-xs uppercase bg-slate-900/50 text-slate-500">
           <tr>
-            <th scope="col" class="px-4 py-3 rounded-l-lg">Rank</th>
-            <th scope="col" class="px-4 py-3">Action / Target Element</th>
+            <th scope="col" class="px-4 py-3 rounded-l-lg w-16">Rank</th>
+            <th scope="col" class="px-4 py-3 w-40">Source Page</th>
+            <th scope="col" class="px-4 py-3">Translated Action / Target</th>
             <th scope="col" class="px-4 py-3 rounded-r-lg text-right">Click Count</th>
           </tr>
         </thead>
@@ -78,11 +88,11 @@
   </div>
 
   <script>
-    // TODO: 替换为你的 Ngrok API 地址
+    // ⚠️ 替换为你的 Ngrok 地址
     const API_URL = "https://noninferable-brigida-vimineous.ngrok-free.dev/api/admin/analytics";
     
-    // 从本地会话缓存中读取密码，防止刷新页面重复弹窗
     let currentAdminToken = sessionStorage.getItem('admin_token');
+    let currentTimeRange = 'all'; // 默认查询全部时间
     
     let pvChartInstance = null;
     let timeChartInstance = null;
@@ -90,12 +100,40 @@
     Chart.defaults.color = '#94a3b8';
     Chart.defaults.font.family = 'Inter, sans-serif';
 
+    // 💡 行为翻译大字典：把网页里生硬的 ID 翻译成人类能看懂的操作
+    const ACTION_DICTIONARY = {
+      "btn_guide": "👀 点击 [查看指南/详情]",
+      "btnNextSlide1": "➡️ 教程轮播图 [下一页]",
+      "btnPrevSlide1": "⬅️ 教程轮播图 [上一页]",
+      "langSwitcher": "🌐 切换语言 (中/英)",
+      "langSwitcherMobile": "📱 手机端切换语言",
+      "btnDiscordLogin": "🔑 点击 [连接 Discord]",
+      "discordUserArea": "🚪 点击用户头像 [退出登录]",
+      "btnOpenTokenTop": "🚀 顶部导航 [前往平台]",
+      "btnOpenTokenBottom": "🚀 底部悬浮 [前往执行]",
+      "btnOpenTokenHero": "🚀 页面主图 [前往执行]",
+      "btnSubRequireLogin": "🔒 点击 [需登录以订阅]",
+      "toggleReminder": "🔔 切换 [智能订阅开关]",
+      "btnScrollToGuide": "📖 点击 [查看实操教程] (滚屏)",
+      "Unknown Element": "❓ 其他空白区域无效点击"
+    };
+
+    // 改变时间范围并重新请求数据
+    function changeTimeRange(range) {
+      currentTimeRange = range;
+      
+      // 更新按钮的 UI 状态
+      document.querySelectorAll('.time-btn').forEach(btn => {
+        btn.className = "time-btn px-4 py-1.5 rounded-lg text-xs font-bold text-slate-400 hover:text-white transition-all";
+      });
+      document.getElementById(`btn-${range}`).className = "time-btn px-4 py-1.5 rounded-lg text-xs font-bold bg-slate-600 text-white shadow-sm transition-all";
+      
+      fetchData(); // 重新拉取
+    }
+
     async function fetchData() {
-      // 1. 如果没有密码，弹窗询问
       if (!currentAdminToken) {
         currentAdminToken = prompt("🔒 Restricted Area. Please enter Admin Password:");
-        
-        // 如果点取消或没输，直接清空页面并显示拒绝访问
         if (!currentAdminToken) {
           document.body.innerHTML = "<div style='display:flex; height:100vh; align-items:center; justify-content:center;'><h2 style='color:#ef4444; font-size:2.5rem; font-weight:900; letter-spacing:2px;'>🚫 ACCESS DENIED</h2></div>";
           return; 
@@ -103,45 +141,38 @@
       }
 
       try {
-        const response = await fetch(API_URL, {
+        // 在 URL 后面加上 time_range 参数发给后端
+        const response = await fetch(`${API_URL}?time_range=${currentTimeRange}`, {
           headers: {
             "ngrok-skip-browser-warning": "true",
-            "x-admin-token": currentAdminToken // 👈 核心加密：将密码放在请求头里发给后端
+            "x-admin-token": currentAdminToken
           }
         });
         
-        // 2. 如果后端发现密码错误，返回 401 拦截
         if (response.status === 401) {
           alert("❌ Incorrect Password!");
-          currentAdminToken = null;
-          sessionStorage.removeItem('admin_token'); // 清空错误密码
-          location.reload(); // 重新加载让用户重输
+          sessionStorage.removeItem('admin_token');
+          location.reload(); 
           return;
         }
 
         if (!response.ok) throw new Error("Network response was not ok");
         
         const data = await response.json();
-        
-        // 3. 密码正确，把密码临时存起来
         sessionStorage.setItem('admin_token', currentAdminToken);
-        
-        // 渲染数据
         renderDashboard(data);
       } catch (err) {
         console.error("Failed to fetch analytics:", err);
-        alert("Cannot connect to the backend server or parse data. Please check Python console.");
+        alert("Cannot connect to the backend server. Please check Python console.");
       }
     }
 
     function renderDashboard(data) {
-      // 1. 渲染数字概览
       document.getElementById('valUsers').textContent = data.overview.total_registered_users;
       document.getElementById('valDau').textContent = data.overview.active_users_today;
       document.getElementById('valDevices').textContent = data.overview.total_unique_devices;
       document.getElementById('valEvents').textContent = data.overview.total_events_logged;
 
-      // 2. 渲染 PV 柱状图
       const pvLabels = Object.keys(data.page_metrics.views);
       const pvData = Object.values(data.page_metrics.views);
       
@@ -160,7 +191,6 @@
         options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } } }
       });
 
-      // 3. 渲染停留时间折线/柱状图
       const timeLabels = Object.keys(data.page_metrics.avg_dwell_time_seconds);
       const timeData = Object.values(data.page_metrics.avg_dwell_time_seconds);
 
@@ -179,16 +209,46 @@
         options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } } }
       });
 
-      // 4. 渲染点击榜单
+      // 渲染排行榜 (配合翻译字典)
       const tbody = document.getElementById('clickTableBody');
       tbody.innerHTML = '';
       data.top_clicks.forEach((item, index) => {
+        // 解析原始字段 "[perle.html] btn_guide"
+        const match = item.target.match(/\[(.*?)\]\s*(.*)/);
+        let page = "Unknown";
+        let rawAction = item.target;
+        
+        if (match) {
+            page = match[1];
+            rawAction = match[2].trim();
+        }
+
+        // 去字典里找有没有对应的翻译，如果没有，判断是不是外部链接
+        let translatedAction = ACTION_DICTIONARY[rawAction];
+        let actionStyle = "text-white";
+        
+        if (!translatedAction) {
+            if (rawAction.includes("->")) {
+                // 处理外部链接跳转事件
+                translatedAction = `🔗 跳转: ${rawAction.split("->")[0].trim()}`;
+                actionStyle = "text-sky-400"; // 链接用蓝色显示
+            } else {
+                // 找不到的保持原样
+                translatedAction = rawAction;
+                actionStyle = "text-slate-400 font-mono"; 
+            }
+        } else {
+            // 在字典里的高亮显示
+            actionStyle = "text-emerald-300";
+        }
+
         const row = document.createElement('tr');
         row.className = 'border-b border-slate-700/50 hover:bg-slate-700/20 transition-colors';
         row.innerHTML = `
           <td class="px-4 py-4 font-black text-slate-500">#${index + 1}</td>
-          <td class="px-4 py-4 text-white font-medium break-all">${item.target}</td>
-          <td class="px-4 py-4 text-right text-emerald-400 font-bold">${item.count}</td>
+          <td class="px-4 py-4 text-slate-400 text-xs font-mono"><span class="bg-slate-800 px-2 py-1 rounded-md border border-slate-600">${page}</span></td>
+          <td class="px-4 py-4 font-medium break-all ${actionStyle}">${translatedAction}</td>
+          <td class="px-4 py-4 text-right text-white font-bold">${item.count}</td>
         `;
         tbody.appendChild(row);
       });
