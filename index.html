@@ -182,7 +182,7 @@
 
         <a href="rafa.html" class="project-card group card-hover flex flex-col relative rounded-[2rem] bg-white border border-slate-200 p-6 md:p-8 h-full overflow-hidden cursor-pointer" data-category="social">
           <div class="flex justify-between items-center mb-6">
-            <div class="inline-flex items-center gap-1.5 rounded-md bg-[#4aeacd]/10 px-2.5 py-1 text-[10px] font-bold tracking-wider text-[#1e9b89] uppercase border border-[#4aeacd]/20"><span data-i18n="f_social">SocialFi</span></div>
+            <div class="inline-flex items-center gap-1.5 rounded-md bg-[#4aeacd]/10 px-2.5 py-1 text-[10px] font-bold tracking-wider text-slate-700 uppercase border border-[#4aeacd]/20"><span data-i18n="f_social">SocialFi</span></div>
             <div class="flex items-center gap-1 text-slate-400"><svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" /></svg><span class="text-xs font-semibold">Web3/AI</span></div>
           </div>
           <h3 class="text-2xl font-bold text-slate-900 mb-2 group-hover:text-[#4aeacd] transition-colors" data-i18n="card_rafa_title">RAFA.AI</h3>
@@ -244,7 +244,9 @@
 
   </main>
   
-  <div id="lightbox" class="is-hidden fixed inset-0 z-[100] bg-slate-900/95 backdrop-blur-md flex items-center justify-center p-4 sm:p-10 cursor-zoom-out transition-opacity duration-300" onclick="closeModal('lightbox')"><img id="lightboxImg" src="" class="max-w-full max-h-full object-contain rounded-xl shadow-2xl" draggable="false" onclick="event.stopPropagation()" /></div>
+  <div id="lightbox" class="is-hidden fixed inset-0 z-[100] bg-slate-900/95 backdrop-blur-md flex items-center justify-center p-4 sm:p-10 cursor-zoom-out transition-opacity duration-300" onclick="closeModal('lightbox')">
+    <img id="lightboxImg" src="" class="max-w-full max-h-full object-contain rounded-xl shadow-2xl" draggable="false" onclick="event.stopPropagation()" />
+  </div>
 
   <script>
     // ==========================================
@@ -280,6 +282,7 @@
     function closeModal(id) {
       const el = document.getElementById(id);
       if(el) el.classList.add('is-hidden');
+      document.body.style.overflow = ""; // ⚠️ 修复大图关闭后不能滑动的 Bug
     }
 
     function applyTranslation() {
@@ -332,7 +335,6 @@
 
           const filterValue = this.getAttribute('data-filter');
           projectCards.forEach(card => {
-            // 核心逻辑修改：如果带有 data-always-show="true" 属性，永远显示它！
             if (filterValue === 'all' || card.getAttribute('data-category') === filterValue || card.getAttribute('data-always-show') === 'true') {
               card.style.display = 'flex'; 
             } else {
