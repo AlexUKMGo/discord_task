@@ -5,7 +5,6 @@
  * ==========================================
  */
 
-// ⚠️ 请填入你的真实 Ngrok 链接
 const BACKEND_API_URL = "https://noninferable-brigida-vimineous.ngrok-free.dev/api/sync";
 const BACKEND_BASE_URL = BACKEND_API_URL.replace("/api/sync", "");
 const DISCORD_CLIENT_ID = '1476907202047508684'; 
@@ -18,14 +17,14 @@ function isProjectTracked(projectId) {
   return subs.includes(projectId);
 }
 
-// 2. 获取当前所在页面的项目 ID (用于子页面判断自己是谁)
+// 2. 获取当前所在页面的项目 ID (💡 核心修复：完美兼容 Vercel 隐藏 .html 的情况)
 function getCurrentProjectId() {
   const path = window.location.pathname.toLowerCase();
-  if (path.includes('oshit.html')) return 'oshit';
-  if (path.includes('hashgame.html')) return 'hashgame';
-  if (path.includes('rafa.html')) return 'rafa';
-  if (path.includes('satsume.html')) return 'satsume';
-  if (path.includes('perle.html')) return 'perle';
+  if (path.includes('oshit')) return 'oshit';
+  if (path.includes('hashgame')) return 'hashgame';
+  if (path.includes('rafa')) return 'rafa';
+  if (path.includes('satsume')) return 'satsume';
+  if (path.includes('perle')) return 'perle';
   return null; // 主页或其他页面返回 null
 }
 
@@ -191,8 +190,6 @@ function updateSubscriptionText() {
   }
   
   textEl.textContent = statusText;
-  
-  // 保持字体颜色锁定为灰色 (不使用特定的项目颜色，防止越界错误)
   textEl.className = "ml-3 text-xs font-bold text-slate-300";
 }
 
