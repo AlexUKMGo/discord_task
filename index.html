@@ -87,12 +87,12 @@
       </div>
     </section>
 
-    <section class="mb-16 grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
+    <section class="mb-16 grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
       <div class="lg:col-span-4 w-full flex flex-col items-center justify-center">
-        <div class="relative w-full h-full bg-white rounded-[2rem] border border-slate-200 shadow-sm p-8 text-center flex flex-col items-center overflow-hidden">
+        <div class="relative w-full bg-white rounded-[2rem] border border-slate-200 shadow-sm p-8 text-center flex flex-col items-center overflow-hidden">
           <div class="absolute inset-0 bg-gradient-to-b from-emerald-50/50 to-transparent pointer-events-none"></div>
           <div id="bonsai-icon" class="text-7xl sm:text-8xl bonsai-grow drop-shadow-md z-10 cursor-default select-none mt-4 mb-4">🌰</div>
-          <h2 class="text-lg font-black text-slate-900 z-10 tracking-tight mt-auto" data-i18n="bonsai_title">Your Alpha Bonsai</h2>
+          <h2 class="text-lg font-black text-slate-900 z-10 tracking-tight mt-4" data-i18n="bonsai_title">Your Alpha Bonsai</h2>
           <p class="text-xs text-slate-500 mt-1 z-10 font-medium leading-relaxed" data-i18n="bonsai_desc">Patience pays off. Consistency is the real alpha.</p>
           <div class="w-full mt-6 flex items-center justify-between text-[11px] font-bold text-slate-400 uppercase tracking-wide z-10 px-1">
             <span id="lbl-level" class="text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-100">Lv. 1</span>
@@ -229,7 +229,7 @@
             </div>
             <div class="rounded-2xl bg-white border border-slate-200 p-4 flex flex-col justify-center items-center cursor-pointer hover:bg-slate-50 transition-colors shadow-sm" onclick="navigator.clipboard.writeText('alex_oshit'); alert(currentLang === 'zh' ? 'Discord 账号已复制！' : 'Discord ID Copied!');">
               <div class="text-[10px] font-bold text-slate-400 uppercase tracking-wide mb-1">Discord</div>
-              <div class="text-sm font-extrabold text-[#5865F2]">alex_oshit</div>
+              <div class="text-sm font-extrabold text-[#5865F2]">Alex</div>
             </div>
           </div>
           
@@ -332,7 +332,6 @@
 
           const filterValue = this.getAttribute('data-filter');
           projectCards.forEach(card => {
-            // 核心逻辑修改：如果带有 data-always-show="true" 属性，永远显示它！
             if (filterValue === 'all' || card.getAttribute('data-category') === filterValue || card.getAttribute('data-always-show') === 'true') {
               card.style.display = 'flex'; 
             } else {
@@ -556,6 +555,25 @@
         setupFilters();
         renderYieldProofs();
       } catch(e) { console.error("Hub init error:", e); }
+    });
+
+    // ⚠️ 核心修复：解决手机端 / 浏览器后退时数据不刷新的问题 (BFCache)
+    window.addEventListener('pageshow', (e) => {
+      // 无论是不是从缓存读取，只要页面重新展示，就强制根据内存重绘打卡列表和盆景树
+      subscriptions = JSON.parse(localStorage.getItem('hub_subs')) || [];
+      treeState = JSON.parse(localStorage.getItem('hub_tree')) || { xp: 0, level: 1, streak: 0, lastActive: null };
+      if (typeof renderDailies === 'function') renderDailies();
+      if (typeof updateBonsaiUI === 'function') updateBonsaiUI();
+    });
+
+    // 监听标签页切换（用户如果在另一个标签页做了任务，切回来也能热更新）
+    document.addEventListener("visibilitychange", () => {
+      if (!document.hidden) {
+        subscriptions = JSON.parse(localStorage.getItem('hub_subs')) || [];
+        treeState = JSON.parse(localStorage.getItem('hub_tree')) || { xp: 0, level: 1, streak: 0, lastActive: null };
+        if (typeof renderDailies === 'function') renderDailies();
+        if (typeof updateBonsaiUI === 'function') updateBonsaiUI();
+      }
     });
 
     document.body.addEventListener('click', (e) => {
