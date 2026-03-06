@@ -7,7 +7,7 @@
   <script src="https://cdn.tailwindcss.com"></script>
   
   <script src="index/lang.js"></script>
-  <script src="index/backend.js"></script>
+  <script src="shared_backend.js"></script>
   <script src="tracker.js"></script>
   
   <style>
@@ -163,6 +163,23 @@
           </div>
         </a>
 
+        <a href="perle.html" class="project-card group card-hover flex flex-col relative rounded-[2rem] bg-white border border-slate-200 p-6 md:p-8 h-full overflow-hidden cursor-pointer" data-category="testnet">
+          <div class="flex justify-between items-center mb-6">
+            <div class="inline-flex items-center gap-1.5 rounded-md bg-indigo-50 px-2.5 py-1 text-[10px] font-bold tracking-wider text-indigo-700 uppercase border border-indigo-200"><span data-i18n="f_testnet">Testnet</span></div>
+            <div class="flex items-center gap-1 text-slate-400"><svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" /></svg><span class="text-xs font-semibold">AI Data</span></div>
+          </div>
+          <h3 class="text-2xl font-bold text-slate-900 mb-2 group-hover:text-indigo-600 transition-colors" data-i18n="card_perle_title">Perle Labs</h3>
+          <p class="text-sm text-slate-500 mb-6 line-clamp-2 leading-relaxed" data-i18n="card_perle_desc">Enterprise-grade AI training data protocol funded by Scale AI veterans. Label to Earn.</p>
+          <div class="grid grid-cols-2 gap-3 mb-6 mt-auto">
+            <div class="rounded-2xl bg-slate-50 border border-slate-100 p-4"><div class="text-[10px] font-bold text-slate-400 uppercase tracking-wide mb-1" data-i18n="lbl_time">Est. Time</div><div class="text-sm font-extrabold text-slate-900" data-i18n="card_perle_time">15 Mins / Quest</div></div>
+            <div class="rounded-2xl bg-slate-50 border border-slate-100 p-4"><div class="text-[10px] font-bold text-slate-400 uppercase tracking-wide mb-1" data-i18n="lbl_cost">Est. Cost</div><div class="text-sm font-extrabold text-indigo-500" data-i18n="card_perle_cost">~0.1 SOL</div></div>
+          </div>
+          <div class="pt-5 border-t border-slate-100 flex items-center justify-between">
+            <div><div class="text-[10px] font-bold text-slate-400 uppercase tracking-wide mb-0.5" data-i18n="lbl_yield">Expected Yield</div><div class="text-base font-black text-slate-900 pr-2" data-i18n="card_perle_yield">Airdrop</div></div>
+            <div class="h-10 w-10 shrink-0 rounded-full bg-slate-50 flex items-center justify-center group-hover:bg-indigo-500 transition-colors"><svg class="w-4 h-4 text-slate-400 group-hover:text-white transform group-hover:translate-x-0.5 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg></div>
+          </div>
+        </a>
+
         <a href="rafa.html" class="project-card group card-hover flex flex-col relative rounded-[2rem] bg-white border border-slate-200 p-6 md:p-8 h-full overflow-hidden cursor-pointer" data-category="social">
           <div class="flex justify-between items-center mb-6">
             <div class="inline-flex items-center gap-1.5 rounded-md bg-[#4aeacd]/10 px-2.5 py-1 text-[10px] font-bold tracking-wider text-[#1e9b89] uppercase border border-[#4aeacd]/20"><span data-i18n="f_social">SocialFi</span></div>
@@ -197,6 +214,31 @@
           </div>
         </a>
 
+        <div class="project-card group flex flex-col relative rounded-[2rem] bg-slate-50/60 border-2 border-dashed border-slate-300 p-6 md:p-8 h-full overflow-hidden" data-always-show="true">
+          <div class="flex justify-between items-center mb-6">
+            <div class="inline-flex items-center gap-1.5 rounded-md bg-slate-200 px-2.5 py-1 text-[10px] font-bold tracking-wider text-slate-700 uppercase"><span data-i18n="f_collab">Partnership</span></div>
+            <div class="flex items-center gap-1 text-slate-400"><svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" /></svg><span class="text-xs font-semibold">Community</span></div>
+          </div>
+          <h3 class="text-2xl font-bold text-slate-900 mb-2 group-hover:text-slate-700 transition-colors" data-i18n="card_submit_title">Submit Alpha & Partner</h3>
+          <p class="text-sm text-slate-500 mb-6 line-clamp-3 leading-relaxed" data-i18n="card_submit_desc">Are you a project team wanting to list your protocol? Or an alpha hunter with solid intel? Contact us to grow the ecosystem. Quality alpha is rewarded!</p>
+          
+          <div class="grid grid-cols-2 gap-3 mb-6 mt-auto">
+            <div class="rounded-2xl bg-white border border-slate-200 p-4 flex flex-col justify-center items-center cursor-pointer hover:bg-slate-50 transition-colors shadow-sm" onclick="window.open('https://t.me/AaaaExpress', '_blank')">
+              <div class="text-[10px] font-bold text-slate-400 uppercase tracking-wide mb-1">Telegram</div>
+              <div class="text-sm font-extrabold text-blue-500">@AaaaExpress</div>
+            </div>
+            <div class="rounded-2xl bg-white border border-slate-200 p-4 flex flex-col justify-center items-center cursor-pointer hover:bg-slate-50 transition-colors shadow-sm" onclick="navigator.clipboard.writeText('alex_oshit'); alert(currentLang === 'zh' ? 'Discord 账号已复制！' : 'Discord ID Copied!');">
+              <div class="text-[10px] font-bold text-slate-400 uppercase tracking-wide mb-1">Discord</div>
+              <div class="text-sm font-extrabold text-[#5865F2]">alex_oshit</div>
+            </div>
+          </div>
+          
+          <div class="pt-5 border-t border-slate-200 flex items-center justify-between">
+            <div><div class="text-[10px] font-bold text-slate-400 uppercase tracking-wide mb-0.5" data-i18n="lbl_reward">Bounty Reward</div><div class="text-base font-black text-slate-900 pr-2" data-i18n="card_submit_reward">USDT / Tokens</div></div>
+            <div class="h-10 w-10 shrink-0 rounded-full bg-white border border-slate-200 flex items-center justify-center"><span class="text-lg">🤝</span></div>
+          </div>
+        </div>
+
       </div>
     </section>
 
@@ -217,9 +259,18 @@
       'oshit': { id: 'oshit', title: 'OSHIT', color: 'emerald', taskKey: 'task_oshit', url: 'oshit.html', reqTasks: ['task_ts', 'task_creator', 'task_engage'] },
       'hashgame': { id: 'hashgame', title: 'Hashgame', color: 'orange', taskKey: 'task_hashgame', url: 'hashgame.html', reqTasks: ['hg_task_faucet', 'hg_task_play'] },
       'rafa': { id: 'rafa', title: 'RAFA.AI', color: 'teal', taskKey: 'task_rafa', url: 'rafa.html', reqTasks: ['rafa_task_daily1'] },
-      
-      // 👇 核心修复：这里原本可能有 'sat_task_daily2'，现在只保留 'sat_task_daily1'
-      'satsume': { id: 'satsume', title: 'Satsume', color: 'rose', taskKey: 'task_satsume', url: 'satsume.html', reqTasks: ['sat_task_daily1'] }
+      'satsume': { id: 'satsume', title: 'Satsume', color: 'rose', taskKey: 'task_satsume', url: 'satsume.html', reqTasks: ['sat_task_daily1'] },
+      'perle': { 
+        id: 'perle', 
+        title: 'Perle Labs', 
+        color: 'indigo', 
+        taskKey: 'task_perle', 
+        url: 'perle.html', 
+        reqTasks: [
+          'perle_task1', 'perle_task2', 'perle_task3', 'perle_task4', 'perle_task5',
+          'perle_task6', 'perle_task7', 'perle_task8', 'perle_task9', 'perle_task10'
+        ] 
+      }
     };
 
     const TREE_STAGES = ['🌰', '🌱', '🌿', '🪴', '🌳']; 
@@ -281,7 +332,8 @@
 
           const filterValue = this.getAttribute('data-filter');
           projectCards.forEach(card => {
-            if (filterValue === 'all' || card.getAttribute('data-category') === filterValue) {
+            // 核心逻辑修改：如果带有 data-always-show="true" 属性，永远显示它！
+            if (filterValue === 'all' || card.getAttribute('data-category') === filterValue || card.getAttribute('data-always-show') === 'true') {
               card.style.display = 'flex'; 
             } else {
               card.style.display = 'none';
@@ -383,7 +435,6 @@
 
       container.innerHTML = '';
       
-      // 更新此时内存里的 subscriptions (防不同步)
       subscriptions = JSON.parse(localStorage.getItem('hub_subs')) || [];
       
       if(subscriptions.length === 0) {
@@ -396,18 +447,23 @@
         const proj = PROJECTS[id];
         if(!proj) return;
         
-        // 核心改动：检查子任务是否都已完成
         const reqTasks = proj.reqTasks || [];
         const allDone = reqTasks.length > 0 && reqTasks.every(tId => localStorage.getItem(tId) === 'true');
         const isWatered = localStorage.getItem(`hub_done_${id}`) === 'true';
         
-        const taskText = data[proj.taskKey] || "Daily Task";
+        let taskText = "Daily Task";
+        if (id === 'perle') {
+          taskText = currentLang === 'zh' ? "完成 10 个数据模块" : "Complete 10 Data Modules";
+        } else {
+          taskText = data[proj.taskKey] || "Daily Task";
+        }
         
         const colors = {
           'emerald': 'text-emerald-600 bg-emerald-50 border-emerald-200 hover:bg-emerald-100 hover:text-emerald-700',
           'orange': 'text-orange-600 bg-orange-50 border-orange-200 hover:bg-orange-100 hover:text-orange-700',
           'teal': 'text-teal-600 bg-teal-50 border-teal-200 hover:bg-teal-100 hover:text-teal-700',
-          'rose': 'text-rose-600 bg-rose-50 border-rose-200 hover:bg-rose-100 hover:text-rose-700'
+          'rose': 'text-rose-600 bg-rose-50 border-rose-200 hover:bg-rose-100 hover:text-rose-700',
+          'indigo': 'text-indigo-600 bg-indigo-50 border-indigo-200 hover:bg-indigo-100 hover:text-indigo-700'
         };
         const colorClass = colors[proj.color];
 
@@ -415,10 +471,8 @@
         if (isWatered) {
           btnHtml = `<button class="shrink-0 px-4 py-2 rounded-xl text-xs font-bold border transition-all bg-slate-100 text-slate-400 border-transparent cursor-not-allowed" disabled>${data.btn_watered || 'Done'}</button>`;
         } else if (allDone) {
-          // 子页面任务做完了，解锁浇水按钮
           btnHtml = `<button class="water-btn shrink-0 px-4 py-2 rounded-xl text-xs font-bold border transition-all ${colorClass}" data-id="${id}">${data.btn_water || 'Water'}</button>`;
         } else {
-          // 子页面任务没做完，显示去完成
           btnHtml = `<button class="go-task-btn shrink-0 px-4 py-2 rounded-xl text-xs font-bold border transition-all bg-white text-slate-600 border-slate-300 hover:bg-slate-50" data-url="${proj.url}">${data.btn_go_tasks || 'Go'}</button>`;
         }
 
@@ -438,7 +492,6 @@
         container.appendChild(row);
       });
 
-      // 绑定浇水事件
       document.querySelectorAll('.water-btn').forEach(btn => {
         btn.addEventListener('click', function(e) {
           const id = this.getAttribute('data-id');
@@ -446,7 +499,6 @@
         });
       });
       
-      // 绑定去完成事件
       document.querySelectorAll('.go-task-btn').forEach(btn => {
         btn.addEventListener('click', function(e) {
           window.location.href = this.getAttribute('data-url');
@@ -496,7 +548,6 @@
       try {
         checkDailyReset();
         
-        // 调用独立出来的后端鉴权模块
         if (typeof initDiscordAuth === 'function') {
            initDiscordAuth();
         }
@@ -507,7 +558,6 @@
       } catch(e) { console.error("Hub init error:", e); }
     });
 
-    // 绑定全局图片放大
     document.body.addEventListener('click', (e) => {
       if(e.target.tagName === 'IMG' && e.target.classList.contains('cursor-zoom-in') && !e.target.closest('#lightbox')) {
         const lb = document.getElementById("lightbox"); 
