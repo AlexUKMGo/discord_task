@@ -51,7 +51,21 @@ window.translations.en = {
 
   // Satsume
   card_satsume_title: "Satsume", card_satsume_desc: "CommerceFi protocol blending e-commerce with DeFi. Mint NFT Receipts through testnet mock shopping to build mainnet airdrop weight.",
-  card_satsume_time: "2 Mins/Tx", card_satsume_cost: "Zero Cost", card_satsume_yield: "Spot / Points"
+  card_satsume_time: "2 Mins/Tx", card_satsume_cost: "Zero Cost", card_satsume_yield: "Spot / Points",
+
+  card_perle_title: "Perle Labs",
+  card_perle_desc: "Enterprise-grade AI training data protocol funded by Scale AI veterans. Label to Earn.",
+  card_perle_time: "15 Mins / Quest",
+  card_perle_cost: "~0.1 SOL",
+  card_perle_yield: "Airdrop",
+
+  f_collab: "Partnership",
+  card_submit_title: "Submit Alpha & Partner",
+  card_submit_desc: "Are you a project team wanting to list your protocol? Or an alpha hunter with solid intel? Contact us to grow the ecosystem. Quality alpha is rewarded!",
+  lbl_reward: "Bounty Reward",
+  card_submit_reward: "USDT / Tokens",
+
+  proof_title: "Recent Verified Yields",
 };
 
 window.translations.zh = {
@@ -106,5 +120,19 @@ window.translations.zh = {
 
   // Satsume
   card_satsume_title: "Satsume", card_satsume_desc: "融合电商与 DeFi 的 CommerceFi 协议。通过测试网零成本购物模拟，铸造数字收据以积攒未来主网空投权重。",
-  card_satsume_time: "单次 2 分钟", card_satsume_cost: "纯零撸", card_satsume_yield: "现货 / 积分"
+  card_satsume_time: "单次 2 分钟", card_satsume_cost: "纯零撸", card_satsume_yield: "现货 / 积分",
+
+  card_perle_title: "Perle Labs",
+  card_perle_desc: "Scale AI 前员工创办的企业级 AI 数据训练协议。通过完成标注任务获取空投权重。",
+  card_perle_time: "15 分钟 / 任务",
+  card_perle_cost: "约 0.1 SOL",
+  card_perle_yield: "空投奖励",
+
+  f_collab: "商务与共建",
+  card_submit_title: "提交项目 & 共建生态",
+  card_submit_desc: "你是想上架项目的官方团队？还是手握早期 Alpha 信息的玩家？联系我们共建生态，提供优质未收录的零撸信息即可获得专属打赏！",
+  lbl_reward: "悬赏奖励",
+  card_submit_reward: "USDT 或 专属代币",
+
+  proof_title: "近期实测收益凭证",
 };
