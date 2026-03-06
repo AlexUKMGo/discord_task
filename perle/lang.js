@@ -1,6 +1,5 @@
 window.translations = window.translations || {};
 
-// 提取出任务的官方英文描述，方便管理
 const enTaskData = [
   { title: "Welcome to Perle Labs", sub: "Social Onboarding", desc: "Help the Perle Labs platform identify the best tasks for you and stay up to date on new announcements by completing these 5 steps." },
   { title: "Clause Conflict Detection", sub: "Educational Task", desc: "You will be presented with two contract clauses from the same agreement. The clauses may work together harmoniously or they may conflict in subtle or significant ways." },
@@ -27,14 +26,15 @@ window.translations.en = {
   btn_copied: "Copied!",
   board_desc: "Track your Season 1 progress. Tick tasks as you complete them.",
   board_progress: "Quest Progress",
-  sub_title: "Smart Daily Reminder",
-  sub_desc: "Connect Discord and subscribe to get a direct message from our Bot if you haven't completed your daily tasks by 20:00 (UTC+8).",
+  
+  sub_title: "Task Update Reminder",
+  sub_desc: "Connect Discord and subscribe. Get a DM from our Bot if new Perle tasks are added or if you haven't completed your current list.",
   sub_btn_connect: "Connect Discord First",
   sub_status_on: "On", sub_status_off: "Off",
   toast_sender: "System Bot",
   toast_msg: "Successfully verified <span class='font-bold text-white'>{0}</span>!",
   toast_sub_title: "Subscription Active",
-  toast_sub_desc: "Our bot will DM you on Discord at 20:00 daily if tasks are incomplete.",
+  toast_sub_desc: "We will notify you via Discord when new tasks arrive.",
   lightbox_hint: "Click anywhere to close",
 
   hero_title: "Enterprise-Grade AI Training: <span class=\"text-transparent bg-clip-text bg-gradient-to-r from-indigo-500 to-cyan-500\">Label to Earn</span>",
@@ -44,12 +44,12 @@ window.translations.en = {
   banner_sub1: "$17.5M Funding ($8.5M + $9M)",
   banner_sub2: "Season 1 Contributor Network",
   
-  check1_title: "Zero Cost", check1_desc: "Tasks mostly require 0 Gas.",
+  check1_title: "Low Cost", check1_desc: "Requires small SOL gas fee.",
   check2_title: "Scale AI Vets", check2_desc: "Top-tier team background.",
   check3_title: "High Traction", check3_desc: "200k+ users on S1 Day 1.",
 
   advice_title: "Heartfelt Advice for Grinders",
-  advice_desc: "Currently, Perle Labs has launched specific AI labeling tasks. It's a bit of a 'grind' (like customer service screening, medical categorization, voice reading), but very interesting. <br><br><b>Core Strategy:</b> Gas costs for tasks are minimal, but minting certain badges might require a small fee. It's a highly recommended Zero-Cost/Low-Cost project right now!",
+  advice_desc: "Currently, Perle Labs has launched specific AI labeling tasks. It's a bit of a 'grind' (like customer service screening, medical categorization, voice reading), but very interesting. <br><br><b>Core Strategy:</b> It is a <b>low-cost</b> project (~0.1 SOL), not absolutely zero-cost. Minting badges and submitting requires a small amount of gas. Highly recommended to build early weight!",
 
   board_s1_title: "Season 1 Training Quests",
   board_s1_desc: "(Complete these 10 core modules to maximize your contributor weight)",
@@ -95,7 +95,7 @@ window.translations.en = {
             <img src="perle/task${i+1}_2.png" class="w-full rounded-xl cursor-zoom-in border border-slate-200 mt-2" onerror="this.outerHTML='<div class=\\'flex aspect-[4/3] w-full items-center justify-center bg-slate-100 text-slate-400 text-xs border border-dashed border-slate-300 rounded-xl mt-2\\'>[Please place participation guide at: perle/task${i+1}_2.png]</div>'">
           </div>
         </div>`,
-        actions: [{ text: "Go to Platform", kind: "primary", url: "https://app.perle.xyz/" }]
+        actions: [{ text: "Go to Platform", kind: "primary", url: "https://app.perle.xyz/join/rUIM5D" }] // 👈 已替换为你的链接
       }
     ]))
   }
@@ -127,15 +127,16 @@ window.translations.zh = {
   btn_copied: "已复制!",
   board_desc: "记录你的第一季任务进度。完成后请打钩以防遗忘。",
   board_progress: "当前进度",
-  sub_title: "智能打卡提醒",
-  sub_desc: "连接 Discord 并开启订阅。如果你在当天 20:00 前未完成日常任务，系统将通过私信提醒你。",
+  
+  sub_title: "任务更新 & 漏打卡提醒",
+  sub_desc: "连接 Discord 并开启订阅。如果官方上线了新任务，或者你有未完成的待办，机器人将通过私信提醒你。",
   sub_btn_connect: "先连接 Discord",
   sub_status_on: "已开启",
   sub_status_off: "未开启",
   toast_sender: "系统提醒",
   toast_msg: "成功确认完成 <span class='font-bold text-white'>{0}</span>！",
   toast_sub_title: "订阅已激活",
-  toast_sub_desc: "如果日常任务未完成，机器人每天 20:00 将在 Discord 私信提醒您。",
+  toast_sub_desc: "当官方上线新任务时，我们将通过 Discord 提醒您。",
   lightbox_hint: "点击任意区域关闭",
 
   hero_title: "企业级 AI 数据训练协议：将 <span class=\"text-transparent bg-clip-text bg-gradient-to-r from-indigo-500 to-cyan-500\">打工转化为空投</span>",
@@ -145,12 +146,12 @@ window.translations.zh = {
   banner_sub1: "累计融资 $1750 万美元",
   banner_sub2: "Season 1 第一季大赛红利",
   
-  check1_title: "绝对零撸", check1_desc: "任务基本不耗费 Gas",
+  check1_title: "极低磨损", check1_desc: "交互仅需极少量 SOL",
   check2_title: "顶级背景", check2_desc: "Scale AI 前员工创办",
   check3_title: "极高热度", check3_desc: "S1 首日涌入 20 万玩家",
 
   advice_title: "给新人的真心建议",
-  advice_desc: "这个项目目前就是大家俗称的“黑奴项目”（数据标注打工）。除了基础的社交任务外，上线了很多答题、语音阅读的任务，甚至有医学分类等特定领域的内容。<br><br><b>核心优势：</b>非常有趣且属于<b>零撸</b>，任务本身花不了多少 Gas，但后期领徽章可能需要一点点费用。目前处于早期红利阶段，强烈建议防身！",
+  advice_desc: "这个项目目前就是大家俗称的“黑奴项目”（数据标注打工）。除了基础的社交任务外，上线了很多答题、语音阅读的任务，甚至有医学分类等特定领域的内容。<br><br><b>核心建议：</b>它<b>不是绝对的零撸</b>，每次提交和领徽章需要少量 Gas（成本约 0.1 SOL）。非常有趣且属于低成本防身项目，目前处于早期红利阶段，强烈建议参与！",
 
   board_s1_title: "Season 1 核心任务列表",
   board_s1_desc: "(当前已发布的 10 个数据模块，完成后请打钩防遗忘)",
@@ -196,7 +197,7 @@ window.translations.zh = {
             <img src="perle/task${i+1}_2.png" class="w-full rounded-xl cursor-zoom-in border border-slate-200 mt-2" onerror="this.outerHTML='<div class=\\'flex aspect-[4/3] w-full items-center justify-center bg-slate-100 text-slate-400 text-xs border border-dashed border-slate-300 rounded-xl mt-2\\'>[请将操作截图保存为: perle/task${i+1}_2.png]</div>'">
           </div>
         </div>`,
-        actions: [{ text: "去官网执行", kind: "primary", url: "https://app.perle.xyz/" }]
+        actions: [{ text: "去官网执行", kind: "primary", url: "https://app.perle.xyz/join/rUIM5D" }] // 👈 已替换为你的链接
       }
     ]))
   }
