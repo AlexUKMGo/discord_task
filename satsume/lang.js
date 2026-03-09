@@ -45,7 +45,7 @@ window.translations.en = {
   sat_strategy_title: "Core Strategy: The NUSD Flywheel",
   sat_strategy_desc: `<ul class="list-disc pl-4 space-y-1.5 mt-1 font-medium">
     <li><b>Points Conversion:</b> Spending 1,000 $NUSD in the marketplace yields 1 <b>Neurobit (the official Testnet Point)</b>. Therefore, earning $NUSD is your primary goal.</li>
-    <li><b>Discord Events:</b> All Discord mini-games (Rumble Royale, Poker, Bomb defusal, etc.) reward $NUSD.</li>
+    <li><b>Discord Events:</b> All Discord mini-games (Rumble Royale, Poker, Zero and Zenith, etc.) reward $NUSD.</li>
     <li><b>Strange Drops:</b> Purchasing a 'Strange Drop' gives a massive cashback of <b>750,000 $NUSD</b>.</li>
     <li><b>Restock Times:</b> Strange Drops restock daily at <b>10:00 AM, 7:00 PM, and 1:00 AM (UTC+8)</b> to accommodate all time zones. Be ready!</li>
     <li class="pt-1"><span class="font-bold text-fuchsia-700 bg-fuchsia-100 px-2 py-0.5 rounded">Speculated Strategy: Testnet Points (Neurobits) + Discord Roles = Potential Airdrop Weight</span></li>
@@ -94,7 +94,7 @@ window.translations.en = {
     strangemind: {
       title: "Top 3 in Strangemind Weekly", sub: "Earn @StrangeDroper",
       body: `<div class="space-y-4 text-sm text-slate-700">
-        <p class="text-xs text-slate-600">Join Strange Mind creation and shape the Strange Drop. The Top 3 creators weekly earn the <b>@StrangeDroper</b> role.</p>
+        <p class="text-xs text-slate-600">Top 3 posts with the highest reactions and posts that are listed as Strange Drop will get the <b>@StrangeDroper</b> role.</p>
         <div class="text-[13px] font-bold text-slate-900 border-b border-slate-100 pb-1">AI Creation Guide</div>
         <div class="space-y-2">
           <div class="text-[12px] text-slate-600 font-medium"><span class="font-bold text-fuchsia-600">Step 1:</span> Choose 1-2 Satsume logos or emojis (found in Discord stickers).</div>
@@ -125,8 +125,7 @@ window.translations.en = {
     neurocatch: {
       title: "Top 5 in Neurocatch Weekly", sub: "Earn @NeuroCatcher",
       body: `<div class="space-y-3 text-sm text-slate-600">
-        <p>The elite hunters who catch the most Neurofolks earn the <b>@NeuroCatcher</b> role. Participate in the weekly Discord mini-game and aim for the Top 5!</p>
-        <img src="satsume/guide_neurocatch.gif" class="w-full rounded-xl cursor-zoom-in border border-slate-200 mt-2" onerror="this.outerHTML='<div class=\\'flex aspect-video w-full items-center justify-center bg-slate-100 text-slate-400 text-xs border border-dashed border-slate-300 rounded-xl mt-2\\'>[Please place GIF at: satsume/guide_neurocatch.gif]</div>'">
+      <p><b>Neurocatch Reward Update</b><br>We’ve updated the reward structure to ensure fairness and reward top performers:<br><br><b>1. Role Distribution:</b><br>The @NeuroCatcher role is awarded to Top 5 players (only if you don't already have it).<br><br><b>2. NUSD Rewards:</b><br>Top 5 players who <i>already</i> have the role will receive 1.5M NUSD. Rank 6–10 players will receive 500K NUSD.<br><br>Climb the leaderboard, secure your spot, and good luck!</p>        <img src="satsume/guide_neurocatch.gif" class="w-full rounded-xl cursor-zoom-in border border-slate-200 mt-2" onerror="this.outerHTML='<div class=\\'flex aspect-video w-full items-center justify-center bg-slate-100 text-slate-400 text-xs border border-dashed border-slate-300 rounded-xl mt-2\\'>[Please place GIF at: satsume/guide_neurocatch.gif]</div>'">
       </div>`,
       actions: [{ text: "Play in Discord", kind: "primary", url: "https://discord.com/invite/nTr2dZMFwu" }]
     },
@@ -234,11 +233,10 @@ window.translations.zh = {
   sat_advice_title: "给新人的真心建议",
   sat_advice_desc: "Satsume 目前极其早期且非常低调，并没有满天飞的大额融资宣发。但这反而是好事——<span class=\"font-bold text-rose-900\">意味着没那么卷，不需要和海量工作室拼刺刀</span>。纯靠行为撸空投，不要 All-in 你的全部时间，但每天坚持花两分钟领水、模拟购物、做一下 Zealy，是一笔极具性价比的“零撸”投资。<br><br><span class=\"font-bold text-rose-600\">重要提示：</span>当前官网交互获得的 <b>Neurobits</b> 本质上就是积分（Points），这极有可能就是未来 TGE 后的空投兑换凭证！",
 
-  // 新增：核心打法与飞轮 (已修改语气并绑定概念)
   sat_strategy_title: "核心打法：NUSD 积分飞轮",
   sat_strategy_desc: `<ul class="list-disc pl-4 space-y-1.5 mt-1 font-medium">
     <li><b>积分转化：</b>在 Marketplace 每消费 1,000 $NUSD 可获得 1 <b>Neurobit（即测试网专属积分）</b>。因此，赚取 $NUSD 是重中之重。</li>
-    <li><b>Discord 活动：</b>频道内的所有活动（大逃杀、打扑克、点炸弹等）都会奖励大量 $NUSD。</li>
+    <li><b>Discord 活动：</b>频道内的所有活动（大逃杀、打扑克、Zero and Zenith 等）都会奖励大量 $NUSD。</li>
     <li><b>奇怪掉落 (Strange Drop)：</b>成功抢购“奇怪掉落”商品，可获得高达 <b>75 万 $NUSD</b> 的巨额返利！</li>
     <li><b>刷新时间：</b>奇怪掉落每天在 <b>10:00、19:00、01:00 (UTC+8)</b> 三个时间点更新库存，方便不同作息的成员蹲点。</li>
     <li class="pt-1"><span class="font-bold text-fuchsia-700 bg-fuchsia-100 px-2 py-0.5 rounded">核心逻辑推测：测试网积分 (Neurobits) + Discord 活跃头衔 = 极高概率的空投权重</span></li>
@@ -290,7 +288,7 @@ window.translations.zh = {
     strangemind: {
       title: "Strange-Mind 周榜前三", sub: "赢取 @StrangeDroper",
       body: `<div class="space-y-4 text-sm text-slate-700">
-        <p class="text-xs text-slate-600">参与构思 Strange Drop！每周点赞排名前 3 的创作者将获得 <b>@StrangeDroper</b> 角色。</p>
+        <p class="text-xs text-slate-600">获得最高互动的 Top 3 帖子，以及被官方收录至 Strange Drop 的帖子作者，将获得 <b>@StrangeDroper</b> 专属身份组。</p>
         <div class="text-[13px] font-bold text-slate-900 border-b border-slate-100 pb-1">AI 创作图文指引</div>
         <div class="space-y-2">
           <div class="text-[12px] text-slate-600 font-medium"><span class="font-bold text-fuchsia-600">Step 1：</span>选择 1-2 个 Satsume 的 logo 或表情包（可在 Discord 贴纸中找到）。</div>
@@ -321,7 +319,7 @@ window.translations.zh = {
     neurocatch: {
       title: "抓脑子小游戏 (周榜前五)", sub: "赢取 @NeuroCatcher",
       body: `<div class="space-y-3 text-sm text-slate-600">
-        <p>参与频道内每周开启的 Neurocatch 抓脑子小游戏。捕获次数排名前五的精英玩家将获得绝版的 <b>@NeuroCatcher</b> 活动角色。</p>
+        <p><b>Neurocatch 奖励机制更新</b><br>我们更新了奖励结构，以确保公平并奖励优秀玩家：<br><br><b>1. 角色分配：</b><br>@NeuroCatcher 身份将仅授予进入 Top 5 且尚未拥有该身份的玩家。<br><br><b>2. NUSD 奖励：</b><br>若 Top 5 玩家已拥有该身份，将获得 1.5M NUSD 奖励。排名 6–10 的玩家将获得 500K NUSD 奖励。<br><br>攀登排行榜，锁定你的奖励，祝各位猎人好运！</p>
         <img src="satsume/guide_neurocatch.gif" class="w-full rounded-xl cursor-zoom-in border border-slate-200 mt-2" onerror="this.outerHTML='<div class=\\'flex aspect-[4/3] w-full items-center justify-center bg-slate-100 text-slate-400 text-xs border border-dashed border-slate-300 rounded-xl mt-2\\'>[请上传 GIF 动图: satsume/guide_neurocatch.gif]</div>'">
       </div>`,
       actions: [{ text: "去 Discord 参与", kind: "primary", url: "https://discord.com/invite/nTr2dZMFwu" }]
