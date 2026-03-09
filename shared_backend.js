@@ -12,6 +12,26 @@ const DISCORD_CLIENT_ID = '1476907202047508684';
 let isDiscordLoggedIn = false;
 
 // ==========================================
+// 🌟 0. 游客初次访问初始化引擎 (新逻辑)
+// ==========================================
+function initializeDefaultTracking() {
+  // 如果是第一次访问网站（没有初始化标记），直接全量订阅！
+  if (!localStorage.getItem('hub_first_visit_init')) {
+    console.log("🌟 [Init] First time visitor detected. Auto-tracking all projects!");
+    const allProjects = ['oshit', 'hashgame', 'rafa', 'satsume', 'perle'];
+    
+    // 强制填满订阅列表
+    localStorage.setItem('hub_subs', JSON.stringify(allProjects));
+    // 默认开启智能提醒的开关状态
+    localStorage.setItem('isSubscribed', 'true');
+    // 打上标记，以后再刷新就不会强制覆盖用户自己取消的设置了
+    localStorage.setItem('hub_first_visit_init', 'true');
+  }
+}
+// 脚本一加载，立刻执行初始化
+initializeDefaultTracking();
+
+// ==========================================
 // 🌟 1. 全局跨天重置引擎 (核心修复区)
 // ==========================================
 function checkGlobalDailyReset() {
@@ -184,9 +204,11 @@ function logoutDiscord() {
   if(confirm("Log out of Discord?")) {
      localStorage.removeItem('discordUser');
      isDiscordLoggedIn = false;
-     localStorage.removeItem('isSubscribed');
-     localStorage.removeItem('hub_subs');
-     localStorage.removeItem('hub_tree');
+     
+     // 🌟 新逻辑：退出时不清除本地的订阅清单和树的等级，让他退出了也能继续用！
+     // localStorage.removeItem('isSubscribed');
+     // localStorage.removeItem('hub_subs');
+     // localStorage.removeItem('hub_tree');
      
      let keysToRemove = [];
      for (let i = 0; i < localStorage.length; i++) {
@@ -257,7 +279,7 @@ function toggleSubscription() {
 }
 
 // ==========================================
-// 🌟 9. 从云端拉取数据 (加入防覆盖验证)
+// 🌟 9. 从云端拉取数据 (已支持新用户同步策略)
 // ==========================================
 async function pullFromBackend(discordId) {
   try {
@@ -272,7 +294,11 @@ async function pullFromBackend(discordId) {
       
       let treeState = { xp: d.xp || 0, level: d.level || 1, streak: d.streak || 0, lastActive: d.last_active || null };
       localStorage.setItem('hub_tree', JSON.stringify(treeState));
-      localStorage.setItem('hub_subs', JSON.stringify(d.subs || []));
+      
+      // 🌟 用云端的真实订阅数据覆盖本地
+      if (d.subs) {
+        localStorage.setItem('hub_subs', JSON.stringify(d.subs));
+      }
 
       // 🛡️ 核心防覆盖：如果本地刚才跨天重置了，坚决不用云端的昨日旧数据！
       // 而是直接把本地清空的状态同步给云端。
@@ -290,6 +316,11 @@ async function pullFromBackend(discordId) {
           }
       }
       console.log("📥 [Backend] Data pulled successfully.");
+      
+    } else if (result.status === 'not_found') {
+      // 🌟 新用户：他本地已经是"满配"状态了，直接把这个满配状态当做初始数据推给云端！
+      console.log("🆕 [Backend] New user detected. Syncing local defaults to cloud!");
+      syncToBackend();
     }
   } catch (error) { 
     console.error("❌ Pull error:", error); 
