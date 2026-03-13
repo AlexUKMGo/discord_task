@@ -1,0 +1,24 @@
+/* ==========================================
+   Shared Styles — SHITHub
+   Applies to all sub-project pages
+   ========================================== */
+
+body { -webkit-tap-highlight-color: transparent; }
+.safe-bottom { padding-bottom: env(safe-area-inset-bottom); }
+.glass { background: rgba(255,255,255,.75); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); }
+.is-hidden { display: none !important; }
+
+.custom-scroll::-webkit-scrollbar { width: 6px; }
+.custom-scroll::-webkit-scrollbar-track { background: transparent; }
+.custom-scroll::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
+
+.check-btn { transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
+.task-row.checked { opacity: 0.65; }
+.task-row.checked .task-title { text-decoration: line-through; color: #64748b; }
+
+#discordToast, #systemToast { transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.3s; }
+.toast-show { transform: translateY(0) scale(1) !important; opacity: 1 !important; }
+.toast-hide { transform: translateY(120%) scale(0.95) !important; opacity: 0 !important; }
+
+.bg-discord { background-color: #5865F2; }
+.hover-bg-discord:hover { background-color: #4752C4; }

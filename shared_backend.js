@@ -5,9 +5,14 @@
  * ==========================================
  */
 
-const BACKEND_API_URL = "https://noninferable-brigida-vimineous.ngrok-free.dev/api/sync";
-const BACKEND_BASE_URL = BACKEND_API_URL.replace("/api/sync", "");
-const DISCORD_CLIENT_ID = '1476907202047508684'; 
+const BACKEND_API_URL = "https://api.alphabonsai.com/api/sync";
+const BACKEND_BASE_URL = "https://api.alphabonsai.com";
+const DISCORD_CLIENT_ID = '1476907202047508684';
+
+// ==========================================
+// Project Registry — add new projects here only
+// ==========================================
+const ALL_PROJECT_IDS = ['oshit', 'hashgame', 'rafa', 'satsume', 'perle'];
 
 let isDiscordLoggedIn = false;
 
@@ -18,10 +23,8 @@ function initializeDefaultTracking() {
   // 如果是第一次访问网站（没有初始化标记），直接全量订阅！
   if (!localStorage.getItem('hub_first_visit_init')) {
     console.log("🌟 [Init] First time visitor detected. Auto-tracking all projects!");
-    const allProjects = ['oshit', 'hashgame', 'rafa', 'satsume', 'perle'];
-    
     // 强制填满订阅列表
-    localStorage.setItem('hub_subs', JSON.stringify(allProjects));
+    localStorage.setItem('hub_subs', JSON.stringify(ALL_PROJECT_IDS));
     // 默认开启智能提醒的开关状态
     localStorage.setItem('isSubscribed', 'true');
     // 打上标记，以后再刷新就不会强制覆盖用户自己取消的设置了
@@ -77,12 +80,10 @@ function isProjectTracked(projectId) {
 // 3. 获取当前所在页面的项目 ID
 function getCurrentProjectId() {
   const path = window.location.pathname.toLowerCase();
-  if (path.includes('oshit')) return 'oshit';
-  if (path.includes('hashgame')) return 'hashgame';
-  if (path.includes('rafa')) return 'rafa';
-  if (path.includes('satsume')) return 'satsume';
-  if (path.includes('perle')) return 'perle';
-  return null; 
+  for (const id of ALL_PROJECT_IDS) {
+    if (path.includes(id)) return id;
+  }
+  return null;
 }
 
 // 4. 初始化 Discord 状态
