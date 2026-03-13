@@ -262,7 +262,7 @@
     let subscriptions = JSON.parse(localStorage.getItem('hub_subs')) || [];
     let treeState = JSON.parse(localStorage.getItem('hub_tree')) || { xp: 0, level: 1, streak: 0, lastActive: null };
     
-    const API_URL = "https://noninferable-brigida-vimineous.ngrok-free.dev/api/public/stats";
+    const API_URL = "https://api.alphabonsai.com/api/public/stats";
     
     const PROJECTS = {
       'oshit': { id: 'oshit', title: 'OSHIT', color: 'emerald', taskKey: 'task_oshit', url: 'oshit.html', reqTasks: ['task_ts', 'task_creator', 'task_engage'] },
@@ -399,7 +399,7 @@
 
     async function fetchPublicAnalytics() {
       try {
-        const response = await fetch(API_URL, { headers: { "ngrok-skip-browser-warning": "true" } });
+        const response = await fetch(API_URL);
         if (!response.ok) throw new Error("Analytics fetch failed");
         
         const data = await response.json();

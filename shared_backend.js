@@ -284,9 +284,7 @@ function toggleSubscription() {
 // ==========================================
 async function pullFromBackend(discordId) {
   try {
-    const res = await fetch(`${BACKEND_BASE_URL}/api/user/${discordId}`, {
-        headers: { "ngrok-skip-browser-warning": "true" }
-    });
+    const res = await fetch(`${BACKEND_BASE_URL}/api/user/${discordId}`);
     const result = await res.json();
     
     if (result.status === 'success' && result.data) {
@@ -364,7 +362,7 @@ async function syncToBackend() {
 
     await fetch(BACKEND_API_URL, {
       method: "POST",
-      headers: { "Content-Type": "application/json", "ngrok-skip-browser-warning": "true" },
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         discord_id: userData.id,
         username: userData.username,

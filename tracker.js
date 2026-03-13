@@ -2,8 +2,7 @@
 // 行为分析探针 (Analytics Tracker)
 // ==========================================
 
-// TODO: 替换为你的真实 ngrok 地址
-const TRACK_API_URL = "https://noninferable-brigida-vimineous.ngrok-free.dev/api/track";
+const TRACK_API_URL = "https://api.alphabonsai.com/api/track";
 
 (function() {
     const sessionId = Math.random().toString(36).substring(2, 15);
@@ -37,8 +36,7 @@ const TRACK_API_URL = "https://noninferable-brigida-vimineous.ngrok-free.dev/api
         fetch(TRACK_API_URL, {
             method: 'POST',
             headers: { 
-                'Content-Type': 'application/json',
-                'ngrok-skip-browser-warning': 'true' // 绕过 ngrok 拦截
+                'Content-Type': 'application/json'
             },
             body: JSON.stringify(payload),
             keepalive: true 

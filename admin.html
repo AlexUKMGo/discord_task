@@ -88,8 +88,7 @@
   </div>
 
   <script>
-    // ⚠️ 替换为你的 Ngrok 地址
-    const API_URL = "https://noninferable-brigida-vimineous.ngrok-free.dev/api/admin/analytics";
+    const API_URL = "https://api.alphabonsai.com/api/admin/analytics";
     
     let currentAdminToken = sessionStorage.getItem('admin_token');
     let currentTimeRange = 'all'; // 默认查询全部时间
@@ -144,7 +143,6 @@
         // 在 URL 后面加上 time_range 参数发给后端
         const response = await fetch(`${API_URL}?time_range=${currentTimeRange}`, {
           headers: {
-            "ngrok-skip-browser-warning": "true",
             "x-admin-token": currentAdminToken
           }
         });
