@@ -373,7 +373,8 @@ async function syncToBackend() {
         streak: treeState.streak,
         last_active: treeState.lastActive,
         subs: subs,
-        done_tasks: done_tasks
+        done_tasks: done_tasks,
+        lang: localStorage.getItem('oshit_lang') || 'en'
       })
     });
     console.log("📤 [Backend] Data synced successfully.");
