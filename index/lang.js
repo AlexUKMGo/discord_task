@@ -1,9 +1,9 @@
 window.translations = window.translations || {};
 
 window.translations.en = {
-  hub_title: "SHITHub — Airdrop & Yield Aggregator",
-  hero_hub_title: "Skip the noise,<br class=\"hidden sm:block\"/>Focus on <span class=\"text-transparent bg-clip-text bg-gradient-to-r from-emerald-600 to-teal-500\">High-Conviction Yields.</span>",
-  hero_hub_desc: "Ditch the complex whitepapers and low-ROI tasks. We provide curated checklists with clear expected returns and step-by-step guides. Filter, click, execute.",
+  hub_title: "SHITclaw — AI Alpha Aggregator",
+  hero_hub_title: "Hunt the AI Signal,<br class=\"hidden sm:block\"/>Farm the <span class=\"text-transparent bg-clip-text bg-gradient-to-r from-emerald-600 to-teal-500\">Edge Before the Crowd.</span>",
+  hero_hub_desc: "Stop scrolling AI hype. We curate actionable daily tasks from the hottest AI x Crypto projects—with clear time costs and expected yields. Find the signal, execute the edge.",
   
   // 公共/共享词汇
   btn_discord_login: "Connect",
@@ -20,13 +20,18 @@ window.translations.en = {
   title_dailies: "My Dailies",
   desc_dailies: "Complete project tasks to unlock watering.",
   empty_dailies: "Your daily list is empty. Explore and track projects below!",
-  title_discover: "Discover Alpha",
+  title_discover: "Discover AI Alpha",
   btn_track: "+ Track Daily",
   btn_untrack: "Untrack",
-  btn_go_tasks: "Go to Tasks", // 新增
+  btn_go_tasks: "Go to Tasks", 
   btn_water: "💧 Water",
   btn_watered: "✨ Done",
   
+  // 🌟 新增：DAU与热度翻译
+  lbl_dau: "Today's AI Hunters:",
+  lbl_dau_mobile: "DAU:",
+  lbl_hype: "Hype",
+
   task_oshit: "Complete all 3 daily tasks to unlock.",
   task_hashgame: "Predict BTC Hash on Testnet",
   task_rafa: "Chat genuinely in Discord to level up",
@@ -61,17 +66,17 @@ window.translations.en = {
 
   f_collab: "Partnership",
   card_submit_title: "Submit Alpha & Partner",
-  card_submit_desc: "Are you a project team wanting to list your protocol? Or an alpha hunter with solid intel? Contact us to grow the ecosystem. Quality alpha is rewarded!",
+  card_submit_desc: "Are you an AI x Crypto project team wanting to list your protocol? Or an alpha hunter tracking the AI wave? Contact us to grow the ecosystem. Quality AI alpha is rewarded!",
   lbl_reward: "Bounty Reward",
   card_submit_reward: "USDT / Tokens",
 
-  proof_title: "Recent Verified Yields",
+  proof_title: "Recent AI Alpha Wins",
 };
 
 window.translations.zh = {
-  hub_title: "SHITHub — 高胜率空投交互聚合器",
-  hero_hub_title: "过滤低效内卷，<br class=\"hidden sm:block\"/>专注 <span class=\"text-transparent bg-clip-text bg-gradient-to-r from-emerald-600 to-teal-500\">高胜率空投。</span>",
-  hero_hub_desc: "摒弃繁杂的白皮书与无效 PUA。这里只有经过 ROI 精算、附带保姆级执行步骤的任务清单。选定目标，直接执行。",
+  hub_title: "SHITclaw — AI Alpha 聚合器",
+  hero_hub_title: "捕捉 AI 信号，<br class=\"hidden sm:block\"/>抢在人群之前 <span class=\"text-transparent bg-clip-text bg-gradient-to-r from-emerald-600 to-teal-500\">埋伏先机。</span>",
+  hero_hub_desc: "停止刷 AI 热点噪音。这里只有精选 AI x Crypto 项目的可执行日常任务——时间成本清晰、收益预期明确。找准信号，先人一步。",
   
   // 公共/共享词汇
   btn_discord_login: "连接账号",
@@ -89,13 +94,18 @@ window.translations.zh = {
   title_dailies: "今日待办",
   desc_dailies: "去项目页完成任务，即可解锁浇水权限。",
   empty_dailies: "当前清单为空。请在下方探索并订阅你认可的项目！",
-  title_discover: "探索高胜率项目",
+  title_discover: "探索 AI Alpha 项目",
   btn_track: "+ 加入打卡",
   btn_untrack: "取消打卡",
-  btn_go_tasks: "去完成", // 新增
+  btn_go_tasks: "去完成", 
   btn_water: "💧 浇水",
   btn_watered: "✨ 已完成",
   
+  // 🌟 新增：DAU与热度翻译
+  lbl_dau: "今日 AI 猎手:",
+  lbl_dau_mobile: "今日活跃:",
+  lbl_hype: "热度",
+
   task_oshit: "去项目页完成 3 个日常任务以解锁",
   task_hashgame: "参与测试网 BTC 哈希预测",
   task_rafa: "Discord 社区真实活跃与升级",
@@ -130,9 +140,9 @@ window.translations.zh = {
 
   f_collab: "商务与共建",
   card_submit_title: "提交项目 & 共建生态",
-  card_submit_desc: "你是想上架项目的官方团队？还是手握早期 Alpha 信息的玩家？联系我们共建生态，提供优质未收录的零撸信息即可获得专属打赏！",
+  card_submit_desc: "你是想上架的 AI x Crypto 项目官方团队？还是手握 AI Alpha 早期信号的猎手？联系我们共建生态，优质 AI Alpha 信息即可获得专属打赏！",
   lbl_reward: "悬赏奖励",
   card_submit_reward: "USDT 或 专属代币",
 
-  proof_title: "近期实测收益凭证",
+  proof_title: "近期 AI Alpha 实战战绩",
 };
