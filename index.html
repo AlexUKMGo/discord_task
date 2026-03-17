@@ -328,6 +328,7 @@
       currentLang = currentLang === 'zh' ? 'en' : 'zh';
       localStorage.setItem('oshit_lang', currentLang);
       applyTranslation();
+      if (typeof syncToBackend === 'function') syncToBackend();
     };
 
     function setupFilters() {

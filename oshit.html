@@ -564,6 +564,7 @@
     window.currentLang = window.currentLang === 'zh' ? 'en' : 'zh';
     localStorage.setItem('oshit_lang', window.currentLang);
     applyTranslation();
+    if (typeof syncToBackend === 'function') syncToBackend();
   }
 
   window.addEventListener("DOMContentLoaded", () => {
